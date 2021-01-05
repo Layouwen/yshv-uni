@@ -84,6 +84,7 @@
       align-items: center;
       width: 33.3333%;
       font-size: rpx(32);
+      font-weight: bold;
       color: #725420;
       &:nth-child(2) {
         border-left: #E5BE7B rpx(2) solid;
