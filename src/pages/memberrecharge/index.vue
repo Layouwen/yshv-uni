@@ -2,7 +2,7 @@
   <view class="container">
     <view class="bbb"></view>
     <view>
-      <view  class="text">{{flag}}</view>
+      <view class="text">{{ flag }}</view>
       <input
         type="text"
         placeholder="请输入充值号码"
@@ -11,14 +11,22 @@
       />
       <view class="main">
         <view class="main_t">
-          <view class="gold" @click="gold" :class="topflag===false?'zindex':''">
+          <view
+            class="gold"
+            @click="gold"
+            :class="topflag === false ? 'zindex' : ''"
+          >
             <image class="yellow" src="../../static/yellow.png" mode="" />
             <view class="float">
               <image class="goldimg" src="../../static/gold.png" mode="" />
               <text>黄金会员</text>
             </view>
           </view>
-          <view class="diamonds" @click="diamonds" :class="topflag===true?'zindex':''">
+          <view
+            class="diamonds"
+            @click="diamonds"
+            :class="topflag === true ? 'zindex' : ''"
+          >
             <image class="black" src="../../static/black.png" mode="" />
             <view class="float">
               <image
@@ -31,49 +39,63 @@
           </view>
         </view>
         <view class="main_box">
-          <view class="main_item1">
-            <view class="main_item_l">
-              <text class="monthcard">月卡</text>
-              <text class="month">1个月</text>
+          <view>
+            <view
+              :class="itemflag === 0 ? 'main_item1' : 'main_item2'"
+              @click="item1(0)"
+            >
+              <view class="main_item_l">
+                <text class="monthcard">月卡</text>
+                <text class="month">1个月</text>
+              </view>
+              <view>
+                <text class="yuan">￥</text>
+                <text class="money">19.8</text>
+              </view>
+              <text>原价：25.8</text>
             </view>
-            <view>
-              <text class="yuan">￥</text>
-              <text class="money">19.8</text>
+            <view
+              :class="itemflag === 1 ? 'main_item1' : 'main_item2'"
+              @click="item2(1)"
+            >
+              <view class="main_item_l">
+                <text class="monthcard">季卡</text>
+                <text class="month">3个月</text>
+              </view>
+              <view>
+                <text class="yuan">￥</text>
+                <text class="money">58.8</text>
+              </view>
+              <text class="yj">原价：88</text>
             </view>
-            <text>原价：25.8</text>
-          </view>
-          <view class="main_item2">
-            <view class="main_item_l">
-              <text class="monthcard">季卡</text>
-              <text class="month">3个月</text>
+            <view
+              :class="itemflag === 2 ? 'main_item1' : 'main_item2'"
+              @click="item3(2)"
+            >
+              <view class="main_item_l">
+                <text class="monthcard">半年卡</text>
+                <text class="month">1个月</text>
+              </view>
+              <view>
+                <text class="yuan1">￥</text>
+                <text class="money">108</text>
+              </view>
+              <text>原价：148</text>
             </view>
-            <view>
-              <text class="yuan">￥</text>
-              <text class="money">58</text>
+            <view
+              :class="itemflag === 3 ? 'main_item1' : 'main_item2'"
+              @click="item4(3)"
+            >
+              <view class="main_item_l">
+                <text class="monthcard">年卡</text>
+                <text class="month">12个月</text>
+              </view>
+              <view>
+                <text class="yuan2">￥</text>
+                <text class="money">198</text>
+              </view>
+              <text>原价：256</text>
             </view>
-            <text class="yj">原价：88</text>
-          </view>
-          <view class="main_item2">
-            <view class="main_item_l">
-              <text class="monthcard">半年卡</text>
-              <text class="month">1个月</text>
-            </view>
-            <view>
-              <text class="yuan1">￥</text>
-              <text class="money">108</text>
-            </view>
-            <text>原价：148</text>
-          </view>
-          <view class="main_item2">
-            <view class="main_item_l">
-              <text class="monthcard">年卡</text>
-              <text class="month">12个月</text>
-            </view>
-            <view>
-              <text class="yuan2">￥</text>
-              <text class="money">198</text>
-            </view>
-            <text>原价：256</text>
           </view>
         </view>
       </view>
@@ -100,25 +122,38 @@ export default {
     return {
       aaa: "",
       flag: "",
-      topflag:false
+      topflag: false,
+      itemflag: 0,
     };
   },
   watch: {
     aaa(val) {
       if (this.aaa !== "") {
-        this.flag="请输入充值号码";
+        this.flag = "请输入充值号码";
       } else {
-        this.flag=""
+        this.flag = "";
       }
     },
   },
   methods: {
-    gold(){
-      this.topflag = false
+    gold() {
+      this.topflag = false;
     },
-    diamonds(){
-      this.topflag = true
-    }
+    diamonds() {
+      this.topflag = true;
+    },
+    item1(e) {
+      this.itemflag = e;
+    },
+    item2(e) {
+      this.itemflag = e;
+    },
+    item3(e) {
+      this.itemflag = e;
+    },
+    item4(e) {
+      this.itemflag = e;
+    },
   },
 };
 </script>
@@ -162,7 +197,6 @@ export default {
         width: rpx(208);
         height: rpx(28);
         font-size: rpx(30);
-        font-family: PingFang SC;
         font-weight: 500;
         color: #999999;
         line-height: 42px;
@@ -173,7 +207,7 @@ export default {
         position: relative;
         display: flex;
         margin-top: rpx(32);
-        >.zindex{
+        > .zindex {
           z-index: 999;
         }
         > .gold {
@@ -198,7 +232,9 @@ export default {
             > .goldimg {
               width: rpx(38);
               height: rpx(32);
+              margin-top: rpx(-8);
               margin-right: rpx(14);
+              vertical-align: middle;
             }
           }
         }
@@ -224,6 +260,7 @@ export default {
             > .diamondsimg {
               width: rpx(30);
               height: rpx(28);
+              margin-bottom: rpx(-3);
               margin-right: rpx(14);
             }
           }
@@ -237,125 +274,126 @@ export default {
         height: rpx(718);
         background: white;
         box-shadow: 0px 5px 15px 0px rgba(45, 47, 64, 0.05);
-        > .main_item1 {
-          display: flex;
-          align-items: center;
-          width: rpx(665);
-          height: rpx(152);
-          border: 2px solid #ba894f;
-          background: linear-gradient(135deg, #fef5e7 0%, #ffcf85 100%);
-          box-shadow: 0px rpx(5) rpx(15) 0px rgba(45, 47, 64, 0.05);
-          border-radius: rpx(10);
-          margin: 0 auto;
+        > view {
           margin-top: rpx(28);
-          margin-bottom: rpx(18);
-          > text {
-            margin-left: rpx(26);
-            font-size: rpx(28);
-            font-weight: 400;
-            text-decoration: line-through;
-            color: #ba8c55;
-          }
-          > view {
+          > .main_item1 {
             display: flex;
             align-items: center;
-            .yuan {
-              margin-left: rpx(136);
-              font-size: rpx(30);
-              font-weight: bold;
-              color: #572f1f;
-            }
-            .money {
-              font-size: rpx(50);
+            width: rpx(665);
+            height: rpx(152);
+            border: 2px solid #ba894f;
+            background: linear-gradient(135deg, #fef5e7 0%, #ffcf85 100%);
+            box-shadow: 0px rpx(5) rpx(15) 0px rgba(45, 47, 64, 0.05);
+            border-radius: rpx(10);
+            margin: 0 auto;
+            margin-bottom: rpx(18);
+            > text {
+              margin-left: rpx(26);
+              font-size: rpx(28);
               font-weight: 400;
-              color: #572f1f;
+              text-decoration: line-through;
+              color: #ba8c55;
             }
-          }
+            > view {
+              display: flex;
+              align-items: center;
+              width: rpx(140);
+              .yuan {
+                font-size: rpx(30);
+                font-weight: bold;
+                color: #572f1f;
+              }
+              .money {
+                font-size: rpx(50);
+                font-weight: 400;
+                color: #572f1f;
+              }
+            }
 
-          > .main_item_l {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-left: rpx(26);
-            > .monthcard {
-              font-size: rpx(34);
-              font-weight: bold;
-              color: #333333;
+            > .main_item_l {
+              width: rpx(224);
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              margin-left: rpx(26);
+              > .monthcard {
+                font-size: rpx(34);
+                font-weight: bold;
+                color: #333333;
+              }
+              > .month {
+                font-size: rpx(26);
+                font-weight: 500;
+                color: #999999;
+              }
             }
-            > .month {
-              font-size: rpx(26);
-              font-weight: 500;
-              color: #999999;
-            }
           }
-        }
-        > .main_item2 {
-          display: flex;
-          align-items: center;
-          width: rpx(663);
-          height: rpx(150);
-          border: rpx(1) solid #e3e3e3;
-          background: #ffffff;
-          box-shadow: 0px rpx(5) rpx(15) 0px rgba(45, 47, 64, 0.05);
-          border-radius: rpx(10);
-          margin: 0 auto;
-          margin-bottom: rpx(18);
-          > .yj {
-            margin-left: rpx(74);
-            font-size: rpx(28);
-            font-weight: 400;
-            text-decoration: line-through;
-            color: #d0c8c3;
-          }
-          > text {
-            margin-left: rpx(42);
-            font-size: rpx(28);
-            font-weight: 400;
-            text-decoration: line-through;
-            color: #d0c8c3;
-          }
-          > view {
+          > .main_item2 {
             display: flex;
             align-items: center;
-            .yuan {
-              margin-left: rpx(135);
-              font-size: rpx(30);
-              font-weight: bold;
-
-              color: #b98a52;
-            }
-            .yuan1 {
-              margin-left: rpx(98);
-              font-size: rpx(30);
-              font-weight: bold;
-              color: #b98a52;
-            }
-            .yuan2 {
-              margin-left: rpx(121);
-              font-size: rpx(30);
-              font-weight: bold;
-              color: #b98a52;
-            }
-            .money {
-              font-size: rpx(50);
+            width: rpx(663);
+            height: rpx(150);
+            border: rpx(1) solid #e3e3e3;
+            background: #ffffff;
+            box-shadow: 0px rpx(5) rpx(15) 0px rgba(45, 47, 64, 0.05);
+            border-radius: rpx(10);
+            margin: 0 auto;
+            margin-bottom: rpx(18);
+            > .yj {
+              font-size: rpx(28);
               font-weight: 400;
-              color: #b98a52;
+              text-decoration: line-through;
+              color: #d0c8c3;
             }
-          }
-          > .main_item_l {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-left: rpx(26);
-            > .monthcard {
-              font-size: rpx(34);
-              font-weight: bold;
-              color: #333333;
+            > text {
+              margin-left: rpx(26);
+              font-size: rpx(28);
+              font-weight: 400;
+              text-decoration: line-through;
+              color: #d0c8c3;
             }
-            > .month {
-              font-size: rpx(26);
-              font-weight: 500;
-              color: #999999;
+            > view {
+              display: flex;
+              align-items: center;
+              width: rpx(140);
+              .yuan {
+                font-size: rpx(30);
+                font-weight: bold;
+
+                color: #b98a52;
+              }
+              .yuan1 {
+                font-size: rpx(30);
+                font-weight: bold;
+                color: #b98a52;
+              }
+              .yuan2 {
+                font-size: rpx(30);
+                font-weight: bold;
+                color: #b98a52;
+              }
+              .money {
+                font-size: rpx(50);
+                font-weight: 400;
+                color: #b98a52;
+              }
+            }
+            > .main_item_l {
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              margin-left: rpx(26);
+              width: rpx(224);
+              > .monthcard {
+                font-size: rpx(34);
+                font-weight: bold;
+                color: #333333;
+              }
+              > .month {
+                font-size: rpx(26);
+                font-weight: 500;
+                color: #999999;
+              }
             }
           }
         }
