@@ -1,6 +1,6 @@
 <template>
   <view class='index-page'>
-    <view class='bg' />
+    <view class='user-wrapper' />
     <view class='top'>
       <u-swiper class='swiper' interval='3000' img-mode='scaleToFill' :list='list'></u-swiper>
     </view>
@@ -12,17 +12,17 @@
     <block v-for="(content, index) in contents" :key="index">
       <view class='item-wrapper' v-show="tabActive === index">
         <view class='item'>
-          <image class='item-icon' src='/static/tengxun.png' />
+          <image class='item-icon' src='/static/images/tengxun.png' />
           <text class='item-title'>腾讯视频</text>
           <button class='item-btn'>低至{{ index }}元起</button>
         </view>
         <view class='item'>
-          <image class='item-icon' src='/static/aiqiyi.png' />
+          <image class='item-icon' src='/static/images/aiqiyi.png' />
           <text class='item-title'>爱奇艺</text>
           <button class='item-btn'>查看全部套餐</button>
         </view>
         <view class='item'>
-          <image class='item-icon' src='/static/youku.png' />
+          <image class='item-icon' src='/static/images/youku.png' />
           <text class='item-title'>优酷</text>
           <button class='item-btn'>查看全部套餐</button>
         </view>
@@ -64,7 +64,7 @@ export default {
   height: 100vh;
   padding-bottom: rpx(200);
   background: #f6f6f8;
-  > .bg {
+  > .user-wrapper {
     position: absolute;
     top: 0;
     left: 0;
