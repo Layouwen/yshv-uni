@@ -62,6 +62,7 @@ export default {
   flex-direction: column;
   align-items: center;
   height: 100vh;
+  padding-bottom: rpx(200);
   background: #f6f6f8;
   > .bg {
     position: absolute;
