@@ -106,7 +106,7 @@ export default {
   watch: {
     aaa(val) {
       if (this.aaa !== "") {
-        this.flag="请输入充值号码"
+        this.flag="请输入充值号码";
       } else {
         this.flag=""
       }
