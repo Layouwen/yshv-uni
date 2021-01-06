@@ -39,62 +39,38 @@
           </view>
         </view>
         <view class="main_box">
-          <view>
+          <view v-if="topflag === false">
             <view
-              :class="itemflag === 0 ? 'main_item1' : 'main_item2'"
-              @click="item1(0)"
+              :class="itemflag1 === index ? 'main_item1' : 'main_item2'"
+              @click="item1(index)"
+              v-for="(item, index) in goldset"
             >
               <view class="main_item_l">
-                <text class="monthcard">月卡</text>
-                <text class="month">1个月</text>
+                <text class="monthcard">{{ item.card }}</text>
+                <text class="month">{{ item.month }}个月</text>
               </view>
               <view>
                 <text class="yuan">￥</text>
-                <text class="money">19.8</text>
+                <text class="money">{{ item.price }}</text>
               </view>
-              <text>原价：25.8</text>
+              <text>原价：{{ item.price }}</text>
             </view>
+          </view>
+          <view v-else>
             <view
-              :class="itemflag === 1 ? 'main_item1' : 'main_item2'"
-              @click="item2(1)"
+              :class="itemflag2 === index ? 'main_item1' : 'main_item2'"
+              @click="item2(index)"
+              v-for="(item, index) in diaset"
             >
               <view class="main_item_l">
-                <text class="monthcard">季卡</text>
-                <text class="month">3个月</text>
+                <text class="monthcard">{{ item.card }}</text>
+                <text class="month">{{ item.month }}个月</text>
               </view>
               <view>
                 <text class="yuan">￥</text>
-                <text class="money">58.8</text>
+                <text class="money">{{ item.price }}</text>
               </view>
-              <text class="yj">原价：88</text>
-            </view>
-            <view
-              :class="itemflag === 2 ? 'main_item1' : 'main_item2'"
-              @click="item3(2)"
-            >
-              <view class="main_item_l">
-                <text class="monthcard">半年卡</text>
-                <text class="month">1个月</text>
-              </view>
-              <view>
-                <text class="yuan1">￥</text>
-                <text class="money">108</text>
-              </view>
-              <text>原价：148</text>
-            </view>
-            <view
-              :class="itemflag === 3 ? 'main_item1' : 'main_item2'"
-              @click="item4(3)"
-            >
-              <view class="main_item_l">
-                <text class="monthcard">年卡</text>
-                <text class="month">12个月</text>
-              </view>
-              <view>
-                <text class="yuan2">￥</text>
-                <text class="money">198</text>
-              </view>
-              <text>原价：256</text>
+              <text>原价：{{ item.price }}</text>
             </view>
           </view>
         </view>
@@ -123,7 +99,20 @@ export default {
       aaa: "",
       flag: "",
       topflag: false,
-      itemflag: 0,
+      itemflag1: 0,
+      itemflag2: 0,
+      goldset: [
+        { card: "月卡", month: 1, price: 19.8, oprice: 25.8 },
+        { card: "季卡", month: 1, price: 19.8, oprice: 25.8 },
+        { card: "半年卡", month: 1, price: 19.8, oprice: 25.8 },
+        { card: "年卡", month: 1, price: 19.8, oprice: 25.8 },
+      ],
+      diaset: [
+        { card: "月卡", month: 1, price: 19.8, oprice: 25.8 },
+        { card: "季卡", month: 1, price: 19.8, oprice: 25.8 },
+        { card: "半年卡", month: 1, price: 19.8, oprice: 25.8 },
+        { card: "年卡", month: 1, price: 19.8, oprice: 25.8 },
+      ],
     };
   },
   watch: {
@@ -143,16 +132,10 @@ export default {
       this.topflag = true;
     },
     item1(e) {
-      this.itemflag = e;
+      this.itemflag1 = e;
     },
     item2(e) {
-      this.itemflag = e;
-    },
-    item3(e) {
-      this.itemflag = e;
-    },
-    item4(e) {
-      this.itemflag = e;
+      this.itemflag2 = e;
     },
   },
 };
@@ -279,9 +262,9 @@ export default {
           > .main_item1 {
             display: flex;
             align-items: center;
-            width: rpx(665);
-            height: rpx(152);
-            border: 2px solid #ba894f;
+            width: rpx(663);
+            height: rpx(150);
+            border: rpx(2) solid #ba894f;
             background: linear-gradient(135deg, #fef5e7 0%, #ffcf85 100%);
             box-shadow: 0px rpx(5) rpx(15) 0px rgba(45, 47, 64, 0.05);
             border-radius: rpx(10);
