@@ -1,6 +1,12 @@
 {
 	"pages": [
 		{
+			"path": "pages/welfare/index",
+			"style": {
+				"navigationBarTitleText": "福利"
+			}
+		},
+		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "uni-app"
@@ -12,6 +18,7 @@
 				"navigationBarTitleText": "uni-app"
 			}
 		}
+
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
