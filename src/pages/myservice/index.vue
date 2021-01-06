@@ -27,7 +27,9 @@ export default {
 .myservice-page {
   display: flex;
   flex-direction: column;
+  height: 100vh;
   padding: rpx(24) rpx(20);
+  overflow: auto;
   background: #f6f6f8;
   > .item {
     display: flex;

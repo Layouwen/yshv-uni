@@ -4,10 +4,12 @@
     <view class='top'>
       <u-swiper class='swiper' interval='3000' img-mode='scaleToFill' :list='list'></u-swiper>
     </view>
-    <view class='tab-wrapper'>
-      <block v-for='(tab, index) in tabsList' :key='index'>
-        <view class='tab' :class='tabActive === index ? "active" : ""' @click='onChangeTab(index)'>{{ tab }}</view>
-      </block>
+    <view class='padding' style="padding: 28rpx 0 22rpx 0;">
+      <view class='tab-wrapper'>
+        <block v-for='(tab, index) in tabsList' :key='index'>
+          <view class='tab' :class='tabActive === index ? "active" : ""' @click='onChangeTab(index)'>{{ tab }}</view>
+        </block>
+      </view>
     </view>
     <block v-for="(content, index) in contents" :key="index">
       <view class='item-wrapper' v-show="tabActive === index">
@@ -63,6 +65,7 @@ export default {
   align-items: center;
   height: 100vh;
   padding-bottom: rpx(200);
+  overflow: auto;
   background: #f6f6f8;
   > .user-wrapper {
     position: absolute;
@@ -85,10 +88,10 @@ export default {
       height: 100%;
     }
   }
-  > .tab-wrapper {
+  > .padding > .tab-wrapper {
     display: flex;
     width: rpx(710);
-    margin: rpx(28) 0 rpx(22) 0;
+    //margin: rpx(28) 0 rpx(22) 0;
     border: rpx(2) solid #E5BE7B;
     border-radius: rpx(10);
     > .tab {
@@ -96,7 +99,7 @@ export default {
       justify-content: center;
       align-items: center;
       width: 33.3333%;
-      padding: rpx(22) 0;
+      padding: rpx(18) 0;
       font-size: rpx(32);
       font-weight: bold;
       color: #725420;
@@ -111,6 +114,7 @@ export default {
   }
   > .item-wrapper {
     > .item {
+      overflow: auto;
       display: flex;
       align-items: center;
       width: rpx(710);

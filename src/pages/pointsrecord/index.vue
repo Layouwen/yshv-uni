@@ -43,7 +43,9 @@ export default {
 @import "~@/assets/styles/fn.scss";
 
 .pointsrecord {
+  height: 100vh;
   padding: 0 rpx(17) 0 rpx(22);
+  overflow: auto;
   > .item-wrapper {
     display: flex;
     justify-content: space-between;

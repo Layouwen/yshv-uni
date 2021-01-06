@@ -37,7 +37,8 @@ export default {
         {
           id: 0,
           title: '我的服务',
-          icon: 'fuwu'
+          icon: 'fuwu',
+          link: 'myservice'
         },
         {
           id: 1,

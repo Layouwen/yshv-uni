@@ -1,8 +1,10 @@
 <template>
   <view class='mycoupon-page'>
-    <view class="tabs">
-      <view class='left' :class="tabActive === 0 ? 'active' : ''" @click='onChangeTab(0)'>待领取</view>
-      <view class="right" :class="tabActive === 1 ? 'active' : ''" @click='onChangeTab(1)'>可使用</view>
+    <view class="tabs-wrapper">
+      <view class="tabs">
+        <view class='left' :class="tabActive === 0 ? 'active' : ''" @click='onChangeTab(0)'>待领取</view>
+        <view class="right" :class="tabActive === 1 ? 'active' : ''" @click='onChangeTab(1)'>可使用</view>
+      </view>
     </view>
     <view class="coupons">
       <view class="coupon" v-for="coupon in couponList" :key="coupon.id" @click='onReceive(coupon.id)'>
@@ -38,6 +40,60 @@ export default {
         },
         {
           id: 1,
+          money: 100,
+          title: '仅限充值腾讯会员使用',
+          time: '2020-12-30'
+        },
+        {
+          id: 2,
+          money: 100,
+          title: '仅限充值腾讯会员使用',
+          time: '2020-12-30'
+        },
+        {
+          id: 3,
+          money: 100,
+          title: '仅限充值腾讯会员使用',
+          time: '2020-12-30'
+        },
+        {
+          id: 4,
+          money: 100,
+          title: '仅限充值腾讯会员使用',
+          time: '2020-12-30'
+        },
+        {
+          id: 5,
+          money: 100,
+          title: '仅限充值腾讯会员使用',
+          time: '2020-12-30'
+        },
+        {
+          id: 6,
+          money: 100,
+          title: '仅限充值腾讯会员使用',
+          time: '2020-12-30'
+        },
+        {
+          id: 7,
+          money: 100,
+          title: '仅限充值腾讯会员使用',
+          time: '2020-12-30'
+        },
+        {
+          id: 8,
+          money: 100,
+          title: '仅限充值腾讯会员使用',
+          time: '2020-12-30'
+        },
+        {
+          id: 9,
+          money: 100,
+          title: '仅限充值腾讯会员使用',
+          time: '2020-12-30'
+        },
+        {
+          id: 10,
           money: 100,
           title: '仅限充值腾讯会员使用',
           time: '2020-12-30'
@@ -98,37 +154,50 @@ export default {
 @import "~@/assets/styles/fn.scss";
 
 .mycoupon-page {
-  padding: rpx(26) rpx(20);
-  > .tabs {
-    display: flex;
-    width: 100%;
-    border: rpx(2) solid #E5BE7B;
-    border-radius: rpx(10);
-    > view {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  > .tabs-wrapper {
+    padding: rpx(26) rpx(20);
+    > .tabs {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 50%;
-      padding: rpx(27) 0;
-      font-size: rpx(28);
-      font-weight: 500;
-      color: #725420;
-      &.active {
-        background: linear-gradient(-42deg, #F0D7A6, #E5BE7B);
+      flex-shrink: 0;
+      width: 100%;
+      border: rpx(2) solid #E5BE7B;
+      border-radius: rpx(10);
+      > view {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50%;
+        padding: rpx(27) 0;
+        font-size: rpx(28);
+        font-weight: 500;
+        color: #725420;
+        &.active {
+          background: linear-gradient(-42deg, #F0D7A6, #E5BE7B);
+        }
       }
     }
   }
   > .coupons {
-    padding-top: rpx(25);
+    flex-grow: 1;
+    padding: 0 rpx(20);
+    overflow: auto;
     > .coupon {
       display: flex;
       width: 100%;
       height: rpx(172);
-      margin-bottom: rpx(21);
       background: url("../../assets/images/coupon.png") no-repeat 0 0;
       background-size: 100%;
       box-shadow: 0 rpx(5) rpx(15) 0 rgba(66, 66, 66, 0.05);
       border-radius: rpx(10);
+      &:not(:first-child) {
+        margin-top: rpx(21);
+      }
+      &:last-child {
+        margin-bottom: rpx(21);
+      }
       > .money-wrapper {
         display: flex;
         justify-content: center;
