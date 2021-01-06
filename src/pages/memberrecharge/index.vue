@@ -4,7 +4,7 @@
     <view>
       <view class="text">{{ flag }}</view>
       <input
-        type="text"
+        type="number"
         placeholder="请输入充值号码"
         placeholder-class="aaa"
         v-model="aaa"
@@ -44,6 +44,7 @@
               :class="itemflag1 === index ? 'main_item1' : 'main_item2'"
               @click="item1(index)"
               v-for="(item, index) in goldset"
+              key="{{index}}"
             >
               <view class="main_item_l">
                 <text class="monthcard">{{ item.card }}</text>
@@ -61,6 +62,7 @@
               :class="itemflag2 === index ? 'main_item1' : 'main_item2'"
               @click="item2(index)"
               v-for="(item, index) in diaset"
+              key="{{index}}"
             >
               <view class="main_item_l">
                 <text class="monthcard">{{ item.card }}</text>
@@ -316,7 +318,7 @@ export default {
             align-items: center;
             width: rpx(663);
             height: rpx(150);
-            border: rpx(1) solid #e3e3e3;
+            border: rpx(2) solid #e3e3e3;
             background: #ffffff;
             box-shadow: 0px rpx(5) rpx(15) 0px rgba(45, 47, 64, 0.05);
             border-radius: rpx(10);
