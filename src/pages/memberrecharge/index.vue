@@ -44,7 +44,7 @@
               :class="itemflag1 === index ? 'main_item1' : 'main_item2'"
               @click="item1(index)"
               v-for="(item, index) in goldset"
-              key="{{index}}"
+              :key="index"
             >
               <view class="main_item_l">
                 <text class="monthcard">{{ item.card }}</text>
@@ -62,7 +62,7 @@
               :class="itemflag2 === index ? 'main_item1' : 'main_item2'"
               @click="item2(index)"
               v-for="(item, index) in diaset"
-              key="{{index}}"
+              :key="index"
             >
               <view class="main_item_l">
                 <text class="monthcard">{{ item.card }}</text>
@@ -81,13 +81,13 @@
       <view class="tips">
         <view class="tips_title">充值须知</view>
         <view class="tips_detail">
-          1.本平台业务为自动充值（一般3秒—1分钟左右）；
-          2.购买的会员业务不会自动续费，过期后需要再次购买使用；
-          3.充值成功后，请您登录腾讯视频官网查询会员状态和时间；
-          4.本商品适用平台：手机、电脑、iPad上使用，电视端需要选择指定套餐；
-          5.因虚拟产品特殊性，充值前请核对充值账号，一旦充值成功将无法转移和退款；
-          6.我们平台上的产品和定价信息在公布前已经过合适，但是在极少数情形下可能有误。如果我们发现定价错误，我们将取消您的订单，并对订单金额全额退款。
-          7.如在充值过程中遇到疑问，可咨询“在线客服”。
+          1.本平台业务为自动充值（一般3秒—1分钟左右）；<br>
+          2.购买的会员业务不会自动续费，过期后需要再次购买使用；<br>
+          3.充值成功后，请您登录腾讯视频官网查询会员状态和时间；<br>
+          4.本商品适用平台：手机、电脑、iPad上使用，电视端需要选择指定套餐；<br>
+          5.因虚拟产品特殊性，充值前请核对充值账号，一旦充值成功将无法转移和退款；<br>
+          6.我们平台上的产品和定价信息在公布前已经过合适，但是在极少数情形下可能有误。如果我们发现定价错误，我们将取消您的订单，并对订单金额全额退款。<br>
+          7.如在充值过程中遇到疑问，可咨询“在线客服”。<br>
         </view>
       </view>
     </view>
@@ -411,10 +411,10 @@ export default {
       > .tips_detail {
         width: rpx(707);
         height: rpx(507);
+        margin-bottom: rpx(77);
         font-size: rpx(26);
         font-weight: 500;
         color: #999999;
-
         line-height: rpx(48);
       }
     }
