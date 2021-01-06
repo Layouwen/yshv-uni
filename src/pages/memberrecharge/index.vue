@@ -152,6 +152,7 @@ export default {
   position: relative;
   background: #ffffff;
   padding-bottom: rpx(30);
+  overflow: hidden;
   &::before {
     content: "";
     display: table;
