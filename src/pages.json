@@ -36,7 +36,7 @@
     {
       "path": "pages/memberrecharge/index",
       "style": {
-        "navigationBarTitleText": "uni-app"
+        "navigationBarTitleText": "爱奇艺会员充值"
       }
     }
   ],
