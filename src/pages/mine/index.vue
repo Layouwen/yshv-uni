@@ -16,7 +16,7 @@
         <button class="item-list item-btn"
                 :open-type="item.type?item.type: ''"
                 hover-class="btn-hover"
-                @click="onLinkPage(item.id)">
+                @click="onLinkPage(item.link, item.type)">
           <image class="item-icon" :src='titlePng(item.icon)' />
           <view class="title">{{ item.title }}</view>
           <u-icon class="item-right" name="arrow-right" size="26rpx" color="#999"></u-icon>
@@ -42,7 +42,8 @@ export default {
         {
           id: 1,
           title: '我的优惠券',
-          icon: 'voucher'
+          icon: 'voucher',
+          link: 'mycoupon'
         },
         {
           id: 2,
@@ -79,8 +80,14 @@ export default {
     titlePng (title) {
       return `/static/images/${title}.png`
     },
-    onLinkPage (id) {
-      console.log(id)
+    path (name) {
+      return `/pages/${name}/index`
+    },
+    onLinkPage (name, type) {
+      if (!name || type === 'contact') return
+      uni.navigateTo({
+        url: this.path(name)
+      })
     },
     login () {
       return new Promise(

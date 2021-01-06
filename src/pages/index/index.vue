@@ -96,7 +96,7 @@ export default {
       justify-content: center;
       align-items: center;
       width: 33.3333%;
-      padding: rpx(26) 0;
+      padding: rpx(22) 0;
       font-size: rpx(32);
       font-weight: bold;
       color: #725420;

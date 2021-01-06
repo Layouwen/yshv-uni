@@ -16,6 +16,24 @@
       }
     },
     {
+      "path": "pages/pointsrecord/index",
+      "style": {
+        "navigationBarTitleText": "积分记录"
+      }
+    },
+    {
+      "path": "pages/mycoupon/index",
+      "style": {
+        "navigationBarTitleText": "我的优惠券"
+      }
+    },
+    {
+      "path": "pages/myservice/index",
+      "style": {
+        "navigationBarTitleText": "我的服务"
+      }
+    },
+    {
       "path": "pages/memberrecharge/index",
       "style": {
         "navigationBarTitleText": "uni-app"
@@ -34,12 +52,12 @@
         "selectedIconPath": "static/tabbar/tab1-active.png",
         "text": "首页"
       },
-      {
-        "pagePath": "pages/memberrecharge/index",
-        "iconPath": "static/tabbar/tab2.png",
-        "selectedIconPath": "static/tabbar/tab2-active.png",
-        "text": "福利"
-      },
+      //      {
+      //        "pagePath": "pages/memberrecharge/index",
+      //        "iconPath": "static/tabbar/tab2.png",
+      //        "selectedIconPath": "static/tabbar/tab2-active.png",
+      //        "text": "福利"
+      //      },
       {
         "pagePath": "pages/mine/index",
         "iconPath": "static/tabbar/tab3.png",
