@@ -81,13 +81,13 @@
       <view class="tips">
         <view class="tips_title">充值须知</view>
         <view class="tips_detail">
-          1.本平台业务为自动充值（一般3秒—1分钟左右）；<br>
-          2.购买的会员业务不会自动续费，过期后需要再次购买使用；<br>
-          3.充值成功后，请您登录腾讯视频官网查询会员状态和时间；<br>
-          4.本商品适用平台：手机、电脑、iPad上使用，电视端需要选择指定套餐；<br>
-          5.因虚拟产品特殊性，充值前请核对充值账号，一旦充值成功将无法转移和退款；<br>
-          6.我们平台上的产品和定价信息在公布前已经过合适，但是在极少数情形下可能有误。如果我们发现定价错误，我们将取消您的订单，并对订单金额全额退款。<br>
-          7.如在充值过程中遇到疑问，可咨询“在线客服”。<br>
+          1.本平台业务为自动充值（一般3秒—1分钟左右）；<br />
+          2.购买的会员业务不会自动续费，过期后需要再次购买使用；<br />
+          3.充值成功后，请您登录腾讯视频官网查询会员状态和时间；<br />
+          4.本商品适用平台：手机、电脑、iPad上使用，电视端需要选择指定套餐；<br />
+          5.因虚拟产品特殊性，充值前请核对充值账号，一旦充值成功将无法转移和退款；<br />
+          6.我们平台上的产品和定价信息在公布前已经过合适，但是在极少数情形下可能有误。如果我们发现定价错误，我们将取消您的订单，并对订单金额全额退款。<br />
+          7.如在充值过程中遇到疑问，可咨询“在线客服”。<br />
         </view>
       </view>
     </view>
@@ -151,18 +151,25 @@ export default {
 .container {
   position: relative;
   background: #ffffff;
+  padding-bottom: rpx(30);
+  &::before {
+    content: "";
+    display: table;
+    clear: both;
+  }
   > .bbb {
+    position: absolute;
+    top: 0;
     width: rpx(1500);
     height: rpx(498 * 2);
     transform: translateX(rpx(-390)) translateY(rpx(-650));
     background: linear-gradient(148deg, #2d2e30, #2d2e30);
     border-radius: 50%;
-    overflow: hidden;
+    z-index: 0;
   }
   > view {
-    position: absolute;
-    top: 0;
-    margin: 0 rpx(20);
+    position: relative;
+    padding-top: rpx(20);
 
     > .text {
       height: rpx(32);
@@ -192,6 +199,7 @@ export default {
       > .main_t {
         position: relative;
         display: flex;
+        margin: 0 rpx(20);
         margin-top: rpx(32);
         > .zindex {
           z-index: 999;
@@ -411,8 +419,7 @@ export default {
       }
       > .tips_detail {
         width: rpx(707);
-        height: rpx(507);
-        margin-bottom: rpx(77);
+        min-height: rpx(507);
         font-size: rpx(26);
         font-weight: 500;
         color: #999999;
