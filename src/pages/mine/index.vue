@@ -129,6 +129,7 @@ export default {
   align-items: center;
   height: 100vh;
   padding-bottom: rpx(62);
+  overflow: auto;
   background: #f6f6f8;
   > .user-wrapper {
     display: flex;
