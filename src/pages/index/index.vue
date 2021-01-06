@@ -88,7 +88,6 @@ export default {
   > .tab-wrapper {
     display: flex;
     width: rpx(710);
-    height: rpx(80);
     margin: rpx(28) 0 rpx(22) 0;
     border: rpx(2) solid #E5BE7B;
     border-radius: rpx(10);
@@ -97,6 +96,7 @@ export default {
       justify-content: center;
       align-items: center;
       width: 33.3333%;
+      padding: rpx(26) 0;
       font-size: rpx(32);
       font-weight: bold;
       color: #725420;
