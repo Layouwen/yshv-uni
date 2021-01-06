@@ -175,18 +175,19 @@ export default {
     > .text {
       height: rpx(32);
       margin-top: rpx(20);
+      margin-left:rpx(21) ;
       font-size: rpx(24);
       font-weight: 500;
       color: #999999;
     }
     > input {
       width: rpx(710);
+      height: rpx(89);
       border-bottom: rpx(1) solid #615f5b;
       font-weight: bold;
       font-size: rpx(50);
       color: #fef1dc;
       margin: 0 auto;
-      padding: rpx(33) 0;
       .aaa {
         width: rpx(208);
         height: rpx(28);
