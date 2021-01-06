@@ -157,6 +157,7 @@ export default {
     transform: translateX(rpx(-390)) translateY(rpx(-650));
     background: linear-gradient(148deg, #2d2e30, #2d2e30);
     border-radius: 50%;
+    overflow: hidden;
   }
   > view {
     position: absolute;
