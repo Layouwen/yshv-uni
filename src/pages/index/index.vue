@@ -13,17 +13,17 @@
     </view>
     <block v-for="(content, index) in contents" :key="index">
       <view class='item-wrapper' v-show="tabActive === index">
-        <view class='item'>
+        <view class='item' @click="onLinkPage">
           <image class='item-icon' src='/static/images/tengxun.png' />
           <text class='item-title'>腾讯视频</text>
           <button class='item-btn'>低至{{ index }}元起</button>
         </view>
-        <view class='item'>
+        <view class='item' @click="onLinkPage">
           <image class='item-icon' src='/static/images/aiqiyi.png' />
           <text class='item-title'>爱奇艺</text>
           <button class='item-btn'>查看全部套餐</button>
         </view>
-        <view class='item'>
+        <view class='item' @click="onLinkPage">
           <image class='item-icon' src='/static/images/youku.png' />
           <text class='item-title'>优酷</text>
           <button class='item-btn'>查看全部套餐</button>
@@ -48,6 +48,11 @@ export default {
   },
   onLoad () { },
   methods: {
+    onLinkPage () {
+      uni.navigateTo({
+        url: '/pages/memberrecharge/index'
+      })
+    },
     onChangeTab (index) {
       this.tabActive = index
     }
