@@ -44,11 +44,12 @@ export default {};
 @import "~@/assets/styles/fn.scss";
 .container {
   > .top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: rpx(36) rpx(20);
     width: rpx(711);
     height: rpx(262);
-    line-height: rpx(262);
-    text-align: center;
     background: #ffffff;
     box-shadow: 0 rpx(8) rpx(15) 0 rgba(70, 70, 70, 0.09);
     border-radius: rpx(10);
