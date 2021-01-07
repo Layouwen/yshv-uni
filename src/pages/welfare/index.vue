@@ -188,7 +188,6 @@ export default {
 @import "~@/assets/styles/fn.scss";
 .container {
   > .top {
-    height: rpx(247);
     border-bottom: rpx(26) solid #f6f6f8;
     > .title {
       display: flex;
@@ -211,6 +210,7 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
+      margin-bottom: rpx(25);
       > .intefral_t {
         font-size: rpx(24);
         font-weight: 500;
