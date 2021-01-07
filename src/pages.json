@@ -16,6 +16,12 @@
       }
     },
     {
+      "path": "pages/exchangedetails/index",
+      "style": {
+        "navigationBarTitleText": "商品兑换详情"
+      }
+    },
+    {
       "path": "pages/mine/index",
       "style": {
         "navigationBarTitleText": "我的"

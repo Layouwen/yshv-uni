@@ -96,7 +96,7 @@
         mode=""
         @click="display"
       />
-      <image class="ewm" src="../../static/logo.png" mode="" />
+      <image class="ewm" src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201710%2F15%2F20171015094202_BHwPK.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612618719&t=9cc627ffbf77bb164f7ce54bb839c689" mode="" />
       <view class="text">长按关注公众号</view>
     </view>
   </view>
@@ -207,7 +207,7 @@ export default {
         this.flag1 = !this.flag1;
       }
     },
-    
+
   },
 };
 </script>
