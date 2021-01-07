@@ -18,6 +18,7 @@
           :class="index === exchangeindex ? 'select' : ''"
           @click="exchange(index)"
           v-for="(item, index) in topoption"
+          :key="index"
           >{{ item }}</view
         >
       </view>
@@ -28,10 +29,15 @@
           <view class="exchange">{{ item.integral }}兑换</view>
         </view>
       </view>
-      <view class="main_b" v-else-if="exchangeindex === 1" v-for="(item,index) in mainb">
+      <view
+        class="main_b"
+        v-else-if="exchangeindex === 1"
+        v-for="(item, index) in mainb"
+        :key="index"
+      >
         <view class="top">
-          <view class="name">{{index+1}}、{{item.name}}</view>
-          <view class="number">数量：x{{item.number}}</view>
+          <view class="name">{{ index + 1 }}、{{ item.name }}</view>
+          <view class="number">数量：x{{ item.number }}</view>
           <view class="logistics" @click="toggle">{{ toggle1 }}</view>
         </view>
         <view class="main" v-if="flag === true">
@@ -77,10 +83,21 @@
           <view class="itemleft">{{ index + 1 }}、{{ item.name }}</view>
           <view class="itemright">
             <text>+{{ item.integral }}积分</text>
-            <text>关注</text>
+            <text @click="display(index)">{{ item.button }}</text>
           </view>
         </view>
       </view>
+    </view>
+    <view class="background" v-if="flag1 === true" @click="display"> </view>
+    <view class="follow" v-if="flag1 === true">
+      <image
+        class="delect"
+        src="../../static/remove.png"
+        mode=""
+        @click="display"
+      />
+      <image class="ewm" src="../../static/logo.png" mode="" />
+      <view class="text">长按关注公众号</view>
     </view>
   </view>
 </template>
@@ -90,6 +107,7 @@ export default {
   data() {
     return {
       flag: false,
+      flag1: false,
       topoption: ["积分兑换", "物品状态", "积分记录"],
       exchangeindex: 1,
       toggle1: "查看物流",
@@ -152,18 +170,22 @@ export default {
         {
           name: "关注公众号",
           integral: 200,
+          button: "关注",
         },
         {
           name: "充值一年腾讯视频会员",
           integral: 200,
+          button: "查看",
         },
         {
           name: "阅读文章",
           integral: 100,
+          button: "查看",
         },
         {
           name: "购买儿童文具",
           integral: 300,
+          button: "查看",
         },
       ],
     };
@@ -180,6 +202,12 @@ export default {
     exchange(e) {
       this.exchangeindex = e;
     },
+    display(index) {
+      if (index === 0 || this.flag1===true) {
+        this.flag1 = !this.flag1;
+      }
+    },
+    
   },
 };
 </script>
@@ -187,6 +215,7 @@ export default {
 <style lang="scss" >
 @import "~@/assets/styles/fn.scss";
 .container {
+  position: relative;
   > .top {
     border-bottom: rpx(26) solid #f6f6f8;
     > .title {
@@ -413,7 +442,7 @@ export default {
                 }
               }
               > .right {
-                flex:1;
+                flex: 1;
                 font-size: rpx(32);
                 font-weight: bold;
                 color: #999999;
@@ -504,6 +533,43 @@ export default {
           }
         }
       }
+    }
+  }
+  > .background {
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #000000;
+    opacity: 0.5;
+  }
+  > .follow {
+    position: absolute;
+    top: rpx(171);
+    z-index: 999;
+    text-align: center;
+    margin: rpx(70) rpx(80);
+    width: rpx(589);
+    height: rpx(614);
+    background: #ffffff;
+    > .delect {
+      width: rpx(30);
+      height: rpx(30);
+      position: absolute;
+      top: rpx(20);
+      left: rpx(20);
+    }
+    > .ewm {
+      width: rpx(336);
+      height: rpx(332);
+      margin-top: rpx(113);
+    }
+    > .text {
+      font-size: rpx(28);
+      font-weight: 500;
+      color: #999999;
+      line-height: 42px;
     }
   }
 }
