@@ -22,7 +22,7 @@
           >{{ item }}</view
         >
       </view>
-      <view class="main_a" v-if="exchangeindex === 0">
+      <view class="main_a" v-if="exchangeindex === 0" @click="onLinkPage">
         <view class="main_a_item" v-for="(item, index) in maina" :key="index">
           <image :src="item.src" mode="" />
           <text>{{ item.name }}</text>
@@ -207,7 +207,11 @@ export default {
         this.flag1 = !this.flag1;
       }
     },
-
+    onLinkPage(){
+      uni.navigateTo({
+        url: '/pages/exchangedetails/index'
+      })
+    }
   },
 };
 </script>

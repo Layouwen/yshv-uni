@@ -1,7 +1,7 @@
 <template>
   <view class="container">
     <view class="top">
-      <image src="../../static/logo.png" mode="" />
+      <image src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.simeng.cc%2Fupload%2Farticle%2F201808%2F21%2F0952185b7b7052e6664VfXt8a.jpg&refer=http%3A%2F%2Fwww.simeng.cc&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612619107&t=3c1a4e11eb1f3dcfdc496c42104804f8" mode="" />
     </view>
     <view class="item1">
       <text>香奈儿香水1瓶（市场价：1299元）</text>
