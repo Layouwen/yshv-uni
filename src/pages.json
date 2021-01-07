@@ -34,6 +34,12 @@
       }
     },
     {
+      "path": "pages/address/index",
+      "style": {
+        "navigationBarTitleText": "收货人信息"
+      }
+    },
+    {
       "path": "pages/mycoupon/index",
       "style": {
         "navigationBarTitleText": "我的优惠券"
