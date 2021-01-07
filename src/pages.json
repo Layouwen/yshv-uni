@@ -1,6 +1,12 @@
 {
 	"pages": [
 		{
+			"path": "pages/exchangedetails/index",
+			"style": {
+				"navigationBarTitleText": "商品兑换详情"
+			}
+		},
+		{
 			"path": "pages/welfare/index",
 			"style": {
 				"navigationBarTitleText": "福利"
@@ -18,7 +24,6 @@
 				"navigationBarTitleText": "uni-app"
 			}
 		}
-
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
