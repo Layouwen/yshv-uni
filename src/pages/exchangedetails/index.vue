@@ -43,6 +43,9 @@ export default {};
 <style lang="scss" scoped>
 @import "~@/assets/styles/fn.scss";
 .container {
+  display: flex;
+  flex-direction: column;
+  background: #f6f6f8;
   > .top {
     display: flex;
     justify-content: center;
@@ -51,7 +54,7 @@ export default {};
     width: rpx(711);
     height: rpx(262);
     background: #ffffff;
-    box-shadow: 0 rpx(8) rpx(15) 0 rgba(70, 70, 70, 0.09);
+    box-shadow: rpx(0) rpx(8) rpx(15) rpx(0) rgba(70, 70, 70, 0.09);
     border-radius: rpx(10);
     > image {
       width: rpx(135);
