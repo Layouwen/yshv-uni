@@ -13,20 +13,31 @@
     </view>
     <view class="main">
       <view class="main_t">
-        <view class="exchange1">积分兑换</view>
-        <view class="exchange2">积分兑换</view>
-        <view class="exchange3">积分兑换</view>
+        <view
+          class="exchange"
+          :class="index === exchangeindex ? 'select' : ''"
+          @click="exchange(index)"
+          v-for="(item, index) in topoption"
+          >{{ item }}</view
+        >
       </view>
-      <view class="main_b">
-        <view class="top">
-          <view class="name">1、香奈儿香水</view>
-          <view class="number">数量：x1</view>
-          <view class="logistics" @click="toggle">收起物流</view>
+      <view class="main_a" v-if="exchangeindex === 0">
+        <view class="main_a_item" v-for="(item, index) in maina" :key="index">
+          <image :src="item.src" mode="" />
+          <text>{{ item.name }}</text>
+          <view class="exchange">{{ item.integral }}兑换</view>
         </view>
-        <view class="main" v-if="flag===true">
+      </view>
+      <view class="main_b" v-else-if="exchangeindex === 1" v-for="(item,index) in mainb">
+        <view class="top">
+          <view class="name">{{index+1}}、{{item.name}}</view>
+          <view class="number">数量：x{{item.number}}</view>
+          <view class="logistics" @click="toggle">{{ toggle1 }}</view>
+        </view>
+        <view class="main" v-if="flag === true">
           <view class="state">
             <text>已发货</text>
-            <text>运输中</text>
+            <text class="select">运输中</text>
             <text>派件中</text>
             <text>已签收</text>
           </view>
@@ -44,26 +55,29 @@
             <text>杭州市</text>
           </view>
           <view class="detail">
-            <view class="detail_item">
+            <view
+              class="detail_item"
+              v-for="(item, index) in item.address"
+              :key="index"
+            >
               <view class="top">
                 <view class="left">
-                  <text>23:27</text>
-                  <text>2020-12-22</text>
+                  <text>{{ item.time }}</text>
+                  <text>{{ item.date }}</text>
                 </view>
-                <view class="right">快件已从义乌出发</view>
+                <view class="right">{{ item.address }}</view>
               </view>
               <view class="line"></view>
             </view>
-            <view class="detail_item">
-              <view class="top">
-                <view class="left">
-                  <text>23:27</text>
-                  <text>2020-12-22</text>
-                </view>
-                <view class="right">快件已从义乌出发</view>
-              </view>
-              <view class="line"></view>
-            </view>
+          </view>
+        </view>
+      </view>
+      <view class="main_c" v-else>
+        <view class="main_c_item" v-for="(item, index) in mainc" :key="index">
+          <view class="itemleft">{{ index + 1 }}、{{ item.name }}</view>
+          <view class="itemright">
+            <text>+{{ item.integral }}积分</text>
+            <text>关注</text>
           </view>
         </view>
       </view>
@@ -73,16 +87,100 @@
 
 <script>
 export default {
-  data(){
-    return{
-      flag:false
-    }
+  data() {
+    return {
+      flag: false,
+      topoption: ["积分兑换", "物品状态", "积分记录"],
+      exchangeindex: 1,
+      toggle1: "查看物流",
+      maina: [
+        {
+          src: "../../static/logo.png",
+          name: "古驰包包",
+          integral: 2500,
+        },
+        {
+          src: "../../static/logo.png",
+          name: "古驰包包",
+          integral: 2500,
+        },
+        {
+          src: "../../static/logo.png",
+          name: "古驰包包",
+          integral: 2500,
+        },
+        {
+          src: "../../static/logo.png",
+          name: "古驰包包",
+          integral: 2500,
+        },
+        {
+          src: "../../static/logo.png",
+          name: "古驰包包",
+          integral: 2500,
+        },
+        {
+          src: "../../static/logo.png",
+          name: "古驰包包",
+          integral: 2500,
+        },
+      ],
+      mainb: [
+        {
+          name: "香奈儿香水",
+          number: 1,
+          address: [
+            {
+              date: "2020-12-22",
+              time: "23:27",
+              address: "快件已从义乌市场部出发",
+            },
+            {
+              date: "2020-12-22",
+              time: "23:27",
+              address: "义乌市场部d的黄晓凡 已揽件",
+            },
+            {
+              date: "2020-12-22",
+              time: "23:27",
+              address: "卖家发货",
+            },
+          ],
+        },
+      ],
+      mainc: [
+        {
+          name: "关注公众号",
+          integral: 200,
+        },
+        {
+          name: "充值一年腾讯视频会员",
+          integral: 200,
+        },
+        {
+          name: "阅读文章",
+          integral: 100,
+        },
+        {
+          name: "购买儿童文具",
+          integral: 300,
+        },
+      ],
+    };
   },
-  methods:{
-    toggle(){
-      this.flag=!this.flag
-    }
-  }
+  methods: {
+    toggle() {
+      this.flag = !this.flag;
+      if (this.flag === false) {
+        this.toggle1 = "查看物流";
+      } else {
+        this.toggle1 = "收起物流";
+      }
+    },
+    exchange(e) {
+      this.exchangeindex = e;
+    },
+  },
 };
 </script>
 
@@ -137,7 +235,7 @@ export default {
       display: flex;
       margin-left: rpx(20);
       margin-top: rpx(26);
-      > .exchange1 {
+      > .exchange {
         width: rpx(236);
         height: rpx(76);
         font-size: rpx(28);
@@ -145,28 +243,55 @@ export default {
         line-height: rpx(76);
         font-weight: 400;
         text-align: center;
-        border: rpx(2) solid #e5be7b;
-        border-radius: rpx(10) 0 0 rpx(10);
+
+        &:nth-child(1) {
+          border: rpx(2) solid #e5be7b;
+          border-radius: rpx(10) 0 0 rpx(10);
+        }
+        &:nth-child(2) {
+          border-top: rpx(2) solid #e5be7b;
+          border-bottom: rpx(2) solid #e5be7b;
+        }
+        &:nth-child(3) {
+          border: rpx(2) solid #e5be7b;
+          border-radius: 0 rpx(10) rpx(10) 0;
+        }
       }
-      > .exchange2 {
-        width: rpx(240);
-        height: rpx(78);
-        line-height: rpx(78);
-        text-align: center;
-        font-size: rpx(28);
+      > .select {
         font-weight: bold;
-        color: #725420;
         background: linear-gradient(42deg, #f0d7a6, #e5be7b);
       }
-      > .exchange3 {
-        width: rpx(228);
-        height: rpx(76);
-        color: #725420;
-        line-height: rpx(76);
-        font-weight: 400;
-        text-align: center;
-        border: rpx(2) solid #e5be7b;
-        border-radius: 0 rpx(10) rpx(10) 0;
+    }
+    > .main_a {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin: 0 rpx(24);
+      margin-top: rpx(33);
+      > .main_a_item {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: rpx(52);
+        > text {
+          margin: rpx(25) 0;
+          font-size: rpx(26);
+          font-weight: 500;
+          color: #333333;
+        }
+        > image {
+          width: rpx(217);
+          height: rpx(217);
+        }
+        > .exchange {
+          padding: rpx(21) rpx(28);
+          border-radius: rpx(10);
+          background: linear-gradient(75deg, #fbe8c8 0%, #e5be7b 100%);
+          font-size: rpx(26);
+          font-weight: 500;
+          color: #4d321b;
+        }
       }
     }
     > .main_b {
@@ -203,15 +328,38 @@ export default {
         > .state {
           display: flex;
           justify-content: space-between;
+          align-items: center;
           margin: 0 rpx(68);
           font-size: rpx(26);
           font-weight: 500;
           color: #999999;
+          > .select {
+            position: relative;
+            width: rpx(126);
+            height: rpx(54);
+            margin-left: rpx(-15);
+            line-height: rpx(54);
+            text-align: center;
+            font-size: rpx(26);
+            font-weight: 500;
+            color: #725420;
+            background: linear-gradient(42deg, #f0d7a6, #e5be7b);
+            border-radius: rpx(22) rpx(23) rpx(20) rpx(20);
+            &::after {
+              position: absolute;
+              bottom: rpx(-10);
+              right: rpx(53);
+              content: "";
+              border-right: rpx(10) solid transparent;
+              border-left: rpx(10) solid transparent;
+              border-top: rpx(10) solid #e5be7b;
+            }
+          }
         }
         > .stateimg {
           display: flex;
           align-items: center;
-          margin: rpx(19) rpx(93) rpx(19);
+          margin: rpx(24) rpx(93) rpx(19);
           .circular {
             width: rpx(20);
             height: rpx(20);
@@ -265,16 +413,11 @@ export default {
                 }
               }
               > .right {
+                flex:1;
                 font-size: rpx(32);
                 font-weight: bold;
                 color: #999999;
               }
-            }
-            > .line:not(:last-child) {
-              width: rpx(2);
-              height: rpx(55);
-              margin-left: rpx(119);
-              background: #999999;
             }
             &:nth-child(1) {
               > .top {
@@ -307,6 +450,56 @@ export default {
                   color: #333333;
                 }
               }
+            }
+          }
+          > .detail_item:not(:last-child) {
+            > .line {
+              margin: rpx(33) 0;
+              width: rpx(2);
+              height: rpx(55);
+              margin-left: rpx(119);
+              background: #999999;
+            }
+          }
+        }
+      }
+    }
+    > .main_c {
+      margin: rpx(45) rpx(20);
+      > .main_c_item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: rpx(1) solid #e3e3e3;
+        border-radius: rpx(10);
+        padding: rpx(42) rpx(25);
+        margin-bottom: rpx(26);
+        > .itemleft {
+          font-size: rpx(28);
+          font-weight: 500;
+          color: #333333;
+        }
+        > .itemright {
+          display: flex;
+          align-items: center;
+          > text {
+            &:nth-child(1) {
+              margin-right: rpx(56);
+              font-size: rpx(26);
+              font-weight: 500;
+              color: #b98a52;
+            }
+            &:nth-child(2) {
+              display: inline-block;
+              width: rpx(103);
+              height: rpx(60);
+              text-align: center;
+              line-height: rpx(60);
+              font-size: rpx(26);
+              font-weight: 500;
+              color: #b98a52;
+              border: rpx(1) solid #b98a52;
+              border-radius: rpx(10);
             }
           }
         }
