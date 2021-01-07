@@ -4,7 +4,7 @@
     <view>
       <view class="text">{{ flag }}</view>
       <input
-        type="text"
+        type="number"
         placeholder="请输入充值号码"
         placeholder-class="aaa"
         v-model="aaa"
@@ -44,6 +44,7 @@
               :class="itemflag1 === index ? 'main_item1' : 'main_item2'"
               @click="item1(index)"
               v-for="(item, index) in goldset"
+              :key="index"
             >
               <view class="main_item_l">
                 <text class="monthcard">{{ item.card }}</text>
@@ -61,6 +62,7 @@
               :class="itemflag2 === index ? 'main_item1' : 'main_item2'"
               @click="item2(index)"
               v-for="(item, index) in diaset"
+              :key="index"
             >
               <view class="main_item_l">
                 <text class="monthcard">{{ item.card }}</text>
@@ -79,13 +81,13 @@
       <view class="tips">
         <view class="tips_title">充值须知</view>
         <view class="tips_detail">
-          1.本平台业务为自动充值（一般3秒—1分钟左右）；
-          2.购买的会员业务不会自动续费，过期后需要再次购买使用；
-          3.充值成功后，请您登录腾讯视频官网查询会员状态和时间；
-          4.本商品适用平台：手机、电脑、iPad上使用，电视端需要选择指定套餐；
-          5.因虚拟产品特殊性，充值前请核对充值账号，一旦充值成功将无法转移和退款；
-          6.我们平台上的产品和定价信息在公布前已经过合适，但是在极少数情形下可能有误。如果我们发现定价错误，我们将取消您的订单，并对订单金额全额退款。
-          7.如在充值过程中遇到疑问，可咨询“在线客服”。
+          1.本平台业务为自动充值（一般3秒—1分钟左右）；<br />
+          2.购买的会员业务不会自动续费，过期后需要再次购买使用；<br />
+          3.充值成功后，请您登录腾讯视频官网查询会员状态和时间；<br />
+          4.本商品适用平台：手机、电脑、iPad上使用，电视端需要选择指定套餐；<br />
+          5.因虚拟产品特殊性，充值前请核对充值账号，一旦充值成功将无法转移和退款；<br />
+          6.我们平台上的产品和定价信息在公布前已经过合适，但是在极少数情形下可能有误。如果我们发现定价错误，我们将取消您的订单，并对订单金额全额退款。<br />
+          7.如在充值过程中遇到疑问，可咨询“在线客服”。<br />
         </view>
       </view>
     </view>
@@ -149,33 +151,43 @@ export default {
 .container {
   position: relative;
   background: #ffffff;
+  padding-bottom: rpx(30);
+  overflow: hidden;
+  &::before {
+    content: "";
+    display: table;
+    clear: both;
+  }
   > .bbb {
+    position: absolute;
+    top: 0;
     width: rpx(1500);
     height: rpx(498 * 2);
     transform: translateX(rpx(-390)) translateY(rpx(-650));
     background: linear-gradient(148deg, #2d2e30, #2d2e30);
     border-radius: 50%;
+    z-index: 0;
   }
   > view {
-    position: absolute;
-    top: 0;
-    margin: 0 rpx(20);
+    position: relative;
+    padding-top: rpx(20);
 
     > .text {
       height: rpx(32);
       margin-top: rpx(20);
+      margin-left:rpx(21) ;
       font-size: rpx(24);
       font-weight: 500;
       color: #999999;
     }
     > input {
       width: rpx(710);
+      height: rpx(89);
       border-bottom: rpx(1) solid #615f5b;
       font-weight: bold;
       font-size: rpx(50);
       color: #fef1dc;
       margin: 0 auto;
-      padding: rpx(33) 0;
       .aaa {
         width: rpx(208);
         height: rpx(28);
@@ -189,6 +201,7 @@ export default {
       > .main_t {
         position: relative;
         display: flex;
+        margin: 0 rpx(20);
         margin-top: rpx(32);
         > .zindex {
           z-index: 999;
@@ -316,7 +329,7 @@ export default {
             align-items: center;
             width: rpx(663);
             height: rpx(150);
-            border: rpx(1) solid #e3e3e3;
+            border: rpx(2) solid #e3e3e3;
             background: #ffffff;
             box-shadow: 0px rpx(5) rpx(15) 0px rgba(45, 47, 64, 0.05);
             border-radius: rpx(10);
@@ -408,11 +421,10 @@ export default {
       }
       > .tips_detail {
         width: rpx(707);
-        height: rpx(507);
+        min-height: rpx(507);
         font-size: rpx(26);
         font-weight: 500;
         color: #999999;
-
         line-height: rpx(48);
       }
     }
