@@ -40,6 +40,12 @@
       }
     },
     {
+      "path": "pages/editaddress/index",
+      "style": {
+        "navigationBarTitleText": "新增地址"
+      }
+    },
+    {
       "path": "pages/mycoupon/index",
       "style": {
         "navigationBarTitleText": "我的优惠券"

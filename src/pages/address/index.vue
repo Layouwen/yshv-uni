@@ -13,13 +13,13 @@
           <image :src='`/static/images/select${index === activeItem ? "-active" : ""}.png`' />
           <text :class='index === activeItem ? "active" : ""'>默认地址</text>
         </view>
-        <view class='edit'>
+        <view class='edit' @click="onEdit(item.id)">
           <image src='/static/images/edit.png' />
           <text>编辑</text>
         </view>
-        <view class='delete'>
+        <view class='delete' @click="onDelete(item.id)">
           <image src='/static/images/del.png' />
-          <text @click="onDelete(item.id)">删除</text>
+          <text>删除</text>
         </view>
       </view>
     </view>
@@ -62,6 +62,11 @@ export default {
   methods: {
     onChangeAddress (index) {
       this.activeItem = index
+    },
+    onEdit (id) {
+      uni.navigateTo({
+        url: `/pages/editaddress/index?id=${id}`
+      })
     },
     onDelete (id) {
       uni.showModal({
