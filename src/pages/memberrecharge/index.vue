@@ -57,9 +57,9 @@
               </view>
               <view>
                 <text class="yuan">￥</text>
-                <text class="money">{{ item.price }}</text>
+                <text class="money">{{parseInt(item.price)}}</text>
               </view>
-              <text>原价：{{ item.originalprice }}</text>
+              <text>原价：{{parseInt(item.originalprice)}}</text>
             </view>
           </view>
           <view v-else>
@@ -85,9 +85,9 @@
               </view>
               <view>
                 <text class="yuan">￥</text>
-                <text class="money">{{ item.price }}</text>
+                <text class="money">{{parseInt(item.price)}}</text>
               </view>
-              <text>原价：{{ item.originalprice }}</text>
+              <text>原价：{{parseInt(item.originalprice)}}</text>
             </view>
           </view>
         </view>
@@ -165,9 +165,6 @@ export default {
     this.diaset = index.data.data[0];
     this.goldCardList=this.goldset.CardList.reverse()
     this.diaCardList=this.diaset.CardList.reverse()
-    console.log(this.goldset);
-    console.log(this.diaset);
-    console.log(index);
   },
 };
 </script>
