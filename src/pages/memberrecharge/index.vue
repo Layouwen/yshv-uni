@@ -18,8 +18,8 @@
           >
             <image class="yellow" src="../../static/yellow.png" mode="" />
             <view class="float">
-              <image class="goldimg" src="../../static/gold.png" mode="" />
-              <text>黄金会员</text>
+              <image class="goldimg" :src="goldset.image" mode="" />
+              <text>{{ goldset.name }}</text>
             </view>
           </view>
           <view
@@ -29,12 +29,8 @@
           >
             <image class="black" src="../../static/black.png" mode="" />
             <view class="float">
-              <image
-                class="diamondsimg"
-                src="../../static/diamonds.png"
-                mode=""
-              />
-              <text>钻石会员</text>
+              <image class="diamondsimg" :src="diaset.image" mode="" />
+              <text>{{ diaset.name }}</text>
             </view>
           </view>
         </view>
@@ -43,7 +39,7 @@
             <view
               :class="itemflag1 === index ? 'main_item1' : 'main_item2'"
               @click="item1(index)"
-              v-for="(item, index) in goldset"
+              v-for="(item, index) in goldset.CardList"
               :key="index"
             >
               <view
@@ -53,21 +49,24 @@
                 >限时7折</view
               >
               <view class="main_item_l">
-                <text class="monthcard">{{ item.card }}</text>
-                <text class="month">{{ item.month }}个月</text>
+                <text class="monthcard" v-if="item.cardtype === '1'">月卡</text>
+                <text class="monthcard" v-if="item.cardtype === '3'">季卡</text>
+                <text class="monthcard" v-if="item.cardtype === '6'">半年卡</text>
+                <text class="monthcard" v-if="item.cardtype === '12'">年卡</text>
+                <text class="month">{{ item.cardtype }}个月</text>
               </view>
               <view>
                 <text class="yuan">￥</text>
                 <text class="money">{{ item.price }}</text>
               </view>
-              <text>原价：{{ item.price }}</text>
+              <text>原价：{{ item.originalprice }}</text>
             </view>
           </view>
           <view v-else>
             <view
               :class="itemflag2 === index ? 'main_item1' : 'main_item2'"
               @click="item2(index)"
-              v-for="(item, index) in diaset"
+              v-for="(item, index) in diaset.CardList"
               :key="index"
               style="position: relative"
             >
@@ -78,19 +77,24 @@
                 >限时7折</view
               >
               <view class="main_item_l">
-                <text class="monthcard">{{ item.card }}</text>
-                <text class="month">{{ item.month }}个月</text>
+                <text class="monthcard" v-if="item.cardtype === '1'">月卡</text>
+                <text class="monthcard" v-if="item.cardtype === '3'">季卡</text>
+                <text class="monthcard" v-if="item.cardtype === '6'">半年卡</text>
+                <text class="monthcard" v-if="item.cardtype === '12'">年卡</text>
+                <text class="month">{{ item.cardtype }}个月</text>
               </view>
               <view>
                 <text class="yuan">￥</text>
                 <text class="money">{{ item.price }}</text>
               </view>
-              <text>原价：{{ item.price }}</text>
+              <text>原价：{{ item.originalprice }}</text>
             </view>
           </view>
         </view>
       </view>
-      <view class="button2" v-if="buttonflag === true">由于相关规定，IOS功能暂不可用</view>
+      <view class="button2" v-if="buttonflag === true"
+        >由于相关规定，IOS功能暂不可用</view
+      >
       <view class="button1" v-else>立即开通</view>
       <view class="tips">
         <view class="tips_title">充值须知</view>
@@ -110,6 +114,7 @@
 
 <script>
 import isIOS from "../../utils/isIOS";
+import request from "../../utils/request";
 export default {
   data() {
     return {
@@ -119,18 +124,8 @@ export default {
       topflag: false,
       itemflag1: 0,
       itemflag2: 0,
-      goldset: [
-        { card: "月卡", month: 1, price: 19.8, oprice: 25.8 },
-        { card: "季卡", month: 1, price: 19.8, oprice: 25.8 },
-        { card: "半年卡", month: 1, price: 19.8, oprice: 25.8 },
-        { card: "年卡", month: 1, price: 19.8, oprice: 25.8 },
-      ],
-      diaset: [
-        { card: "月卡", month: 1, price: 19.8, oprice: 25.8 },
-        { card: "季卡", month: 1, price: 19.8, oprice: 25.8 },
-        { card: "半年卡", month: 1, price: 19.8, oprice: 25.8 },
-        { card: "年卡", month: 1, price: 19.8, oprice: 25.8 },
-      ],
+      goldset: [],
+      diaset: [],
     };
   },
   watch: {
@@ -155,6 +150,20 @@ export default {
     item2(e) {
       this.itemflag2 = e;
     },
+    async getIndex(data) {
+      return await request.get({
+        url: "index/payproductdetails",
+        data,
+      });
+    },
+  },
+  async onLoad(e) {
+    const index = await this.getIndex(e);
+    this.goldset = index.data.data[1];
+    this.diaset = index.data.data[0];
+    console.log(this.goldset);
+    console.log(this.diaset);
+    console.log(index);
   },
 };
 </script>
