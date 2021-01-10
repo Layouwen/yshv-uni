@@ -51,15 +51,19 @@
               <view class="main_item_l">
                 <text class="monthcard" v-if="item.cardtype === '1'">月卡</text>
                 <text class="monthcard" v-if="item.cardtype === '3'">季卡</text>
-                <text class="monthcard" v-if="item.cardtype === '6'">半年卡</text>
-                <text class="monthcard" v-if="item.cardtype === '12'">年卡</text>
+                <text class="monthcard" v-if="item.cardtype === '6'"
+                  >半年卡</text
+                >
+                <text class="monthcard" v-if="item.cardtype === '12'"
+                  >年卡</text
+                >
                 <text class="month">{{ item.cardtype }}个月</text>
               </view>
               <view>
                 <text class="yuan">￥</text>
-                <text class="money">{{parseFloat(item.price)}}</text>
+                <text class="money">{{ parseFloat(item.price) }}</text>
               </view>
-              <text>原价：{{parseFloat(item.originalprice)}}</text>
+              <text>原价：{{ parseFloat(item.originalprice) }}</text>
             </view>
           </view>
           <view v-else>
@@ -79,15 +83,19 @@
               <view class="main_item_l">
                 <text class="monthcard" v-if="item.cardtype === '1'">月卡</text>
                 <text class="monthcard" v-if="item.cardtype === '3'">季卡</text>
-                <text class="monthcard" v-if="item.cardtype === '6'">半年卡</text>
-                <text class="monthcard" v-if="item.cardtype === '12'">年卡</text>
+                <text class="monthcard" v-if="item.cardtype === '6'"
+                  >半年卡</text
+                >
+                <text class="monthcard" v-if="item.cardtype === '12'"
+                  >年卡</text
+                >
                 <text class="month">{{ item.cardtype }}个月</text>
               </view>
               <view>
                 <text class="yuan">￥</text>
-                <text class="money">{{parseFloat(item.price)}}</text>
+                <text class="money">{{ parseFloat(item.price) }}</text>
               </view>
-              <text>原价：{{parseFloat(item.originalprice)}}</text>
+              <text>原价：{{ parseFloat(item.originalprice) }}</text>
             </view>
           </view>
         </view>
@@ -126,8 +134,8 @@ export default {
       itemflag2: 0,
       goldset: [],
       diaset: [],
-      goldCardList:[],
-      diaCardList:[]
+      goldCardList: [],
+      diaCardList: [],
     };
   },
   watch: {
@@ -160,11 +168,15 @@ export default {
     },
   },
   async onLoad(e) {
+    console.log(e);
+    uni.setNavigationBarTitle({
+      title: e.name+'会员充值',
+    });
     const index = await this.getIndex(e);
     this.goldset = index.data.data[1];
     this.diaset = index.data.data[0];
-    this.goldCardList=this.goldset.CardList.reverse()
-    this.diaCardList=this.diaset.CardList.reverse()
+    this.goldCardList = this.goldset.CardList.reverse();
+    this.diaCardList = this.diaset.CardList.reverse();
   },
 };
 </script>
@@ -293,7 +305,7 @@ export default {
         flex-direction: column;
         margin: 0 auto;
         width: rpx(711);
-        height: rpx(718);
+        min-height: rpx(700);
         background: white;
         box-shadow: 0px 5px 15px 0px rgba(45, 47, 64, 0.05);
         > view {
