@@ -26,7 +26,7 @@
         class="item"
         v-for="(content, index) in payList[tabActive].SonList"
         :key="index"
-        @click="onLinkPage(content.id)"
+        @click="onLinkPage(content.id, content.name)"
       >
         <image class="item-icon" :src="content.image" />
         <text class="item-title">{{ content.name }}</text>
@@ -53,9 +53,9 @@ export default {
         url: "index/index",
       });
     },
-    onLinkPage(id) {
+    onLinkPage(id, name) {
       uni.navigateTo({
-        url: `/pages/memberrecharge/index?id=${id}`,
+        url: `/pages/memberrecharge/index?id=${id}&name=${name}`,
       });
     },
     onChangeTab(index) {
