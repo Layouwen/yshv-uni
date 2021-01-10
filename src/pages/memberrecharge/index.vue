@@ -39,7 +39,7 @@
             <view
               :class="itemflag1 === index ? 'main_item1' : 'main_item2'"
               @click="item1(index)"
-              v-for="(item, index) in goldset.CardList"
+              v-for="(item, index) in goldCardList"
               :key="index"
             >
               <view
@@ -66,7 +66,7 @@
             <view
               :class="itemflag2 === index ? 'main_item1' : 'main_item2'"
               @click="item2(index)"
-              v-for="(item, index) in diaset.CardList"
+              v-for="(item, index) in diaCardList"
               :key="index"
               style="position: relative"
             >
@@ -126,6 +126,8 @@ export default {
       itemflag2: 0,
       goldset: [],
       diaset: [],
+      goldCardList:[],
+      diaCardList:[]
     };
   },
   watch: {
@@ -161,6 +163,8 @@ export default {
     const index = await this.getIndex(e);
     this.goldset = index.data.data[1];
     this.diaset = index.data.data[0];
+    this.goldCardList=this.goldset.CardList.reverse()
+    this.diaCardList=this.diaset.CardList.reverse()
     console.log(this.goldset);
     console.log(this.diaset);
     console.log(index);
