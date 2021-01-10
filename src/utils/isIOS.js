@@ -1,4 +1,4 @@
 export default () => {
-  const systeminfo = uni.getSystemInfoSync();
-  return systeminfo.system.includes("iOS");
+  const systemInfo = uni.getSystemInfoSync();
+  return systemInfo.system.includes("iOS");
 };

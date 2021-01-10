@@ -90,8 +90,8 @@
           </view>
         </view>
       </view>
-      <view class="button1"  v-if="buttonflag===true">立即开通</view>
-      <view class="button2" v-else>由于相关规定，IOS功能暂不可用</view>
+      <view class="button2" v-if="buttonflag === true">由于相关规定，IOS功能暂不可用</view>
+      <view class="button1" v-else>立即开通</view>
       <view class="tips">
         <view class="tips_title">充值须知</view>
         <view class="tips_detail">
@@ -109,10 +109,11 @@
 </template>
 
 <script>
+import isIOS from "../../utils/isIOS";
 export default {
   data() {
     return {
-      buttonflag:true,
+      buttonflag: isIOS(),
       aaa: "",
       flag: "",
       topflag: false,
@@ -158,7 +159,7 @@ export default {
 };
 </script>
 
-<style lang='scss'>
+<style lang="scss">
 @import "~@/assets/styles/fn.scss";
 
 // 所有rpx单位写法换成 rpx(数字)
