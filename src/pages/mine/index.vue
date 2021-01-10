@@ -164,7 +164,7 @@ export default {
             try {
               const value = uni.getStorageSync("logininfo");
               if (value) {
-                this.logininfo = value
+                this.logininfo = value;
               }
             } catch (e) {
               console.err(e, "获取logininfo失败");

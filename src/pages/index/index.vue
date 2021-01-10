@@ -26,7 +26,7 @@
         class="item"
         v-for="(content, index) in payList[tabActive].SonList"
         :key="index"
-        @click="onLinkPage"
+        @click="onLinkPage(content.id)"
       >
         <image class="item-icon" :src="content.image" />
         <text class="item-title">{{ content.name }}</text>
@@ -43,7 +43,6 @@ export default {
     return {
       adList: "",
       payList: "",
-      contents: [1, 2, 3],
       tabActive: 0,
     };
   },
@@ -54,9 +53,9 @@ export default {
         url: "index/index",
       });
     },
-    onLinkPage() {
+    onLinkPage(id) {
       uni.navigateTo({
-        url: "/pages/memberrecharge/index",
+        url: `/pages/memberrecharge/index?id=${id}`,
       });
     },
     onChangeTab(index) {
@@ -76,7 +75,7 @@ export default {
 };
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 @import "~@/assets/styles/fn.scss";
 
 .index-page {
@@ -182,7 +181,7 @@ export default {
 }
 </style>
 
-<style lang='scss'>
+<style lang="scss">
 .index-page {
   > .top {
     .u-swiper-wrap {
