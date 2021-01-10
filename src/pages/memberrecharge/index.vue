@@ -46,6 +46,12 @@
               v-for="(item, index) in goldset"
               :key="index"
             >
+              <view
+                v-if="index === 1"
+                class="xianshi"
+                style="position: absolute; top: 0"
+                >限时7折</view
+              >
               <view class="main_item_l">
                 <text class="monthcard">{{ item.card }}</text>
                 <text class="month">{{ item.month }}个月</text>
@@ -63,7 +69,14 @@
               @click="item2(index)"
               v-for="(item, index) in diaset"
               :key="index"
+              style="position: relative"
             >
+              <view
+                v-if="index === 1"
+                class="xianshi"
+                style="position: absolute; top: 0"
+                >限时7折</view
+              >
               <view class="main_item_l">
                 <text class="monthcard">{{ item.card }}</text>
                 <text class="month">{{ item.month }}个月</text>
@@ -77,7 +90,8 @@
           </view>
         </view>
       </view>
-      <view class="button">立即开通</view>
+      <view class="button1"  v-if="buttonflag===true">立即开通</view>
+      <view class="button2" v-else>由于相关规定，IOS功能暂不可用</view>
       <view class="tips">
         <view class="tips_title">充值须知</view>
         <view class="tips_detail">
@@ -98,6 +112,7 @@
 export default {
   data() {
     return {
+      buttonflag:true,
       aaa: "",
       flag: "",
       topflag: false,
@@ -175,7 +190,7 @@ export default {
     > .text {
       height: rpx(32);
       margin-top: rpx(20);
-      margin-left:rpx(21) ;
+      margin-left: rpx(21);
       font-size: rpx(24);
       font-weight: 500;
       color: #999999;
@@ -273,6 +288,7 @@ export default {
         > view {
           margin-top: rpx(28);
           > .main_item1 {
+            position: relative;
             display: flex;
             align-items: center;
             width: rpx(663);
@@ -283,6 +299,20 @@ export default {
             border-radius: rpx(10);
             margin: 0 auto;
             margin-bottom: rpx(18);
+            > .xianshi {
+              position: absolute;
+              top: 0;
+              width: rpx(148);
+              height: rpx(42);
+              font-size: rpx(26);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background: linear-gradient(135deg, #626667 0%, #3a3e3d 100%);
+              border-radius: rpx(10) 0 rpx(10) 0;
+              font-weight: 500;
+              color: #fbdfbe;
+            }
             > text {
               margin-left: rpx(26);
               font-size: rpx(28);
@@ -294,6 +324,7 @@ export default {
               display: flex;
               align-items: center;
               width: rpx(140);
+
               .yuan {
                 font-size: rpx(30);
                 font-weight: bold;
@@ -325,6 +356,7 @@ export default {
             }
           }
           > .main_item2 {
+            position: relative;
             display: flex;
             align-items: center;
             width: rpx(663);
@@ -335,6 +367,20 @@ export default {
             border-radius: rpx(10);
             margin: 0 auto;
             margin-bottom: rpx(18);
+            > .xianshi {
+              position: absolute;
+              top: 0;
+              width: rpx(148);
+              height: rpx(42);
+              font-size: rpx(26);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background: linear-gradient(135deg, #626667 0%, #3a3e3d 100%);
+              border-radius: rpx(10) 0 rpx(10) 0;
+              font-weight: 500;
+              color: #fbdfbe;
+            }
             > .yj {
               font-size: rpx(28);
               font-weight: 400;
@@ -395,7 +441,7 @@ export default {
         }
       }
     }
-    > .button {
+    > .button1 {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -409,6 +455,21 @@ export default {
       font-size: rpx(32);
       font-weight: bold;
       color: #4d321b;
+    }
+    > .button2 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+      margin-top: rpx(72);
+      margin-bottom: rpx(80);
+      width: rpx(711);
+      height: rpx(100);
+      color: #999999;
+      background: #e5e5e5;
+      border-radius: rpx(10);
+      font-size: rpx(32);
+      font-weight: bold;
     }
     > .tips {
       width: rpx(707);
