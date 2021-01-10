@@ -57,9 +57,9 @@
               </view>
               <view>
                 <text class="yuan">￥</text>
-                <text class="money">{{parseInt(item.price)}}</text>
+                <text class="money">{{parseFloat(item.price)}}</text>
               </view>
-              <text>原价：{{parseInt(item.originalprice)}}</text>
+              <text>原价：{{parseFloat(item.originalprice)}}</text>
             </view>
           </view>
           <view v-else>
@@ -85,9 +85,9 @@
               </view>
               <view>
                 <text class="yuan">￥</text>
-                <text class="money">{{parseInt(item.price)}}</text>
+                <text class="money">{{parseFloat(item.price)}}</text>
               </view>
-              <text>原价：{{parseInt(item.originalprice)}}</text>
+              <text>原价：{{parseFloat(item.originalprice)}}</text>
             </view>
           </view>
         </view>
