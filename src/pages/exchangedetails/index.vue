@@ -26,18 +26,38 @@
     <view class="button">立即兑换</view>
     <view class="tips_title">兑换须知</view>
     <view class="tips_detail">
-      1.实物商品图片仅供参考，请以实际到货实物为准；<br>
-      2.虚拟商品图片可以直接使用即可； 3.本平台向您保证所售商品均为正品行货；<br>
-      4.因厂家会在没有任何通知的情况下更改产品包装、产地或附件，本平台不能确保客户收到的商品与平台图片、附件等说明完全一致，只能确保为原厂正货！并保证与市场同类产品一致，若没急事更新，请大家谅解；<br>
-      5.我们平台上的产品和定价信息在公布前已经过合适，但是，在极少数情形下可能有误。如果我们发现定价错误，我们将取消您的订单，并对订单金额全额退款；<br>
-      6.优惠券具有一定时效性，请注意时间，及时兑换，过期无效;<br>
-      7.兑换过程中，如果有疑问请及时咨询客服。<br>
+      1.实物商品图片仅供参考，请以实际到货实物为准；<br />
+      2.虚拟商品图片可以直接使用即可；<br />
+      3.本平台向您保证所售商品均为正品行货；<br />
+      4.因厂家会在没有任何通知的情况下更改产品包装、产地或附件，本平台不能确保客户收到的商品与平台图片、附件等说明完全一致，只能确保为原厂正货！并保证与市场同类产品一致，若没急事更新，请大家谅解；<br />
+      5.我们平台上的产品和定价信息在公布前已经过合适，但是，在极少数情形下可能有误。如果我们发现定价错误，我们将取消您的订单，并对订单金额全额退款；<br />
+      6.优惠券具有一定时效性，请注意时间，及时兑换，过期无效;<br />
+      7.兑换过程中，如果有疑问请及时咨询客服。<br />
+    </view>
+    <view class="background" catchtouchmove v-if="flag===true"> </view>
+    <view class="follow" v-if="flag===true">
+      <image
+        class="delect"
+        src="../../static/success.png"
+        mode=""
+        @click="display"
+      />
+      <view class="success">兑换成功</view>
+      <view class="nav">自动跳转“我的积分”</view>
+      <view>....</view>
     </view>
   </view>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      flag:false
+    };
+  },
+  methods: {},
+};
 </script>
 
 <style lang="scss" scoped>
@@ -45,6 +65,7 @@ export default {};
 .container {
   display: flex;
   flex-direction: column;
+  position: relative;
   background: #f6f6f8;
   > .top {
     display: flex;
@@ -68,7 +89,7 @@ export default {};
     height: rpx(142);
     margin: 0 rpx(20);
     border-bottom: rpx(1) solid #e3e3e3;
-    >view{
+    > view {
       margin-left: rpx(-130);
     }
     > text {
@@ -133,6 +154,47 @@ export default {};
     font-size: rpx(26);
     font-weight: 500;
     color: #999999;
+  }
+  > .background {
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #000000;
+    opacity: 0.5;
+  }
+  > .follow {
+    position: absolute;
+    top: rpx(171);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: rpx(70) rpx(80);
+    width: rpx(589);
+    height: rpx(554);
+    background: #ffffff;
+    > image {
+      width: rpx(210);
+      height: rpx(216);
+    }
+    > .success {
+      margin-top: rpx(35);
+      margin-bottom: rpx(68);
+      font-size: rpx(32);
+      font-weight: 500;
+      color: #333333;
+      line-height: rpx(42);
+    }
+    > .nav {
+      font-size: rpx(26);
+      font-weight: 500;
+      color: #e9c589;
+      line-height: rpx(42);
+    }
   }
 }
 </style>
