@@ -96,7 +96,11 @@
         mode=""
         @click="display"
       />
-      <image class="ewm" src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201710%2F15%2F20171015094202_BHwPK.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612618719&t=9cc627ffbf77bb164f7ce54bb839c689" mode="" />
+      <image
+        class="ewm"
+        src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201710%2F15%2F20171015094202_BHwPK.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612618719&t=9cc627ffbf77bb164f7ce54bb839c689"
+        mode=""
+      />
       <view class="text">长按关注公众号</view>
     </view>
   </view>
@@ -113,32 +117,38 @@ export default {
       toggle1: "查看物流",
       maina: [
         {
-          src: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f",
+          src:
+            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f",
           name: "古驰包包",
           integral: 2500,
         },
         {
-          src: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f",
+          src:
+            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f",
           name: "古驰包包",
           integral: 2500,
         },
         {
-          src: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f",
+          src:
+            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f",
           name: "古驰包包",
           integral: 2500,
         },
         {
-          src: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f",
+          src:
+            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f",
           name: "古驰包包",
           integral: 2500,
         },
         {
-          src: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f",
+          src:
+            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f",
           name: "古驰包包",
           integral: 2500,
         },
         {
-          src: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f",
+          src:
+            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f",
           name: "古驰包包",
           integral: 2500,
         },
@@ -203,15 +213,24 @@ export default {
       this.exchangeindex = e;
     },
     display(index) {
-      if (index === 0 || this.flag1===true) {
+      if (index === 0 || this.flag1 === true) {
         this.flag1 = !this.flag1;
       }
     },
-    onLinkPage(){
+    onLinkPage() {
       uni.navigateTo({
-        url: '/pages/exchangedetails/index'
-      })
-    }
+        url: "/pages/exchangedetails/index",
+      });
+    },
+    async getIndex(data) {
+      return await request.get({
+        url: "user/userinfo",
+        data,
+      });
+    },
+  },
+  async onLoad() {
+    const data = await this.getIndex()
   },
 };
 </script>
