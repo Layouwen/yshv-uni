@@ -11,10 +11,10 @@
       <text>数量</text>
       <text class="number">x1</text>
     </view>
-    <view class="item1">
+    <!-- <view class="item1">
       <text>优惠券</text>
       <text class="coupon">不可用</text>
-    </view>
+    </view> -->
     <view class="item1">
       <text>地址</text>
       <view>
