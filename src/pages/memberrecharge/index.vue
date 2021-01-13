@@ -170,7 +170,7 @@ export default {
   async onLoad(e) {
     console.log(e);
     uni.setNavigationBarTitle({
-      title: e.name+'会员充值',
+      title: e.name + "会员充值",
     });
     const index = await this.getIndex(e);
     this.goldset = index.data.data[1];
@@ -239,7 +239,7 @@ export default {
       > .main_t {
         position: relative;
         display: flex;
-        margin: 0 rpx(20);
+        margin: 0 rpx(21);
         margin-top: rpx(32);
         > .zindex {
           z-index: 999;
@@ -300,12 +300,16 @@ export default {
           }
         }
       }
-      > .main_box {
+      .main_box {
+        &::-webkit-scrollbar {
+          display: none;
+        }
         display: flex;
         flex-direction: column;
         margin: 0 auto;
+        overflow: auto;
         width: rpx(711);
-        min-height: rpx(700);
+        height: rpx(700);
         background: white;
         box-shadow: 0px 5px 15px 0px rgba(45, 47, 64, 0.05);
         > view {
