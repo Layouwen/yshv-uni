@@ -173,10 +173,14 @@ export default {
       title: e.name + "会员充值",
     });
     const index = await this.getIndex(e);
+    console.log(index);
     this.goldset = index.data.data[1];
     this.diaset = index.data.data[0];
-    this.goldCardList = this.goldset.CardList.reverse();
+    if(this.goldset!=undefined&&this.diaset!=undefined){
+          this.goldCardList =  this.goldset.CardList.reverse();
     this.diaCardList = this.diaset.CardList.reverse();
+    }
+
   },
 };
 </script>
