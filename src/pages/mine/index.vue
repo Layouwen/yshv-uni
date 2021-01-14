@@ -1,12 +1,7 @@
 <template>
   <view class="mine-page">
     <view class="user-wrapper">
-      <button
-        class="avatar"
-        v-if="!userinfo"
-        open-type="getUserInfo"
-        @getuserinfo="getUserInfo"
-      />
+      <button class="avatar" v-if="!userinfo" open-type="getUserInfo" @getuserinfo="getUserInfo" />
       <image
         class="avatar"
         v-if="userinfo"
@@ -14,13 +9,7 @@
         :src="logininfo ? logininfo.avatar : userinfo.avatarUrl"
       />
       <view class="content">
-        <view class="name">{{
-          logininfo
-            ? logininfo.username
-            : userinfo
-            ? userinfo.nickName
-            : "未登录"
-        }}</view>
+        <view class="name">{{ logininfo ? logininfo.username : userinfo ? userinfo.nickName : '未登录' }}</view>
         <view v-if="logininfo" class="user-id">ID:{{ logininfo.id }}</view>
       </view>
     </view>
@@ -34,12 +23,7 @@
         >
           <image class="item-icon" :src="titlePng(item.icon)" />
           <view class="title">{{ item.title }}</view>
-          <u-icon
-            class="item-right"
-            name="arrow-right"
-            size="26rpx"
-            color="#999"
-          />
+          <u-icon class="item-right" name="arrow-right" size="26rpx" color="#999" />
         </button>
       </block>
     </view>
@@ -48,138 +32,154 @@
 </template>
 
 <script>
-import request from "../../utils/request";
+import request from '../../utils/request'
 
 export default {
   data() {
     return {
-      userinfo: "",
-      logininfo: "",
+      userinfo: '',
+      logininfo: '',
       isLogin: false,
       items: [
         {
           id: 0,
-          title: "我的服务",
-          icon: "fuwu",
-          link: "myservice",
+          title: '我的服务',
+          icon: 'fuwu',
+          link: 'myservice',
         },
         {
           id: 1,
-          title: "我的优惠券",
-          icon: "voucher",
-          link: "mycoupon",
+          title: '我的优惠券',
+          icon: 'voucher',
+          link: 'mycoupon',
         },
         {
           id: 2,
-          title: "收货人信息",
-          icon: "shouhuoren",
+          title: '收货人信息',
+          icon: 'shouhuoren',
         },
         {
           id: 3,
-          title: "在线客服",
-          type: "contact",
-          icon: "kefu",
+          title: '在线客服',
+          type: 'contact',
+          icon: 'kefu',
         },
       ],
-    };
+    }
   },
   methods: {
+    // login api
     async xcxlogin({ code, nickname, avatar, gender }) {
       return await request.post({
-        url: "login/xcxlogin",
+        url: 'login/xcxlogin',
         data: {
           code,
           nickname,
           avatar,
           gender,
         },
-      });
+      })
     },
+    // setStorage
     setUserInfo(user, code) {
       try {
-        uni.setStorageSync("userInfo", user);
-        uni.setStorageSync("code", code);
+        uni.setStorageSync('userInfo', user)
+        uni.setStorageSync('code', code)
       } catch (err) {
-        console.error("设置userInfo失败：", err);
+        console.error('设置userInfo失败：', err)
       }
     },
     async getUserInfo(userData) {
-      const { detail } = userData;
-      if (detail.errMsg === "getUserInfo:ok") {
-        const userinfo = JSON.parse(detail.rawData);
-        const { nickName, avatarUrl, gender } = userinfo;
-        const loginRes = await this.login();
-        if (loginRes.errMsg !== "login:ok") {
+      const { detail } = userData
+      if (detail.errMsg === 'getUserInfo:ok') {
+        const userinfo = JSON.parse(detail.rawData)
+        const { nickName, avatarUrl, gender } = userinfo
+        const loginRes = await this.login()
+        if (loginRes.errMsg !== 'login:ok') {
           // TODO
-          console.log("login失败");
+          console.log('login失败')
         }
         const res = await this.xcxlogin({
           code: loginRes.code,
           nickname: nickName,
           avatar: avatarUrl,
           gender,
-        });
+        })
         if (res.data.code === 1) {
-          uni.setStorageSync("logininfo", res.data.data);
+          uni.setStorageSync('logininfo', res.data.data)
         }
-        this.userinfo = userinfo;
-        this.logininfo = res.data.data;
-        this.setUserInfo(detail.rawData, loginRes.code);
+        this.userinfo = userinfo
+        this.logininfo = res.data.data
+        this.setUserInfo(detail.rawData, loginRes.code)
 
-        console.log(this.userinfo, this.logininfo);
+        console.log(this.userinfo, this.logininfo)
       }
     },
+    // 路由跳转
     titlePng(title) {
-      return `/static/images/${title}.png`;
+      return `/static/images/${title}.png`
     },
     path(name) {
-      return `/pages/${name}/index`;
+      return `/pages/${name}/index`
     },
     onLinkPage(name, type) {
-      if (!name || type === "contact") return;
+      if (!name || type === 'contact') return
       uni.navigateTo({
         url: this.path(name),
-      });
+      })
     },
     login() {
       return new Promise((resolve, reject) => {
         uni.login({
-          provider: "weixin",
-          success: (loginRes) => {
-            resolve(loginRes);
+          provider: 'weixin',
+          success: loginRes => {
+            resolve(loginRes)
           },
-        });
-      });
+        })
+      })
     },
   },
   onLoad() {
     uni.getSetting({
       success: () => {
         uni.getUserInfo({
-          success: async (userRes) => {
-            const userinfo = JSON.parse(userRes.rawData);
-            const { nickName, avatarUrl, gender } = userinfo;
-            const loginRes = await this.login();
-            this.setUserInfo(userRes.rawData, loginRes.code);
-            try {
-              const value = uni.getStorageSync("logininfo");
-              if (value) {
-                this.logininfo = value;
-              }
-            } catch (e) {
-              console.err(e, "获取logininfo失败");
+          success: async userRes => {
+            const userinfo = JSON.parse(userRes.rawData)
+            const { nickName, avatarUrl, gender } = userinfo
+            const loginRes = await this.login()
+            this.setUserInfo(userRes.rawData, loginRes.code)
+
+            const res = await this.xcxlogin({
+              code: loginRes.code,
+              nickname: nickName,
+              avatar: avatarUrl,
+              gender,
+            })
+            if (res.data.code === 1) {
+              uni.setStorageSync('logininfo', res.data.data)
             }
-            this.userinfo = userinfo;
+
+            this.userinfo = userinfo
           },
-        });
+        })
       },
-    });
+    })
   },
-};
+  onShow() {
+    try {
+      const value = uni.getStorageSync('logininfo')
+      if (value) {
+        this.logininfo = value
+      }
+    } catch (e) {
+      console.err(e, '获取logininfo失败')
+    }
+  },
+}
 </script>
 
 <style lang="scss" scoped>
-@import "~@/assets/styles/fn.scss";
+@import '~@/assets/styles/fn.scss';
 
 .mine-page {
   display: flex;
@@ -200,8 +200,7 @@ export default {
       height: rpx(101);
       margin: 0 rpx(34) 0 rpx(24);
       border-radius: 50%;
-      background: #fff url("../../static/images/default-avatar.png") no-repeat
-        center center;
+      background: #fff url('../../static/images/default-avatar.png') no-repeat center center;
       background-size: 50%;
     }
     > .content {
