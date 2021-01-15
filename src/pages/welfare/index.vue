@@ -2,7 +2,7 @@
   <view class="container">
     <view class="top">
       <view class="title">
-        <text class="number">456</text>
+        <text class="number">{{data.score}}</text>
         <text class="available">可用积分</text>
       </view>
       <view class="integral">
@@ -107,6 +107,7 @@
 </template>
 
 <script>
+import request from "../../utils/request";
 export default {
   data() {
     return {
@@ -198,6 +199,8 @@ export default {
           button: "查看",
         },
       ],
+      token: null,
+      data:null,
     };
   },
   methods: {
@@ -223,14 +226,28 @@ export default {
       });
     },
     async getIndex(data) {
+      console.log(data);
       return await request.get({
         url: "user/userinfo",
-        data,
+        data:{
+          token: data
+        },
       });
     },
   },
-  async onLoad() {
-    const data = await this.getIndex()
+  async onShow() {
+    // const data = await this.getIndex(this.token);
+  },
+  onLoad() {
+    uni.getStorage({
+      key: "logininfo",
+      success: (res) => {
+        this.token = res.data.token;
+        console.log('token',res.data.token);
+        const data = this.getIndex(res.data.token);
+        this.data = data.data.data
+      },
+    });
   },
 };
 </script>

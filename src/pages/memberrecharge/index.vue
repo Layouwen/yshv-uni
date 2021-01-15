@@ -176,11 +176,10 @@ export default {
     console.log(index);
     this.goldset = index.data.data[1];
     this.diaset = index.data.data[0];
-    if(this.goldset!=undefined&&this.diaset!=undefined){
-          this.goldCardList =  this.goldset.CardList.reverse();
-    this.diaCardList = this.diaset.CardList.reverse();
+    if (this.goldset != undefined && this.diaset != undefined) {
+      this.goldCardList = this.goldset.CardList.reverse();
+      this.diaCardList = this.diaset.CardList.reverse();
     }
-
   },
 };
 </script>

@@ -5,7 +5,6 @@ const post = ({
     data = {},
     header = {}
 }) => {
-    console.log(url, data, header)
     return new Promise((resolve, reject) => {
         uni.request({
             method: 'POST',
