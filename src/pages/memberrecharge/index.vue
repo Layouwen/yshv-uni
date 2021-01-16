@@ -126,6 +126,7 @@
 </template>
 
 <script>
+import { checkLogin } from '@/utils/login'
 import isIOS from '../../utils/isIOS'
 import request from '../../utils/request'
 export default {
@@ -238,6 +239,9 @@ export default {
         this.data = data.data.data
       }
     })
+  },
+  onShow () {
+    checkLogin()
   }
 }
 </script>
