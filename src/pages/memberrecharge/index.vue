@@ -10,7 +10,7 @@
         v-model="aaa"
       />
       <view class="main">
-        <view class="main_t">
+        <!-- <view class="main_t">
           <view
             class="gold"
             @click="gold"
@@ -33,13 +33,13 @@
               <text>{{ diaset.name }}</text>
             </view>
           </view>
-        </view>
+        </view> -->
         <view class="main_box">
           <view v-if="topflag === false">
             <view
               :class="itemflag1 === index ? 'main_item1' : 'main_item2'"
               @click="item1(index)"
-              v-for="(item, index) in goldCardList"
+              v-for="(item, index) in goldset"
               :key="index"
             >
               <view
@@ -49,24 +49,24 @@
                 >限时7折</view
               >
               <view class="main_item_l">
-                <text class="monthcard" v-if="item.cardtype === '1'">月卡</text>
-                <text class="monthcard" v-if="item.cardtype === '3'">季卡</text>
-                <text class="monthcard" v-if="item.cardtype === '6'"
-                  >半年卡</text
-                >
-                <text class="monthcard" v-if="item.cardtype === '12'"
-                  >年卡</text
-                >
-                <text class="month">{{ item.cardtype }}个月</text>
+                <text class="monthcard">{{
+                  item.product_detail.item_name
+                }}</text>
+                <text class="month" v-if="item.type === '1'">1天</text>
+                <text class="month" v-if="item.type === '2'">1周</text>
+                <text class="month" v-if="item.type === '3'">1个月</text>
+                <text class="month" v-if="item.type === '4'">3个月</text>
+                <text class="month" v-if="item.type === '5'">6个月</text>
+                <text class="month" v-if="item.type === '6'">12个月</text>
               </view>
               <view>
                 <text class="yuan">￥</text>
-                <text class="money">{{ parseFloat(item.price) }}</text>
+                <text class="money">{{ parseFloat(item.type) }}</text>
               </view>
-              <text>原价：{{ parseFloat(item.originalprice) }}</text>
+              <text>原价：{{ parseFloat(item.type) }}</text>
             </view>
           </view>
-          <view v-else>
+          <!-- <view v-else>
             <view
               :class="itemflag2 === index ? 'main_item1' : 'main_item2'"
               @click="item2(index)"
@@ -81,15 +81,18 @@
                 >限时7折</view
               >
               <view class="main_item_l">
-                <text class="monthcard" v-if="item.cardtype === '1'">月卡</text>
-                <text class="monthcard" v-if="item.cardtype === '3'">季卡</text>
-                <text class="monthcard" v-if="item.cardtype === '6'"
-                  >半年卡</text
-                >
-                <text class="monthcard" v-if="item.cardtype === '12'"
-                  >年卡</text
-                >
-                <text class="month">{{ item.cardtype }}个月</text>
+                <text class="monthcard" v-if="item.type === '1'">天卡</text>
+                <text class="monthcard" v-if="item.type === '2'">周卡</text>
+                <text class="monthcard" v-if="item.type === '3'">月卡</text>
+                <text class="monthcard" v-if="item.type === '4'">季卡</text>
+                <text class="monthcard" v-if="item.type === '5'">半年卡</text>
+                <text class="monthcard" v-if="item.type === '6'">年卡</text>
+                <text class="month" v-if="item.type === '1'">1天</text>
+                <text class="month" v-if="item.type === '2'">1周</text>
+                <text class="month" v-if="item.type === '3'">1个月</text>
+                <text class="month" v-if="item.type === '4'">3个月</text>
+                <text class="month" v-if="item.type === '5'">6个月</text>
+                <text class="month" v-if="item.type === '6'">12个月</text>
               </view>
               <view>
                 <text class="yuan">￥</text>
@@ -97,13 +100,13 @@
               </view>
               <text>原价：{{ parseFloat(item.originalprice) }}</text>
             </view>
-          </view>
+          </view> -->
         </view>
       </view>
-      <view class="button2" v-if="buttonflag === true"
+      <!-- <view class="button2" v-if="buttonflag === true"
         >由于相关规定，IOS功能暂不可用</view
-      >
-      <view class="button1" v-else>立即开通</view>
+      > -->
+      <view class="button1" @click="pay">立即开通</view>
       <view class="tips">
         <view class="tips_title">充值须知</view>
         <view class="tips_detail">
@@ -136,6 +139,7 @@ export default {
       diaset: [],
       goldCardList: [],
       diaCardList: [],
+      token: "",
     };
   },
   watch: {
@@ -162,9 +166,34 @@ export default {
     },
     async getIndex(data) {
       return await request.get({
-        url: "index/payproductdetails",
+        url: "pay_product/details",
         data,
       });
+    },
+    async postPay(data) {
+      return await request.post({
+        header:{
+          'Content-Type': 'multipart/form-data',
+          'token':this.token
+        },
+        url: "pay_product/pay",
+        data,
+      });
+    },
+    async pay() {
+      const item = this.goldset[this.itemflag1];
+      const data = await this.postPay({
+        id:item.id,
+        mobile:this.aaa,
+        category_id:item.category_id,
+        thirdpartyid:item.thirdpartyid,
+        type:parseInt(item.type),
+        payamount:0.01,
+        productname:item.product_detail.item_name
+      })
+      uni.requestPayment({
+        
+      })
     },
   },
   async onLoad(e) {
@@ -172,14 +201,25 @@ export default {
     uni.setNavigationBarTitle({
       title: e.name + "会员充值",
     });
-    const index = await this.getIndex(e);
+    const index = await this.getIndex({
+      id: e.id,
+    });
     console.log(index);
-    this.goldset = index.data.data[1];
-    this.diaset = index.data.data[0];
-    if (this.goldset != undefined && this.diaset != undefined) {
-      this.goldCardList = this.goldset.CardList.reverse();
-      this.diaCardList = this.diaset.CardList.reverse();
+    this.goldset = index.data.data;
+    if (this.goldset != undefined) {
+      this.goldset = this.goldset.reverse();
     }
+  },
+  onload() {
+    uni.getStorage({
+      key: "logininfo",
+      success: (res) => {
+        this.token = res.data.token;
+        console.log("token", res.data.token);
+        const data = this.getIndex(res.data.token);
+        this.data = data.data.data;
+      },
+    });
   },
 };
 </script>
