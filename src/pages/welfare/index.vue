@@ -239,13 +239,15 @@ export default {
     // const data = await this.getIndex(this.token);
   },
   onLoad() {
-    uni.getStorage({
+     uni.getStorage({
       key: "logininfo",
       success: (res) => {
         this.token = res.data.token;
         console.log('token',res.data.token);
-        const data = this.getIndex(res.data.token);
-        this.data = data.data.data
+        this.getIndex(res.data.token).then(res=>{
+          this.data = res.data.data
+          console.log(res);
+        });
       },
     });
   },
