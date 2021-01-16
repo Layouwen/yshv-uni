@@ -46,12 +46,14 @@
                 v-if="index === 1"
                 class="xianshi"
                 style="position: absolute; top: 0"
-                >限时7折</view
+              >限时7折
+              </view
               >
               <view class="main_item_l">
                 <text class="monthcard">{{
-                  item.product_detail.item_name
-                }}</text>
+                    item.product_detail.item_name
+                  }}
+                </text>
                 <text class="month" v-if="item.type === '1'">1天</text>
                 <text class="month" v-if="item.type === '2'">1周</text>
                 <text class="month" v-if="item.type === '3'">1个月</text>
@@ -124,14 +126,14 @@
 </template>
 
 <script>
-import isIOS from "../../utils/isIOS";
-import request from "../../utils/request";
+import isIOS from '../../utils/isIOS'
+import request from '../../utils/request'
 export default {
-  data() {
+  data () {
     return {
       buttonflag: isIOS(),
-      aaa: "",
-      flag: "",
+      aaa: '',
+      flag: '',
       topflag: false,
       itemflag1: 0,
       itemflag2: 0,
@@ -139,89 +141,105 @@ export default {
       diaset: [],
       goldCardList: [],
       diaCardList: [],
-      token: "",
-    };
-  },
-  watch: {
-    aaa(val) {
-      if (this.aaa !== "") {
-        this.flag = "请输入充值号码";
-      } else {
-        this.flag = "";
-      }
-    },
-  },
-  methods: {
-    gold() {
-      this.topflag = false;
-    },
-    diamonds() {
-      this.topflag = true;
-    },
-    item1(e) {
-      this.itemflag1 = e;
-    },
-    item2(e) {
-      this.itemflag2 = e;
-    },
-    async getIndex(data) {
-      return await request.get({
-        url: "pay_product/details",
-        data,
-      });
-    },
-    async postPay(data) {
-      return await request.post({
-        header:{
-          'Content-Type': 'multipart/form-data',
-          'token':this.token
-        },
-        url: "pay_product/pay",
-        data,
-      });
-    },
-    async pay() {
-      const item = this.goldset[this.itemflag1];
-      const data = await this.postPay({
-        id:item.id,
-        mobile:this.aaa,
-        category_id:item.category_id,
-        thirdpartyid:item.thirdpartyid,
-        type:parseInt(item.type),
-        payamount:0.01,
-        productname:item.product_detail.item_name
-      })
-      uni.requestPayment({
-        
-      })
-    },
-  },
-  async onLoad(e) {
-    console.log(e);
-    uni.setNavigationBarTitle({
-      title: e.name + "会员充值",
-    });
-    const index = await this.getIndex({
-      id: e.id,
-    });
-    console.log(index);
-    this.goldset = index.data.data;
-    if (this.goldset != undefined) {
-      this.goldset = this.goldset.reverse();
+      token: ''
     }
   },
-  onload() {
-    uni.getStorage({
-      key: "logininfo",
-      success: (res) => {
-        this.token = res.data.token;
-        console.log("token", res.data.token);
-        const data = this.getIndex(res.data.token);
-        this.data = data.data.data;
-      },
-    });
+  watch: {
+    aaa (val) {
+      if (this.aaa !== '') {
+        this.flag = '请输入充值号码'
+      } else {
+        this.flag = ''
+      }
+    }
   },
-};
+  methods: {
+    gold () {
+      this.topflag = false
+    },
+    diamonds () {
+      this.topflag = true
+    },
+    item1 (e) {
+      this.itemflag1 = e
+    },
+    item2 (e) {
+      this.itemflag2 = e
+    },
+    async getIndex (data) {
+      return await request.get({
+        url: 'pay_product/details',
+        data
+      })
+    },
+    async postPay (data) {
+      return await request.post({
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'token': this.token
+        },
+        url: 'pay_product/pay',
+        data
+      })
+    },
+    async pay () {
+      if (this.aaa === '') {
+        uni.showToast({
+          icon: 'none',
+          title: '请输入手机号'
+        })
+        return
+      }
+      const item = this.goldset[this.itemflag1]
+      const data = await this.postPay({
+        id: item.id,
+        mobile: this.aaa,
+        category_id: item.category_id,
+        thirdpartyid: item.thirdpartyid,
+        type: parseInt(item.type),
+        payamount: item.product_detail.channel_price,
+        productname: item.product_detail.item_name
+      })
+      if (data.data.msg == '手机号格式错误') {
+        uni.showToast({
+          icon: 'none',
+          title: '手机号格式错误'
+        })
+        return
+      }
+      if (data.data.code === 1) {
+        const result = await uni.requestPayment(data.data.data)
+        if (result[1]) {
+          uni.showToast({
+            title: '支付成功'
+          })
+        }
+      }
+    }
+  },
+  async onLoad (e) {
+    console.log(e)
+    uni.setNavigationBarTitle({
+      title: e.name + '会员充值'
+    })
+    const index = await this.getIndex({
+      id: e.id
+    })
+    console.log(index)
+    this.goldset = index.data.data
+    if (this.goldset != undefined) {
+      this.goldset = this.goldset.reverse()
+    }
+    uni.getStorage({
+      key: 'logininfo',
+      success: async (res) => {
+        this.token = res.data.token
+        const data = await this.getIndex(res.data.token)
+        this.data = data.data.data
+      }
+    })
+  }
+}
 </script>
 
 <style lang="scss">
