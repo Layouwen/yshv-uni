@@ -16,7 +16,8 @@
             class="tab"
             :class="tabActive === index ? 'active' : ''"
             @click="onChangeTab(index)"
-            >{{ tab.name }}</view
+          >{{ tab.name }}
+          </view
           >
         </block>
       </view>
@@ -37,42 +38,45 @@
 </template>
 
 <script>
-import request from "../../utils/request";
+import { checkLogin } from '@/utils/login'
+import request from '../../utils/request'
 export default {
-  data() {
+  data () {
     return {
-      adList: "",
-      payList: "",
-      tabActive: 0,
-    };
+      adList: '',
+      payList: '',
+      tabActive: 0
+    }
   },
-  onLoad() {},
   methods: {
-    async getIndex() {
+    async getIndex () {
       return await request.get({
-        url: "index/index",
-      });
+        url: 'index/index'
+      })
     },
-    onLinkPage(id, name) {
+    onLinkPage (id, name) {
       uni.navigateTo({
-        url: `/pages/memberrecharge/index?id=${id}&name=${name}`,
-      });
+        url: `/pages/memberrecharge/index?id=${id}&name=${name}`
+      })
     },
-    onChangeTab(index) {
-      this.tabActive = index;
-    },
+    onChangeTab (index) {
+      this.tabActive = index
+    }
   },
-  async onLoad() {
-    const indexData = await this.getIndex();
+  async onLoad () {
+    const indexData = await this.getIndex()
     const {
       data: {
-        data: { AdList: adList, PayProductCategoryList: payList },
-      },
-    } = indexData;
-    this.adList = adList;
-    this.payList = payList;
+        data: { AdList: adList, PayProductCategoryList: payList }
+      }
+    } = indexData
+    this.adList = adList
+    this.payList = payList
   },
-};
+  onShow () {
+    checkLogin()
+  }
+}
 </script>
 
 <style lang="scss" scoped>

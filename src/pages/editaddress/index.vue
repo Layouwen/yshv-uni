@@ -19,13 +19,13 @@
     <!--      </label>-->
     <!--    </form>-->
     <u-picker
-        v-model="show"
-        mode="region"
-        :params="params"
-        z-index='10'
-        :safe-area-inset-bottom='true'
-        :confirm="onSetRegion"
-        :cancel='test'
+      v-model="show"
+      mode="region"
+      :params="params"
+      z-index="10"
+      :safe-area-inset-bottom="true"
+      :confirm="onSetRegion"
+      :cancel="test"
     />
   </view>
 </template>
@@ -39,7 +39,7 @@ export default {
         city: true,
         area: true
       },
-      show: true,
+      show: true
     }
   },
   onLoad (data) {

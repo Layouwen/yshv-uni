@@ -32,10 +32,11 @@
 </template>
 
 <script>
+import { login } from '@/utils/login'
 import request from '../../utils/request'
 
 export default {
-  data() {
+  data () {
     return {
       userinfo: '',
       logininfo: '',
@@ -45,127 +46,105 @@ export default {
           id: 0,
           title: '我的服务',
           icon: 'fuwu',
-          link: 'myservice',
+          link: 'myservice'
         },
         {
           id: 1,
           title: '我的优惠券',
           icon: 'voucher',
-          link: 'mycoupon',
+          link: 'mycoupon'
         },
         {
           id: 2,
           title: '收货人信息',
-          icon: 'shouhuoren',
+          icon: 'shouhuoren'
         },
         {
           id: 3,
           title: '在线客服',
           type: 'contact',
-          icon: 'kefu',
-        },
-      ],
+          icon: 'kefu'
+        }
+      ]
     }
   },
   methods: {
     // login api
-    async xcxlogin({ code, nickname, avatar, gender }) {
+    async xcxlogin ({ code, nickname, avatar, gender }) {
       return await request.post({
         url: 'login/xcxlogin',
-        data: {
-          code,
-          nickname,
-          avatar,
-          gender,
-        },
+        data: { code, nickname, avatar, gender }
       })
     },
     // setStorage
-    setUserInfo(user, code) {
+    setUserInfo (user) {
       try {
         uni.setStorageSync('userInfo', user)
-        uni.setStorageSync('code', code)
       } catch (err) {
         console.error('设置userInfo失败：', err)
       }
     },
-    async getUserInfo(userData) {
+    async getUserInfo (userData) {
       const { detail } = userData
       if (detail.errMsg === 'getUserInfo:ok') {
         const userinfo = JSON.parse(detail.rawData)
         const { nickName, avatarUrl, gender } = userinfo
-        const loginRes = await this.login()
-        if (loginRes.errMsg !== 'login:ok') {
-          // TODO
-          console.log('login失败')
-        }
-        const res = await this.xcxlogin({
-          code: loginRes.code,
+        const code = await login()
+        const { data } = await this.xcxlogin({
+          code,
           nickname: nickName,
           avatar: avatarUrl,
-          gender,
+          gender
         })
-        if (res.data.code === 1) {
-          uni.setStorageSync('logininfo', res.data.data)
+        if (data.code === 1) {
+          uni.setStorageSync('logininfo', data.data)
         }
         this.userinfo = userinfo
-        this.logininfo = res.data.data
-        this.setUserInfo(detail.rawData, loginRes.code)
-
+        this.logininfo = data.data
+        this.setUserInfo(detail.rawData)
         console.log(this.userinfo, this.logininfo)
       }
     },
     // 路由跳转
-    titlePng(title) {
+    titlePng (title) {
       return `/static/images/${title}.png`
     },
-    path(name) {
+    path (name) {
       return `/pages/${name}/index`
     },
-    onLinkPage(name, type) {
+    onLinkPage (name, type) {
       if (!name || type === 'contact') return
       uni.navigateTo({
-        url: this.path(name),
+        url: this.path(name)
       })
-    },
-    login() {
-      return new Promise((resolve, reject) => {
-        uni.login({
-          provider: 'weixin',
-          success: loginRes => {
-            resolve(loginRes)
-          },
-        })
-      })
-    },
+    }
   },
-  onLoad() {
+  onLoad () {
     uni.getSetting({
       success: () => {
         uni.getUserInfo({
           success: async userRes => {
             const userinfo = JSON.parse(userRes.rawData)
             const { nickName, avatarUrl, gender } = userinfo
-            const loginRes = await this.login()
-            this.setUserInfo(userRes.rawData, loginRes.code)
-
-            const res = await this.xcxlogin({
-              code: loginRes.code,
+            const code = await login()
+            this.setUserInfo(userRes.rawData)
+            const { data } = await this.xcxlogin({
+              code,
               nickname: nickName,
               avatar: avatarUrl,
-              gender,
+              gender
             })
-            if (res.data.code === 1) {
-              uni.setStorageSync('logininfo', res.data.data)
+            console.log(data.data.token)
+            if (data.code === 1) {
+              uni.setStorageSync('logininfo', data.data)
             }
-
             this.userinfo = userinfo
-          },
+          }
         })
-      },
+      }
     })
   },
-  onShow() {
+  onShow () {
     try {
       const value = uni.getStorageSync('logininfo')
       if (value) {
@@ -174,12 +153,12 @@ export default {
     } catch (e) {
       console.err(e, '获取logininfo失败')
     }
-  },
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '~@/assets/styles/fn.scss';
+@import "~@/assets/styles/fn.scss";
 
 .mine-page {
   display: flex;
@@ -200,7 +179,7 @@ export default {
       height: rpx(101);
       margin: 0 rpx(34) 0 rpx(24);
       border-radius: 50%;
-      background: #fff url('../../static/images/default-avatar.png') no-repeat center center;
+      background: #fff url("../../static/images/default-avatar.png") no-repeat center center;
       background-size: 50%;
     }
     > .content {
