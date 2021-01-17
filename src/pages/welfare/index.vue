@@ -2,7 +2,7 @@
   <view class="container">
     <view class="top">
       <view class="title">
-        <text class="number">{{data.score}}</text>
+        <text class="number">{{ data.score }}</text>
         <text class="available">可用积分</text>
       </view>
       <view class="integral">
@@ -19,7 +19,8 @@
           @click="exchange(index)"
           v-for="(item, index) in topoption"
           :key="index"
-          >{{ item }}</view
+        >{{ item }}
+        </view
         >
       </view>
       <view class="main_a" v-if="exchangeindex === 0" @click="onLinkPage">
@@ -88,7 +89,7 @@
         </view>
       </view>
     </view>
-    <view class="background" v-if="flag1 === true" @click="display"> </view>
+    <view class="background" v-if="flag1 === true" @click="display"></view>
     <view class="follow" v-if="flag1 === true">
       <image
         class="delect"
@@ -107,155 +108,158 @@
 </template>
 
 <script>
-import request from "../../utils/request";
+import { checkLogin } from '@/utils/login'
+import request from '../../utils/request'
 export default {
-  data() {
+  data () {
     return {
       flag: false,
       flag1: false,
-      topoption: ["积分兑换", "物品状态", "积分记录"],
+      topoption: ['积分兑换', '物品状态', '积分记录'],
       exchangeindex: 1,
-      toggle1: "查看物流",
+      toggle1: '查看物流',
       maina: [
         {
           src:
-            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f",
-          name: "古驰包包",
-          integral: 2500,
+            'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f',
+          name: '古驰包包',
+          integral: 2500
         },
         {
           src:
-            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f",
-          name: "古驰包包",
-          integral: 2500,
+            'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f',
+          name: '古驰包包',
+          integral: 2500
         },
         {
           src:
-            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f",
-          name: "古驰包包",
-          integral: 2500,
+            'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f',
+          name: '古驰包包',
+          integral: 2500
         },
         {
           src:
-            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f",
-          name: "古驰包包",
-          integral: 2500,
+            'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f',
+          name: '古驰包包',
+          integral: 2500
         },
         {
           src:
-            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f",
-          name: "古驰包包",
-          integral: 2500,
+            'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f',
+          name: '古驰包包',
+          integral: 2500
         },
         {
           src:
-            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f",
-          name: "古驰包包",
-          integral: 2500,
-        },
+            'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f',
+          name: '古驰包包',
+          integral: 2500
+        }
       ],
       mainb: [
         {
-          name: "香奈儿香水",
+          name: '香奈儿香水',
           number: 1,
           address: [
             {
-              date: "2020-12-22",
-              time: "23:27",
-              address: "快件已从义乌市场部出发",
+              date: '2020-12-22',
+              time: '23:27',
+              address: '快件已从义乌市场部出发'
             },
             {
-              date: "2020-12-22",
-              time: "23:27",
-              address: "义乌市场部d的黄晓凡 已揽件",
+              date: '2020-12-22',
+              time: '23:27',
+              address: '义乌市场部d的黄晓凡 已揽件'
             },
             {
-              date: "2020-12-22",
-              time: "23:27",
-              address: "卖家发货",
-            },
-          ],
-        },
+              date: '2020-12-22',
+              time: '23:27',
+              address: '卖家发货'
+            }
+          ]
+        }
       ],
       mainc: [
         {
-          name: "关注公众号",
+          name: '关注公众号',
           integral: 200,
-          button: "关注",
+          button: '关注'
         },
         {
-          name: "充值一年腾讯视频会员",
+          name: '充值一年腾讯视频会员',
           integral: 200,
-          button: "查看",
+          button: '查看'
         },
         {
-          name: "阅读文章",
+          name: '阅读文章',
           integral: 100,
-          button: "查看",
+          button: '查看'
         },
         {
-          name: "购买儿童文具",
+          name: '购买儿童文具',
           integral: 300,
-          button: "查看",
-        },
+          button: '查看'
+        }
       ],
       token: null,
-      data:null,
-    };
+      data: null
+    }
   },
   methods: {
-    toggle() {
-      this.flag = !this.flag;
+    toggle () {
+      this.flag = !this.flag
       if (this.flag === false) {
-        this.toggle1 = "查看物流";
+        this.toggle1 = '查看物流'
       } else {
-        this.toggle1 = "收起物流";
+        this.toggle1 = '收起物流'
       }
     },
-    exchange(e) {
-      this.exchangeindex = e;
+    exchange (e) {
+      this.exchangeindex = e
     },
-    display(index) {
+    display (index) {
       if (index === 0 || this.flag1 === true) {
-        this.flag1 = !this.flag1;
+        this.flag1 = !this.flag1
       }
     },
-    onLinkPage() {
+    onLinkPage () {
       uni.navigateTo({
-        url: "/pages/exchangedetails/index",
-      });
+        url: '/pages/exchangedetails/index'
+      })
     },
-    async getIndex(data) {
-      console.log(data);
+    async getIndex (data) {
+      console.log(data)
       return await request.get({
-        url: "user/userinfo",
-        data:{
+        url: 'user/userinfo',
+        data: {
           token: data
-        },
-      });
-    },
+        }
+      })
+    }
   },
-  async onShow() {
-    // const data = await this.getIndex(this.token);
-  },
-  onLoad() {
-     uni.getStorage({
-      key: "logininfo",
+  onShow () {
+    uni.getStorage({
+      key: 'logininfo',
       success: (res) => {
-        this.token = res.data.token;
-        console.log('token',res.data.token);
-        this.getIndex(res.data.token).then(res=>{
+        console.log(1)
+        this.token = res.data.token
+        console.log('token', res.data.token)
+        this.getIndex(res.data.token).then(res => {
           this.data = res.data.data
-          console.log(res);
-        });
-      },
-    });
+          console.log(res)
+        })
+      }
+    })
   },
-};
+  onLoad () {
+    checkLogin()
+  }
+}
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 @import "~@/assets/styles/fn.scss";
+
 .container {
   position: relative;
   > .top {
