@@ -10,7 +10,7 @@
         v-model="aaa"
       />
       <view class="main">
-        <!-- <view class="main_t">
+        <view class="main_t">
           <view
             class="gold"
             @click="gold"
@@ -18,11 +18,11 @@
           >
             <image class="yellow" src="../../static/yellow.png" mode="" />
             <view class="float">
-              <image class="goldimg" :src="goldset.image" mode="" />
-              <text>{{ goldset.name }}</text>
+              <image class="goldimg" src="../../static/gold.png" mode="" />
+              <text>黄金会员</text>
             </view>
           </view>
-          <view
+          <!-- <view
             class="diamonds"
             @click="diamonds"
             :class="topflag === true ? 'zindex' : ''"
@@ -32,8 +32,8 @@
               <image class="diamondsimg" :src="diaset.image" mode="" />
               <text>{{ diaset.name }}</text>
             </view>
-          </view>
-        </view> -->
+          </view> -->
+        </view>
         <view class="main_box">
           <view v-if="topflag === false">
             <view
