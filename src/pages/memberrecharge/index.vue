@@ -247,7 +247,7 @@ export default {
     })
   },
   onShow () {
-    checkLogin()
+    checkLogin(false)
   }
 }
 </script>

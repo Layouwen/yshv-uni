@@ -7,10 +7,11 @@ const login = async () => {
   return code
 }
 
-const checkLogin = async () => {
+const checkLogin = async (status = true) => {
   const info = await uni.checkSession()
   if (info[1]) return true
   const res = await uni.showModal({
+    showCancel: status,
     title: '提示',
     content: '您未登录账号，请登录进行操作'
   })

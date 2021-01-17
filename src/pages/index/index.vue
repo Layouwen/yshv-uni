@@ -73,9 +73,7 @@ export default {
     this.adList = adList
     this.payList = payList
   },
-  onShow () {
-    checkLogin()
-  }
+  onShow () { }
 }
 </script>
 
