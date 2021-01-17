@@ -228,7 +228,6 @@ export default {
       })
     },
     async getIndex (data) {
-      console.log(data)
       return await request.get({
         url: 'user/userinfo',
         data: {
@@ -241,17 +240,12 @@ export default {
     uni.getStorage({
       key: 'logininfo',
       success: (res) => {
-        console.log(1)
         this.token = res.data.token
-        console.log('token', res.data.token)
         this.getIndex(res.data.token).then(res => {
           this.data = res.data.data
-          console.log(res)
         })
       }
     })
-  },
-  onLoad () {
     checkLogin()
   }
 }

@@ -102,7 +102,6 @@ export default {
         this.userinfo = userinfo
         this.logininfo = data.data
         this.setUserInfo(detail.rawData)
-        console.log(this.userinfo, this.logininfo)
       }
     },
     // 路由跳转
@@ -134,7 +133,6 @@ export default {
               avatar: avatarUrl,
               gender
             })
-            console.log(data.data.token)
             if (data.code === 1) {
               uni.setStorageSync('logininfo', data.data)
             }
@@ -151,7 +149,7 @@ export default {
         this.logininfo = value
       }
     } catch (e) {
-      console.err(e, '获取logininfo失败')
+      console.error(e, '获取logininfo失败')
     }
   }
 }

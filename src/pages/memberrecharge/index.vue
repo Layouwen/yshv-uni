@@ -51,7 +51,7 @@
               > -->
               <view class="main_item_l">
                 <text class="monthcard"
-                  >{{ item.product_detail.item_name }}
+                >{{ item.product_detail.item_name }}
                 </text>
                 <text class="month" v-if="item.type === '1'">1天</text>
                 <text class="month" v-if="item.type === '2'">1周</text>
@@ -63,13 +63,15 @@
               <view>
                 <text class="yuan">￥</text>
                 <text class="money">{{
-                  parseFloat(item.product_detail.channel_price)
-                }}</text>
+                    parseFloat(item.product_detail.channel_price)
+                  }}
+                </text>
               </view>
               <text
-                >原价：{{
+              >原价：{{
                   parseFloat(item.product_detail.original_price)
-                }}</text
+                }}
+              </text
               >
             </view>
           </view>
@@ -111,7 +113,8 @@
         </view>
       </view>
       <view class="button2" v-if="buttonflag === true"
-        >由于相关规定，IOS功能暂不可用</view
+      >由于相关规定，IOS功能暂不可用
+      </view
       >
       <view class="button1" @click="pay" v-else>立即开通</view>
       <view class="tips">
@@ -131,15 +134,15 @@
 </template>
 
 <script>
-import { checkLogin } from "@/utils/login";
-import isIOS from "../../utils/isIOS";
-import request from "../../utils/request";
+import { checkLogin } from '@/utils/login'
+import isIOS from '../../utils/isIOS'
+import request from '../../utils/request'
 export default {
-  data() {
+  data () {
     return {
       buttonflag: isIOS(),
-      aaa: "",
-      flag: "",
+      aaa: '',
+      flag: '',
       topflag: false,
       itemflag1: 0,
       itemflag2: 0,
@@ -147,56 +150,56 @@ export default {
       diaset: [],
       goldCardList: [],
       diaCardList: [],
-      token: "",
-    };
+      token: ''
+    }
   },
   watch: {
-    aaa(val) {
-      if (this.aaa !== "") {
-        this.flag = "请输入充值号码";
+    aaa (val) {
+      if (this.aaa !== '') {
+        this.flag = '请输入充值号码'
       } else {
-        this.flag = "";
+        this.flag = ''
       }
-    },
+    }
   },
   methods: {
-    gold() {
-      this.topflag = false;
+    gold () {
+      this.topflag = false
     },
-    diamonds() {
-      this.topflag = true;
+    diamonds () {
+      this.topflag = true
     },
-    item1(e) {
-      this.itemflag1 = e;
+    item1 (e) {
+      this.itemflag1 = e
     },
-    item2(e) {
-      this.itemflag2 = e;
+    item2 (e) {
+      this.itemflag2 = e
     },
-    async getIndex(data) {
+    async getIndex (data) {
       return await request.get({
-        url: "pay_product/details",
-        data,
-      });
+        url: 'pay_product/details',
+        data
+      })
     },
-    async postPay(data) {
+    async postPay (data) {
       return await request.post({
         header: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          token: this.token,
+          'Content-Type': 'application/x-www-form-urlencoded',
+          token: this.token
         },
-        url: "pay_product/pay",
-        data,
-      });
+        url: 'pay_product/pay',
+        data
+      })
     },
-    async pay() {
-      if (this.aaa === "") {
+    async pay () {
+      if (this.aaa === '') {
         uni.showToast({
-          icon: "none",
-          title: "请输入手机号",
-        });
-        return;
+          icon: 'none',
+          title: '请输入手机号'
+        })
+        return
       }
-      const item = this.goldset[this.itemflag1];
+      const item = this.goldset[this.itemflag1]
       const data = await this.postPay({
         id: item.id,
         mobile: this.aaa,
@@ -204,51 +207,49 @@ export default {
         thirdpartyid: item.thirdpartyid,
         type: parseInt(item.type),
         payamount: item.product_detail.channel_price,
-        productname: item.product_detail.item_name,
-      });
-      if (data.data.msg == "手机号格式错误") {
+        productname: item.product_detail.item_name
+      })
+      if (data.data.msg == '手机号格式错误') {
         uni.showToast({
-          icon: "none",
-          title: "手机号格式错误",
-        });
-        return;
+          icon: 'none',
+          title: '手机号格式错误'
+        })
+        return
       }
       if (data.data.code === 1) {
-        const result = await uni.requestPayment(data.data.data);
+        const result = await uni.requestPayment(data.data.data)
         if (result[1]) {
           uni.showToast({
-            title: "支付成功",
-          });
+            title: '支付成功'
+          })
         }
       }
-    },
+    }
   },
-  async onLoad(e) {
-    console.log(e);
+  async onLoad (e) {
     uni.setNavigationBarTitle({
-      title: e.name + "会员充值",
-    });
+      title: e.name + '会员充值'
+    })
     const index = await this.getIndex({
-      id: e.id,
-    });
-    console.log(index);
-    this.goldset = index.data.data;
+      id: e.id
+    })
+    this.goldset = index.data.data
     if (this.goldset != undefined) {
-      this.goldset = this.goldset.reverse();
+      this.goldset = this.goldset.reverse()
     }
     uni.getStorage({
-      key: "logininfo",
+      key: 'logininfo',
       success: async (res) => {
-        this.token = res.data.token;
-        const data = await this.getIndex(res.data.token);
-        this.data = data.data.data;
-      },
-    });
+        this.token = res.data.token
+        const data = await this.getIndex(res.data.token)
+        this.data = data.data.data
+      }
+    })
   },
-  onShow() {
-    checkLogin();
-  },
-};
+  onShow () {
+    checkLogin()
+  }
+}
 </script>
 
 <style lang="scss">
@@ -379,7 +380,7 @@ export default {
         margin: 0 auto;
         overflow: auto;
         width: rpx(711);
-        height: rpx(700);
+        max-height: rpx(700);
         background: white;
         box-shadow: 0px 5px 15px 0px rgba(45, 47, 64, 0.05);
         > view {
