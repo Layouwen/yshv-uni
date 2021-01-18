@@ -19,7 +19,7 @@
             <image class="yellow" src="../../static/yellow.png" mode="" />
             <view class="float">
               <image class="goldimg" src="../../static/gold.png" mode="" />
-              <text>黄金会员</text>
+              <text>套餐列表</text>
             </view>
           </view>
           <!-- <view
