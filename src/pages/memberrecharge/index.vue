@@ -141,11 +141,11 @@
 </template>
 
 <script>
-import { checkLogin } from "@/utils/login";
+import { checkLogin, checkToken } from "@/utils/login";
 import isIOS from "../../utils/isIOS";
 import request from "../../utils/request";
 export default {
-  data() {
+  data () {
     return {
       buttonflag: isIOS(),
       phone: "",
@@ -162,7 +162,7 @@ export default {
     };
   },
   watch: {
-    aaa(val) {
+    aaa (val) {
       if (this.aaa !== "") {
         this.flag = "请输入充值号码";
       } else {
@@ -171,25 +171,25 @@ export default {
     },
   },
   methods: {
-    gold() {
+    gold () {
       this.topflag = false;
     },
-    diamonds() {
+    diamonds () {
       this.topflag = true;
     },
-    item1(e) {
+    item1 (e) {
       this.itemflag1 = e;
     },
-    item2(e) {
+    item2 (e) {
       this.itemflag2 = e;
     },
-    async getIndex(data) {
+    async getIndex (data) {
       return await request.get({
         url: "pay_product/details",
         data,
       });
     },
-    async postPay(data) {
+    async postPay (data) {
       return await request.post({
         header: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -199,7 +199,7 @@ export default {
         data,
       });
     },
-    pay() {
+    pay () {
       if (this.phone === "") {
         uni.showToast({
           icon: "none",
@@ -237,7 +237,7 @@ export default {
       });
     },
   },
-  async onLoad(e) {
+  async onLoad (e) {
     uni.setNavigationBarTitle({
       title: e.name + "会员充值",
     });
@@ -257,8 +257,9 @@ export default {
       },
     });
   },
-  onShow() {
-    checkLogin(false);
+  onShow () {
+    checkLogin({ status: false });
+    checkToken({ status: false })
   },
 };
 </script>

@@ -1,7 +1,12 @@
 <template>
   <view class="mine-page">
     <view class="user-wrapper">
-      <button class="avatar" v-if="!userinfo" open-type="getUserInfo" @getuserinfo="getUserInfo" />
+      <button
+        class="avatar"
+        v-if="!userinfo"
+        open-type="getUserInfo"
+        @getuserinfo="getUserInfo"
+      />
       <image
         class="avatar"
         v-if="userinfo"
@@ -9,7 +14,13 @@
         :src="logininfo ? logininfo.avatar : userinfo.avatarUrl"
       />
       <view class="content">
-        <view class="name">{{ logininfo ? logininfo.username : userinfo ? userinfo.nickName : '未登录' }}</view>
+        <view class="name">{{
+          logininfo
+            ? logininfo.username
+            : userinfo
+            ? userinfo.nickName
+            : "未登录"
+        }}</view>
         <view v-if="logininfo" class="user-id">ID:{{ logininfo.id }}</view>
       </view>
     </view>
@@ -23,7 +34,12 @@
         >
           <image class="item-icon" :src="titlePng(item.icon)" />
           <view class="title">{{ item.title }}</view>
-          <u-icon class="item-right" name="arrow-right" size="26rpx" color="#999" />
+          <u-icon
+            class="item-right"
+            name="arrow-right"
+            size="26rpx"
+            color="#999"
+          />
         </button>
       </block>
     </view>
@@ -32,7 +48,7 @@
 </template>
 
 <script>
-import { login } from '@/utils/login'
+import { login, checkToken } from '@/utils/login'
 import request from '../../utils/request'
 
 export default {
@@ -142,14 +158,22 @@ export default {
       }
     })
   },
-  onShow () {
-    try {
-      const value = uni.getStorageSync('logininfo')
-      if (value) {
-        this.logininfo = value
+  async onShow () {
+    if (await checkToken({ tips: false })) {
+      try {
+        const value = uni.getStorageSync('logininfo')
+        if (value) {
+          this.logininfo = value
+        }
+      } catch (e) {
+        console.error(e, '获取logininfo失败')
       }
-    } catch (e) {
-      console.error(e, '获取logininfo失败')
+    } else {
+      console.log(1)
+      uni.showToast({
+        title: '重新登录成功',
+        success: () => this.xcxlogin()
+      })
     }
   }
 }
@@ -177,7 +201,8 @@ export default {
       height: rpx(101);
       margin: 0 rpx(34) 0 rpx(24);
       border-radius: 50%;
-      background: #fff url("../../static/images/default-avatar.png") no-repeat center center;
+      background: #fff url("../../static/images/default-avatar.png") no-repeat
+        center center;
       background-size: 50%;
     }
     > .content {

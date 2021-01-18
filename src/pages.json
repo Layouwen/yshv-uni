@@ -9,12 +9,12 @@
         "navigationBarTitleText": "首页"
       }
     },
-    {
-      "path": "pages/welfare/index",
-      "style": {
-        "navigationBarTitleText": "福利"
-      }
-    },
+    // {
+    //   "path": "pages/welfare/index",
+    //   "style": {
+    //     "navigationBarTitleText": "福利"
+    //   }
+    // },
     {
       "path": "pages/exchangedetails/index",
       "style": {
@@ -76,12 +76,12 @@
         "selectedIconPath": "static/tabbar/tab1-active.png",
         "text": "首页"
       },
-      {
-        "pagePath": "pages/welfare/index",
-        "iconPath": "static/tabbar/tab2.png",
-        "selectedIconPath": "static/tabbar/tab2-active.png",
-        "text": "福利"
-      },
+      // {
+      //   "pagePath": "pages/welfare/index",
+      //   "iconPath": "static/tabbar/tab2.png",
+      //   "selectedIconPath": "static/tabbar/tab2-active.png",
+      //   "text": "福利"
+      // },
       {
         "pagePath": "pages/mine/index",
         "iconPath": "static/tabbar/tab3.png",
