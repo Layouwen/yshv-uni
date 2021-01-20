@@ -9,7 +9,9 @@
     </view>
     <view class="item1">
       <text>数量</text>
-      <text class="number">x1</text>
+      <picker @change="bindPickerChange"  :range="arr">
+        <view class="number" >x{{ arr[index] }}</view>
+      </picker>
     </view>
     <!-- <view class="item1">
       <text>优惠券</text>
@@ -34,8 +36,8 @@
       6.优惠券具有一定时效性，请注意时间，及时兑换，过期无效;<br />
       7.兑换过程中，如果有疑问请及时咨询客服。<br />
     </view>
-    <view class="background" catchtouchmove v-if="flag===true"> </view>
-    <view class="follow" v-if="flag===true">
+    <view class="background" catchtouchmove v-if="flag === true"> </view>
+    <view class="follow" v-if="flag === true">
       <image
         class="delect"
         src="../../static/success.png"
@@ -53,10 +55,20 @@
 export default {
   data() {
     return {
-      flag:false
+      flag: false,
+      arr: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      index:0,
+      value:1
     };
   },
-  methods: {},
+  methods: {
+    bindPickerChange(e){
+      console.log(e);
+      this.index = e.detail.value
+      this.value = parseInt(e.detail.value)+1
+      console.log(this.value);
+    }
+  },
 };
 </script>
 
@@ -104,7 +116,7 @@ export default {
       font-weight: bold;
       color: #b98a52;
     }
-    > .number {
+     .number {
       width: rpx(45);
       height: rpx(45);
       line-height: rpx(45);
