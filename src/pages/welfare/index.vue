@@ -22,8 +22,8 @@
           >{{ item }}
         </view>
       </view>
-      <view class="main_a" v-if="exchangeindex === 0" @click="onLinkPage">
-        <view class="main_a_item" v-for="(item, index) in list" :key="index">
+      <view class="main_a" v-if="exchangeindex === 0" >
+        <view class="main_a_item" v-for="(item, index) in list" :key="index" @click="onLinkPage(item.id)">
           <image :src="item.image" mode="" />
           <text>{{ item.title }}</text>
           <view class="exchange">{{ item.score }}兑换</view>
@@ -117,44 +117,6 @@ export default {
       topoption: ["积分兑换", "物品状态", "积分记录"],
       exchangeindex: 1,
       toggle1: "查看物流",
-      maina: [
-        {
-          src:
-            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f",
-          name: "古驰包包",
-          integral: 2500,
-        },
-        {
-          src:
-            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f",
-          name: "古驰包包",
-          integral: 2500,
-        },
-        {
-          src:
-            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f",
-          name: "古驰包包",
-          integral: 2500,
-        },
-        {
-          src:
-            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f",
-          name: "古驰包包",
-          integral: 2500,
-        },
-        {
-          src:
-            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f",
-          name: "古驰包包",
-          integral: 2500,
-        },
-        {
-          src:
-            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.womai.com%2Fupload%2F601%2F603%2F608%2F362420%2F362422%2F362431%2F641766%2F641766_1_pic1080_7002.jpg&refer=http%3A%2F%2Fpic2.womai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612599671&t=1e061b6e6f3acb74a43a5515fe4faf4f",
-          name: "古驰包包",
-          integral: 2500,
-        },
-      ],
       mainb: [
         {
           name: "香奈儿香水",
@@ -222,9 +184,10 @@ export default {
         this.flag1 = !this.flag1;
       }
     },
-    onLinkPage() {
+    onLinkPage(e) {
+      console.log(e);
       uni.navigateTo({
-        url: "/pages/exchangedetails/index",
+        url: `/pages/exchangedetails/index?id=e`,
       });
     },
     async getIndex(data) {
