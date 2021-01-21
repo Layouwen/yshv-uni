@@ -1,16 +1,19 @@
 <template>
   <view class="container">
     <view class="top">
-      <image src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.simeng.cc%2Fupload%2Farticle%2F201808%2F21%2F0952185b7b7052e6664VfXt8a.jpg&refer=http%3A%2F%2Fwww.simeng.cc&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612619107&t=3c1a4e11eb1f3dcfdc496c42104804f8" mode="" />
+      <image
+        :src="detail.image"
+        mode=""
+      />
     </view>
     <view class="item1">
-      <text>香奈儿香水1瓶（市场价：1299元）</text>
-      <text class="integral">2000积分</text>
+      <text>{{detail.title}}</text>
+      <text class="integral">{{detail.score}}积分</text>
     </view>
     <view class="item1">
       <text>数量</text>
-      <picker @change="bindPickerChange"  :range="arr">
-        <view class="number" >x{{ arr[index] }}</view>
+      <picker @change="bindPickerChange" :range="arr">
+        <view class="number">x{{ arr[index] }}</view>
       </picker>
     </view>
     <!-- <view class="item1">
@@ -52,22 +55,48 @@
 </template>
 
 <script>
+import request from "../../utils/request";
 export default {
   data() {
     return {
       flag: false,
       arr: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-      index:0,
-      value:1
+      index: 0,
+      value: 1,
+      detail:{}
     };
   },
   methods: {
-    bindPickerChange(e){
+    bindPickerChange(e) {
       console.log(e);
-      this.index = e.detail.value
-      this.value = parseInt(e.detail.value)+1
+      this.index = e.detail.value;
+      this.value = parseInt(e.detail.value) + 1;
       console.log(this.value);
-    }
+    },
+    async getdetail(token, e) {
+      return await request.get({
+        header: {
+          token: token,
+        },
+        url: "score_product/detail",
+        data: {
+          id: e,
+        },
+      });
+    },
+  },
+  onLoad(e) {
+    console.log(e);
+    uni.getStorage({
+      key: "logininfo",
+      success: (res) => {
+        console.log(res);
+        console.log(res.data);
+        this.getdetail(res.data.token,e.id).then(res=>{
+          this.detail = res.data.data;
+        })
+      },
+    });
   },
 };
 </script>
@@ -90,7 +119,7 @@ export default {
     box-shadow: rpx(0) rpx(8) rpx(15) rpx(0) rgba(70, 70, 70, 0.09);
     border-radius: rpx(10);
     > image {
-      width: rpx(135);
+      width: rpx(182);
       height: rpx(182);
     }
   }
@@ -116,7 +145,7 @@ export default {
       font-weight: bold;
       color: #b98a52;
     }
-     .number {
+    .number {
       width: rpx(45);
       height: rpx(45);
       line-height: rpx(45);

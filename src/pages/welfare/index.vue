@@ -187,7 +187,7 @@ export default {
     onLinkPage(e) {
       console.log(e);
       uni.navigateTo({
-        url: `/pages/exchangedetails/index?id=e`,
+        url: `/pages/exchangedetails/index?id=${e}`,
       });
     },
     async getIndex(data) {
