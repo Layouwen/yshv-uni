@@ -19,7 +19,7 @@
       </label>
       <label class="input-item">
         <view class="title">门牌号</view>
-        <input type="number" name="address" placeholder-class="placeholder" placeholder="详细地址" />
+        <input type="text" name="address" placeholder-class="placeholder" placeholder="详细地址" />
       </label>
       <view class="full" />
       <button class="btn" form-type="submit">保存地址</button>
