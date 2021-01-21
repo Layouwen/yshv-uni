@@ -1,79 +1,95 @@
 <template>
-  <view class='address-page'>
-    <view class="item" v-for="(item, index) in items" :key="item.name">
+  <view class="address-page">
+    <view class="item" v-for="item in items" :key="item.id">
       <view class="top">
         <view class="info">
           <text class="name">{{ item.name }}</text>
-          <text class="phone">{{ item.phone }}</text>
+          <text class="phone">{{ item.mobile }}</text>
         </view>
-        <text class="address">{{ item.address }}</text>
+        <text class="address">{{ item.province + item.city + item.area }}</text>
       </view>
       <view class="bottom">
-        <view class="select" @click="onChangeAddress(index)">
-          <image :src='`/static/images/select${index === activeItem ? "-active" : ""}.png`' />
-          <text :class='index === activeItem ? "active" : ""'>默认地址</text>
+        <view class="select" @click="addressDefault(item.id)">
+          <image :src='`/static/images/select${item.default === 1 ? "-active" : ""}.png`' />
+          <text :class='item.default === 1 ? "active" : ""'>默认地址</text>
         </view>
-        <view class='edit' @click="onEdit(item.id)">
-          <image src='/static/images/edit.png' />
+        <view class="edit" @click="onLinkEditAddress(item.id)">
+          <image src="/static/images/edit.png" />
           <text>编辑</text>
         </view>
-        <view class='delete' @click="onDelete(item.id)">
-          <image src='/static/images/del.png' />
+        <view class="delete" @click="addressdel(item.id)">
+          <image src="/static/images/del.png" />
           <text>删除</text>
         </view>
       </view>
     </view>
+    <button v-if="items.length < 2" class="btn" @click="onLinkEditAddress">新增地址</button>
   </view>
 </template>
 
 <script>
+import request from '@/utils/request'
+
 export default {
   data () {
     return {
-      activeItem: 0,
-      items: [
-        {
-          id: 12,
-          name: '李小姐',
-          phone: '13467856897',
-          address: '广东省广州市天河区车陂路'
-        },
-        {
-          id: 21,
-          name: '李小姐',
-          phone: '13467856897',
-          address: '广东省广州市天河区车陂路'
-        },
-        {
-          id: 32,
-          name: '黄先生',
-          phone: '13856985624',
-          address: '广东省广州市天河区车陂路2巷3号'
-        },
-        {
-          id: 44,
-          name: '李小姐',
-          phone: '13467856897',
-          address: '广东省广州市天河区车陂路'
-        }
-      ]
+      items: []
     }
   },
   methods: {
-    onChangeAddress (index) {
-      this.activeItem = index
-    },
-    onEdit (id) {
-      uni.navigateTo({
-        url: `/pages/editaddress/index?id=${id}`
+    async addressdel (id) {
+      const [, { confirm }] = await uni.showModal({
+        title: '删除操作',
+        content: '是否确定删除该地址',
+        confirmText: '删除',
+        confirmColor: 'red'
       })
+      if (!confirm) return
+      const { data } = await request.post({
+        header: { token: uni.getStorageSync('logininfo').token },
+        url: 'user/addressdel',
+        data: { id }
+      })
+      if (data.code === 1) {
+        uni.showToast({
+          title: '删除成功',
+          mask: true,
+          success: () => this.init()
+        })
+      }
     },
-    onDelete (id) {
-      uni.showModal({
-        title: '是否删除',
-        success: res => res.confirm && (this.items = this.items.filter(item => item.id !== id))
+    async init () {
+      const { data } = await request.get({
+        header: {
+          token: uni.getStorageSync('logininfo').token
+        },
+        url: 'user/addresslist'
+      })
+      if (data.code === 1) this.items = data.data
+    },
+    async addressDefault (id) {
+      const { data } = await request.get({
+        header: { token: uni.getStorageSync('logininfo').token },
+        url: 'user/addressdefault',
+        data: { id }
+      })
+      if (data.code === 1) {
+        uni.showToast({
+          title: '设置成功',
+          mask: true,
+          duration: 800,
+          success: () => this.init()
+        })
+      }
+    },
+    onLinkEditAddress (id) {
+      uni.navigateTo({
+        url: '/pages/editaddress/index' + (id ? `?id=${id}` : '')
       })
     }
+  },
+  onShow () {
+    this.init()
   }
 }
 </script>
@@ -152,6 +168,22 @@ export default {
       > .delete {
         padding-left: rpx(32);
       }
+    }
+  }
+  .btn {
+    flex-shrink: 1;
+    width: rpx(540);
+    height: rpx(100);
+    line-height: rpx(100);
+    margin: auto auto rpx(139);
+    font-size: rpx(30);
+    font-weight: 500;
+    color: #B98A52;
+    background: transparent;
+    border: rpx(1) solid #C18D54;
+    border-radius: rpx(10);
+    &::after {
+      display: none;
     }
   }
 }

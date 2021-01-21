@@ -1,6 +1,6 @@
 <template>
   <form @submit="onSubmit">
-    <view class='editaddress-page'>
+    <view class="editaddress-page">
       <label class="input-item">
         <view class="title">联系人</view>
         <input type="text" name="name" placeholder-class="placeholder" placeholder="你的姓名" />
@@ -9,13 +9,13 @@
         <view class="title">手机号</view>
         <input type="number" name="mobile" placeholder-class="placeholder" placeholder="快递员联系您的电话" />
       </label>
-      <label class="input-item" @click.prevent='onShowPicker'>
+      <label class="input-item" @click.prevent="this.show = true">
         <view class="title">收货地址</view>
-        <view class=input-address>
+        <view class="input-address">
           <image class="icon" :src="require('@/assets/images/yshy_address.png')" />
           {{ defaultAddress | formatAddress }}
         </view>
-        <u-icon name='arrow-right' color="#9a9a9a" />
+        <u-icon name="arrow-right" color="#9a9a9a" />
       </label>
       <label class="input-item">
         <view class="title">门牌号</view>
@@ -25,14 +25,13 @@
       <button class="btn" form-type="submit">保存地址</button>
     </view>
     <u-picker
-        v-model="show"
-        mode="region"
-        :params="params"
-        z-index="10"
-        :default-region="defaultAddress"
-        :safe-area-inset-bottom="true"
-        @confirm="onSetRegion"
-        @cancel="test"
+      v-model="show"
+      mode="region"
+      :params="params"
+      z-index="10"
+      :default-region="defaultAddress"
+      :safe-area-inset-bottom="true"
+      @confirm="onSetRegion"
     />
   </form>
 </template>
@@ -49,12 +48,8 @@ export default {
         area: true
       },
       show: false,
-      defaultAddress: ['广东省', '广州市', '荔湾区']
-    }
-  },
-  computed: {
-    token () {
-      return uni.getStorageSync('logininfo').token
+      defaultAddress: ['广东省', '广州市', '荔湾区'],
+      id: ''
     }
   },
   filters: {
@@ -64,16 +59,19 @@ export default {
       return str
     }
   },
-  onLoad (data) {
+  async onLoad (data) {
     const { id } = data
+    if (id.indexOf('object') === -1) {
+      this.id = id
+      const res = await request.get({
+        header: { token: uni.getStorageSync('logininfo').token },
+        url: 'user/addresssdetail',
+        data: { id }
+      })
+      console.log(res)
+    }
   },
   methods: {
-    test (e) {
-      console.log(e)
-    },
-    onShowPicker () {
-      this.show = true
-    },
     onSetRegion (option) {
       const { area, city, province } = option
       this.defaultAddress = [province.label, city.label, area.label]
@@ -99,25 +97,25 @@ export default {
       if (!state) return
       value = {
         ...value,
-        action: 'add',
+        action: this.id ? 'edit' : 'add',
         province: this.defaultAddress[0],
         city: this.defaultAddress[1],
         area: this.defaultAddress[2]
       }
+      if (this.id) value.id = this.id
       const { data } = await request.post({
         header: {
-          token: this.token
+          token: uni.getStorageSync('logininfo').token
         },
         url: 'user/addressmodify',
         data: value
       })
-      console.log(data)
       if (data.code === 0) {
         uni.showToast({ icon: 'none', title: data.msg })
         return
       }
       uni.showToast({
-        title: '添加成功',
+        title: this.id ? '修改成功' : '添加成功',
         mask: true,
         success: () => setTimeout(() => uni.navigateBack({ delta: 1 }), 800)
       })
