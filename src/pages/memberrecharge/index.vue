@@ -108,6 +108,66 @@
           </view> -->
         </view>
       </view>
+      <view class="coupon" @click="open">
+        <view class="coupon_l">
+          <image src="../../static/coupon.png" mode="" />
+          <text>优惠券</text>
+        </view>
+        <view :class="discount1===false?'coupon_r1':'coupon_r2'">
+          <text>{{discount2}}</text>
+          <image src="../../static/right1.png" mode="" />
+        </view>
+      </view>
+      <u-popup
+        v-model="show"
+        mode="bottom"
+        height="800rpx"
+        closeable="true"
+        close-icon-color="#000000"
+        class="popup"
+      >
+        <view class="title">优惠券选择</view>
+        <view class="maintitle">
+          <view class="coupon" @click="toggle(0)">
+            <view :class="titletoggle === 0 ? 'top2' : 'top1'"
+              >可用优惠券(2)</view
+            >
+            <view class="line" v-if="titletoggle === 0"></view>
+          </view>
+          <view class="coupon" @click="toggle(1)">
+            <view :class="titletoggle === 1 ? 'top2' : 'top1'"
+              >不可用优惠券(1)</view
+            >
+            <view class="line" v-if="titletoggle === 1"></view>
+          </view>
+        </view>
+        <view
+          class="couponitem1"
+          v-for="(item, index) in couponlist"
+          :key="index"
+          @click="couponitem(index)"
+        >
+          <view class="left">
+            <text class="number">{{ item.money }}</text>
+            <text class="yuan">元</text>
+          </view>
+          <view class="line"></view>
+          <view class="center">
+            <view class="top">{{ item.title }}</view>
+            <view class="bottom">截止至{{ item.date }}</view>
+          </view>
+
+          <view class="icon"
+            ><u-icon
+              v-if="active === index"
+              size="48"
+              color="#BA894F"
+              name="checkmark-circle-fill"
+            ></u-icon
+          ></view>
+        </view>
+        <view class="button" @click="confirm(couponlist[active].money)">确认</view>
+      </u-popup>
       <view class="button2" v-if="buttonflag === true"
         >由于相关规定，IOS功能暂不可用
       </view>
@@ -145,7 +205,7 @@ import { checkLogin, checkToken } from "@/utils/login";
 import isIOS from "../../utils/isIOS";
 import request from "../../utils/request";
 export default {
-  data () {
+  data() {
     return {
       buttonflag: isIOS(),
       phone: "",
@@ -159,10 +219,27 @@ export default {
       diaCardList: [],
       token: "",
       // loading: false,
+      show: false,
+      couponlist: [
+        {
+          money: 10,
+          title: "通用优惠券",
+          date: "2020 - 12 - 30",
+        },
+        {
+          money: 100,
+          title: "仅限充值腾讯会员使用",
+          date: "2020 - 12 - 30",
+        },
+      ],
+      titletoggle: 0,
+      active: 0,
+      discount1: false,
+      discount2: '选择优惠券',
     };
   },
   watch: {
-    aaa (val) {
+    aaa(val) {
       if (this.aaa !== "") {
         this.flag = "请输入充值号码";
       } else {
@@ -171,25 +248,25 @@ export default {
     },
   },
   methods: {
-    gold () {
+    gold() {
       this.topflag = false;
     },
-    diamonds () {
+    diamonds() {
       this.topflag = true;
     },
-    item1 (e) {
+    item1(e) {
       this.itemflag1 = e;
     },
-    item2 (e) {
+    item2(e) {
       this.itemflag2 = e;
     },
-    async getIndex (data) {
+    async getIndex(data) {
       return await request.get({
         url: "pay_product/details",
         data,
       });
     },
-    async postPay (data) {
+    async postPay(data) {
       return await request.post({
         header: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -199,7 +276,7 @@ export default {
         data,
       });
     },
-    pay () {
+    pay() {
       if (this.phone === "") {
         uni.showToast({
           icon: "none",
@@ -236,8 +313,24 @@ export default {
         }
       });
     },
+    open() {
+      this.show = true;
+    },
+    toggle(e) {
+      console.log(111);
+      this.titletoggle = e;
+    },
+    confirm(m) {
+      this.discount1 = true
+      this.show = false;
+      this.discount2 = `已优惠${m}元`
+    },
+    couponitem(e,m) {
+      this.active = e;
+      
+    },
   },
-  async onLoad (e) {
+  async onLoad(e) {
     uni.setNavigationBarTitle({
       title: e.name + "会员充值",
     });
@@ -257,7 +350,7 @@ export default {
       },
     });
   },
-  onShow () {
+  onShow() {
     // checkLogin({ status: false });
     // checkToken({ status: false })
   },
@@ -550,6 +643,208 @@ export default {
             }
           }
         }
+      }
+    }
+    > .coupon {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: rpx(36) rpx(21);
+      .coupon_l {
+        display: flex;
+        align-items: center;
+        font-size: rpx(30);
+        font-weight: 500;
+        color: #333333;
+        image {
+          margin-right: rpx(11);
+          width: rpx(30);
+          height: rpx(27);
+        }
+      }
+      .coupon_r1 {
+        display: flex;
+        align-items: center;
+        font-size: rpx(26);
+        font-weight: 500;
+        color: #9a9a9a;
+        image {
+          margin-left: rpx(14);
+          width: rpx(13);
+          height: rpx(25);
+          color: red;
+        }
+      }
+      .coupon_r2 {
+        display: flex;
+        align-items: center;
+        font-size: rpx(26);
+        font-weight: 500;
+        color: #B98A52;
+        image {
+          margin-left: rpx(14);
+          width: rpx(13);
+          height: rpx(25);
+        }
+      }
+    }
+    > .popup {
+      .title {
+        display: flex;
+        justify-content: center;
+        margin-top: rpx(37);
+        margin-bottom: rpx(54);
+        font-size: rpx(30);
+        font-weight: bold;
+        color: #333333;
+      }
+      .maintitle {
+        display: flex;
+        justify-content: space-around;
+        border-bottom: rpx(1) solid #f0f0f0;
+        margin: 0 rpx(20);
+        margin-bottom: rpx(42);
+        .coupon {
+          .top1 {
+            font-size: rpx(26);
+            font-weight: bold;
+            color: #999999;
+          }
+          .top2 {
+            font-size: rpx(26);
+            font-weight: bold;
+            color: #725420;
+          }
+          .line {
+            margin: 0 auto;
+            margin-top: rpx(19);
+            width: rpx(49);
+            height: rpx(3);
+            background: #725420;
+          }
+        }
+      }
+      .couponitem1 {
+        display: flex;
+        align-items: center;
+        margin: 0 auto;
+        margin-bottom: rpx(20);
+        width: rpx(712);
+        height: rpx(172);
+        border: rpx(2) solid #ba894f;
+        border-radius: rpx(10);
+        background: linear-gradient(135deg, #fef5e7 0%, #ffcf85 100%);
+        .left {
+          display: flex;
+          justify-content: center;
+          width: rpx(211);
+          .number {
+            font-size: rpx(61);
+            font-weight: 400;
+            color: #4d321b;
+          }
+          .yuan {
+            font-size: rpx(32);
+            font-weight: bold;
+            color: #4d321b;
+            margin-top: rpx(30);
+            margin-left: rpx(4);
+          }
+        }
+        .line {
+          width: rpx(2);
+          height: rpx(98);
+          background: #c7b3a2;
+        }
+        .center {
+          margin-left: rpx(54);
+          min-width: rpx(353);
+          .top {
+            font-size: rpx(28);
+            font-weight: bold;
+            color: #333333;
+            line-height: rpx(42);
+          }
+          .bottom {
+            font-size: rpx(24);
+            font-weight: 500;
+            color: #95867a;
+            line-height: rpx(42);
+          }
+        }
+        .icon {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: rpx(38);
+          height: rpx(38);
+          border-radius: 50%;
+          border: rpx(4) solid #ba894f;
+        }
+      }
+      .couponitem2 {
+        display: flex;
+        align-items: center;
+        margin: 0 auto;
+        margin-bottom: rpx(20);
+        width: rpx(712);
+        height: rpx(172);
+        border: rpx(2) solid #ba894f;
+        border-radius: rpx(10);
+        background: linear-gradient(135deg, #fef5e7 0%, #ffcf85 100%);
+        .left {
+          display: flex;
+          justify-content: center;
+          width: rpx(211);
+          .number {
+            font-size: rpx(61);
+            font-weight: 400;
+            color: #4d321b;
+          }
+          .yuan {
+            font-size: rpx(32);
+            font-weight: bold;
+            color: #4d321b;
+            margin-top: rpx(30);
+            margin-left: rpx(4);
+          }
+        }
+        .line {
+          width: rpx(2);
+          height: rpx(98);
+          background: #c7b3a2;
+        }
+        .center {
+          margin-left: rpx(54);
+          min-width: rpx(353);
+          .top {
+            font-size: rpx(28);
+            font-weight: bold;
+            color: #333333;
+            line-height: rpx(42);
+          }
+          .bottom {
+            font-size: rpx(24);
+            font-weight: 500;
+            color: #95867a;
+            line-height: rpx(42);
+          }
+        }
+      }
+      .button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        margin-top: rpx(72);
+        margin-bottom: rpx(35);
+        width: rpx(712);
+        height: rpx(98);
+        font-size: rpx(32);
+        font-weight: bold;
+        color: #4d321b;
+        background: linear-gradient(90deg, #fbe8c8, #e5be7b);
+        border-radius: rpx(10);
       }
     }
     > .button1 {
