@@ -23,10 +23,10 @@
         </view>
       </view>
       <view class="main_a" v-if="exchangeindex === 0" @click="onLinkPage">
-        <view class="main_a_item" v-for="(item, index) in maina" :key="index">
-          <image :src="item.src" mode="" />
-          <text>{{ item.name }}</text>
-          <view class="exchange">{{ item.integral }}兑换</view>
+        <view class="main_a_item" v-for="(item, index) in list" :key="index">
+          <image :src="item.image" mode="" />
+          <text>{{ item.title }}</text>
+          <view class="exchange">{{ item.score }}兑换</view>
         </view>
       </view>
       <view
@@ -202,6 +202,7 @@ export default {
       ],
       token: null,
       data: null,
+      list:[]
     };
   },
   methods: {
@@ -234,6 +235,11 @@ export default {
         },
       });
     },
+    async getList(){
+      return await request.get({
+        url:"score_product/list"
+      })
+    }
   },
   onShow() {
     uni.getStorage({
@@ -245,6 +251,10 @@ export default {
         });
       },
     });
+    this.getList().then(res=>{
+      this.list = res.data.data
+      console.log(this.list);
+    })
     checkLogin();
   },
   // onLoad() {
