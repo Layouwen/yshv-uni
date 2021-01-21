@@ -145,7 +145,7 @@
           class="couponitem1"
           v-for="(item, index) in couponlist"
           :key="index"
-          @click="couponitem(index,item.money)"
+          @click="couponitem(index)"
         >
           <view class="left">
             <text class="number">{{ item.money }}</text>
@@ -166,7 +166,7 @@
             ></u-icon
           ></view>
         </view>
-        <view class="button" @click="confirm">确认</view>
+        <view class="button" @click="confirm(couponlist[active].money)">确认</view>
       </u-popup>
       <view class="button2" v-if="buttonflag === true"
         >由于相关规定，IOS功能暂不可用
@@ -320,13 +320,14 @@ export default {
       console.log(111);
       this.titletoggle = e;
     },
-    confirm() {
-      this.discount = true
+    confirm(m) {
+      this.discount1 = true
       this.show = false;
+      this.discount2 = `已优惠${m}元`
     },
     couponitem(e,m) {
       this.active = e;
-      this.discount2 = `已优惠${m}元`
+      
     },
   },
   async onLoad(e) {
