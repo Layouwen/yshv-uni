@@ -327,7 +327,7 @@ export default {
     },
     couponitem(e,m) {
       this.active = e;
-      
+
     },
   },
   async onLoad(e) {
@@ -351,8 +351,8 @@ export default {
     });
   },
   onShow() {
-    // checkLogin({ status: false });
-    // checkToken({ status: false })
+    checkLogin({ status: false })
+    checkToken({ status: false })
   },
 };
 </script>
