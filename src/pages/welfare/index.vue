@@ -19,10 +19,10 @@
           @click="exchange(index)"
           v-for="(item, index) in topoption"
           :key="index"
-          >{{ item }}
+        >{{ item }}
         </view>
       </view>
-      <view class="main_a" v-if="exchangeindex === 0" >
+      <view class="main_a" v-if="exchangeindex === 0">
         <view class="main_a_item" v-for="(item, index) in list" :key="index" @click="onLinkPage(item.id)">
           <image :src="item.image" mode="" />
           <text>{{ item.title }}</text>
@@ -107,132 +107,132 @@
 </template>
 
 <script>
-import { checkLogin } from "@/utils/login";
-import request from "../../utils/request";
+import { checkLogin } from '@/utils/login'
+import request from '../../utils/request'
 export default {
-  data() {
+  data () {
     return {
       flag: false,
       flag1: false,
-      topoption: ["积分兑换", "物品状态", "积分记录"],
+      topoption: ['积分兑换', '物品状态', '积分记录'],
       exchangeindex: 1,
-      toggle1: "查看物流",
+      toggle1: '查看物流',
       mainb: [
         {
-          name: "香奈儿香水",
+          name: '香奈儿香水',
           number: 1,
           address: [
             {
-              date: "2020-12-22",
-              time: "23:27",
-              address: "快件已从义乌市场部出发",
+              date: '2020-12-22',
+              time: '23:27',
+              address: '快件已从义乌市场部出发'
             },
             {
-              date: "2020-12-22",
-              time: "23:27",
-              address: "义乌市场部d的黄晓凡 已揽件",
+              date: '2020-12-22',
+              time: '23:27',
+              address: '义乌市场部d的黄晓凡 已揽件'
             },
             {
-              date: "2020-12-22",
-              time: "23:27",
-              address: "卖家发货",
-            },
-          ],
-        },
+              date: '2020-12-22',
+              time: '23:27',
+              address: '卖家发货'
+            }
+          ]
+        }
       ],
       mainc: [
         {
-          name: "关注公众号",
+          name: '关注公众号',
           integral: 200,
-          button: "关注",
+          button: '关注'
         },
         {
-          name: "充值一年腾讯视频会员",
+          name: '充值一年腾讯视频会员',
           integral: 200,
-          button: "查看",
+          button: '查看'
         },
         {
-          name: "阅读文章",
+          name: '阅读文章',
           integral: 100,
-          button: "查看",
+          button: '查看'
         },
         {
-          name: "购买儿童文具",
+          name: '购买儿童文具',
           integral: 300,
-          button: "查看",
-        },
+          button: '查看'
+        }
       ],
       token: null,
       data: null,
-      list:[]
-    };
+      list: []
+    }
   },
   methods: {
-    toggle() {
-      this.flag = !this.flag;
+    toggle () {
+      this.flag = !this.flag
       if (this.flag === false) {
-        this.toggle1 = "查看物流";
+        this.toggle1 = '查看物流'
       } else {
-        this.toggle1 = "收起物流";
+        this.toggle1 = '收起物流'
       }
     },
-    exchange(e) {
-      this.exchangeindex = e;
+    exchange (e) {
+      this.exchangeindex = e
     },
-    display(index) {
+    display (index) {
       if (index === 0 || this.flag1 === true) {
-        this.flag1 = !this.flag1;
+        this.flag1 = !this.flag1
       }
     },
-    onLinkPage(e) {
-      console.log(e);
+    onLinkPage (e) {
+      console.log(e)
       uni.navigateTo({
-        url: `/pages/exchangedetails/index?id=${e}`,
-      });
+        url: `/pages/exchangedetails/index?id=${e}`
+      })
     },
-    async getIndex(data) {
+    async getIndex (data) {
       return await request.get({
-        url: "user/userinfo",
+        url: 'user/userinfo',
         data: {
-          token: data,
-        },
-      });
+          token: data
+        }
+      })
     },
-    async getList(){
+    async getList () {
       return await request.get({
-        url:"score_product/list"
+        url: 'score_product/list'
       })
     }
   },
-  onShow() {
+  onShow () {
     uni.getStorage({
-      key: "logininfo",
+      key: 'logininfo',
       success: (res) => {
-        this.token = res.data.token;
+        this.token = res.data.token
         this.getIndex(res.data.token).then((res) => {
-          this.data = res.data.data;
-        });
-      },
-    });
-    this.getList().then(res=>{
-      this.list = res.data.data
-      console.log(this.list);
+          this.data = res.data.data
+        })
+      }
     })
-    checkLogin();
+    this.getList().then(res => {
+      this.list = res.data.data
+      console.log(this.list)
+    })
+    checkLogin({ status: false })
   },
-  // onLoad() {
-  //   uni.getStorageSync({
-  //     key: "logininfo",
-  //     success: (res) => {
-  //       this.token = res.data.token;
-  //       this.getIndex(res.data.token).then((res) => {
-  //         this.data = res.data.data;
-  //       });
-  //     },
-  //   });
-  //   checkLogin();
-  // },
-};
+  onLoad () {
+    uni.getStorageSync({
+      key: 'logininfo',
+      success: (res) => {
+        this.token = res.data.token
+        this.getIndex(res.data.token).then((res) => {
+          this.data = res.data.data
+        })
+      }
+    })
+    checkLogin({ status: false })
+  }
+}
 </script>
 
 <style lang="scss">

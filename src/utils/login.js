@@ -8,20 +8,20 @@ const login = async () => {
   return code
 }
 
-const checkLogin = async ({status, tips = true}) => {
+const checkLogin = async ({status = true, tips = true}) => {
   const info = await uni.checkSession()
   if (info[1]) return true
   tips && showTips(status)
   return false
 }
 
-const checkToken = async ({status, tips = true}) => {
+const checkToken = async ({status = true, tips = true}) => {
   const { token } = uni.getStorageSync('logininfo')
   if(!token) return true
   const {data} = await request.post({
     url: "user/userinfo",
     header: { token }
-  }) 
+  })
   if(data.code === 1) return true
   tips && showTips(status, '请重新登录后操作')
   return false
