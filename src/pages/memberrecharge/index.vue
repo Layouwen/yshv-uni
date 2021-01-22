@@ -239,8 +239,8 @@ export default {
     };
   },
   watch: {
-    aaa(val) {
-      if (this.aaa !== "") {
+    phone(val) {
+      if (this.phone !== "") {
         this.flag = "请输入充值号码";
       } else {
         this.flag = "";
