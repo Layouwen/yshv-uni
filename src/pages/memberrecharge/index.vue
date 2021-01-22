@@ -115,7 +115,7 @@
         </view>
         <view :class="discount1===false?'coupon_r1':'coupon_r2'">
           <text>{{discount2}}</text>
-          <image src="../../static/right1.png" mode="" />
+          <image :src="discount1===false?'../../static/right1.png':'../../static/selectright.png'" mode="" />
         </view>
       </view>
       <u-popup
