@@ -20,7 +20,7 @@
       <text>优惠券</text>
       <text class="coupon">不可用</text>
     </view> -->
-    <view class="item1">
+    <view class="item1" @click="nav">
       <text>地址</text>
       <view>
         <text class="name">{{detail.DefaultAddress.name}} {{detail.DefaultAddress.mobile}}</text>
@@ -67,6 +67,11 @@ export default {
     };
   },
   methods: {
+    nav(){
+      uni.navigateTo({
+         url: '../address/index'
+      });
+    },
     bindPickerChange(e) {
       console.log(e);
       this.index = e.detail.value;
