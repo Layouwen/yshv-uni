@@ -191,7 +191,7 @@
             <view class="bottom">截止至{{ item.date }}</view>
           </view>
         </view>
-        <view class="button" @click="confirm(couponlist[active].money)"
+        <view v-if="titletoggle===0" class="button" @click="confirm(couponlist[active].money)"
           >确认</view
         >
       </u-popup>
