@@ -3,23 +3,44 @@
     <view class="editaddress-page">
       <label class="input-item">
         <view class="title">联系人</view>
-        <input type="text" name="name" placeholder-class="placeholder" placeholder="你的姓名" />
+        <input
+          type="text"
+          name="name"
+          placeholder-class="placeholder"
+          placeholder="你的姓名"
+          :value="detailData.name"
+        />
       </label>
       <label class="input-item">
         <view class="title">手机号</view>
-        <input type="number" name="mobile" placeholder-class="placeholder" placeholder="快递员联系您的电话" />
+        <input
+          type="number"
+          name="mobile"
+          placeholder-class="placeholder"
+          placeholder="快递员联系您的电话"
+          :value="detailData.mobile"
+        />
       </label>
       <label class="input-item" @click.prevent="this.show = true">
         <view class="title">收货地址</view>
         <view class="input-address">
-          <image class="icon" :src="require('@/assets/images/yshy_address.png')" />
+          <image
+            class="icon"
+            :src="require('@/assets/images/yshy_address.png')"
+          />
           {{ defaultAddress | formatAddress }}
         </view>
         <u-icon name="arrow-right" color="#9a9a9a" />
       </label>
       <label class="input-item">
         <view class="title">门牌号</view>
-        <input type="text" name="address" placeholder-class="placeholder" placeholder="详细地址" />
+        <input
+          type="text"
+          name="address"
+          placeholder-class="placeholder"
+          placeholder="详细地址"
+          :value="detailData.address"
+        />
       </label>
       <view class="full" />
       <button class="btn" form-type="submit">保存地址</button>
@@ -49,7 +70,8 @@ export default {
       },
       show: false,
       defaultAddress: ['广东省', '广州市', '荔湾区'],
-      id: ''
+      id: '',
+      detailData: {}
     }
   },
   filters: {
@@ -63,12 +85,16 @@ export default {
     const { id } = data
     if (id.indexOf('object') === -1) {
       this.id = id
-      const res = await request.get({
+      const { data } = await request.get({
         header: { token: uni.getStorageSync('logininfo').token },
-        url: 'user/addresssdetail',
+        url: 'user/addressdetail',
         data: { id }
       })
-      console.log(res)
+      if (data.code === 1) {
+        const { province, city, area } = data.data
+        this.detailData = data.data
+        this.defaultAddress = [province, city, area]
+      }
     }
   },
   methods: {
@@ -140,7 +166,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     height: rpx(114);
-    border-bottom: rpx(1) solid #E3E3E3;
+    border-bottom: rpx(1) solid #e3e3e3;
     > .input-address {
       display: flex;
       flex-grow: 1;
@@ -174,9 +200,9 @@ export default {
     line-height: rpx(100);
     font-size: rpx(30);
     font-weight: 500;
-    color: #B98A52;
+    color: #b98a52;
     background: transparent;
-    border: rpx(1) solid #C18D54;
+    border: rpx(1) solid #c18d54;
     border-radius: rpx(10);
     &::after {
       display: none;
