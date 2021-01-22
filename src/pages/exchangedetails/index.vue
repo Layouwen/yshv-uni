@@ -1,14 +1,11 @@
 <template>
   <view class="container">
     <view class="top">
-      <image
-        :src="detail.image"
-        mode=""
-      />
+      <image :src="detail.image" mode="" />
     </view>
     <view class="item1">
-      <text>{{detail.title}}</text>
-      <text class="integral">{{detail.score}}积分</text>
+      <text>{{ detail.title }}</text>
+      <text class="integral">{{ detail.score }}积分</text>
     </view>
     <view class="item1">
       <text>数量</text>
@@ -23,8 +20,15 @@
     <view class="item1" @click="nav">
       <text>地址</text>
       <view>
-        <text class="name">{{detail.DefaultAddress.name}} {{detail.DefaultAddress.mobile}}</text>
-        <view class="address">{{detail.DefaultAddress.province}}{{detail.DefaultAddress.city}}{{detail.DefaultAddress.area}}{{detail.DefaultAddress.address}}</view>
+        <text class="name"
+          >{{ detail.DefaultAddress.name }}
+          {{ detail.DefaultAddress.mobile }}</text
+        >
+        <view class="address"
+          >{{ detail.DefaultAddress.province }}{{ detail.DefaultAddress.city
+          }}{{ detail.DefaultAddress.area
+          }}{{ detail.DefaultAddress.address }}</view
+        >
       </view>
       <text class="address">></text>
     </view>
@@ -63,13 +67,14 @@ export default {
       arr: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       index: 0,
       value: 1,
-      detail:{}
+      detail: {},
+      id:null
     };
   },
   methods: {
-    nav(){
+    nav() {
       uni.navigateTo({
-         url: '../address/index'
+        url: "../address/index",
       });
     },
     bindPickerChange(e) {
@@ -92,15 +97,29 @@ export default {
   },
   onLoad(e) {
     console.log(e);
+    this.id = e.id
     uni.getStorage({
       key: "logininfo",
       success: (res) => {
         console.log(res);
         console.log(res.data);
-        this.getdetail(res.data.token,e.id).then(res=>{
+        this.getdetail(res.data.token, this.id).then((res) => {
           this.detail = res.data.data;
           console.log(this.detail);
-        })
+        });
+      },
+    });
+  },
+  onShow() {
+    uni.getStorage({
+      key: "logininfo",
+      success: (res) => {
+        console.log(res);
+        console.log(res.data);
+        this.getdetail(res.data.token, this.id).then((res) => {
+          this.detail = res.data.data;
+          console.log(this.detail);
+        });
       },
     });
   },
