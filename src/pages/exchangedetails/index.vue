@@ -23,8 +23,8 @@
     <view class="item1">
       <text>地址</text>
       <view>
-        <text class="name">黄先生 13867895656</text>
-        <view class="address">广东省广州市白云区666号路</view>
+        <text class="name">{{detail.DefaultAddress.name}} {{detail.DefaultAddress.mobile}}</text>
+        <view class="address">{{detail.DefaultAddress.province}}{{detail.DefaultAddress.city}}{{detail.DefaultAddress.area}}{{detail.DefaultAddress.address}}</view>
       </view>
       <text class="address">></text>
     </view>
@@ -94,6 +94,7 @@ export default {
         console.log(res.data);
         this.getdetail(res.data.token,e.id).then(res=>{
           this.detail = res.data.data;
+          console.log(this.detail);
         })
       },
     });
