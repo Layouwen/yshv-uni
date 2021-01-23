@@ -22,16 +22,11 @@
           >{{ item }}
         </view>
       </view>
-      <view class="main_a" v-if="exchangeindex === 0">
-        <view
-          class="main_a_item"
-          v-for="(item, index) in list"
-          :key="index"
-          @click="onLinkPage(item.id)"
-        >
+      <view class="main_a" v-if="exchangeindex === 0" >
+        <view class="main_a_item" v-for="(item, index) in list" :key="index" @click="onLinkPage(item.id)">
           <image :src="item.image" mode="" />
           <text>{{ item.title }}</text>
-          <view class="exchange" @click.stop="score">{{ item.score }}兑换</view>
+          <view class="exchange">{{ item.score }}兑换</view>
         </view>
       </view>
       <view
@@ -108,18 +103,6 @@
       />
       <view class="text">长按关注公众号</view>
     </view>
-    <view class="background" catchtouchmove v-if="flag===true"> </view>
-    <view class="follow1" v-if="flag===true">
-      <image
-        class="delect"
-        src="../../static/success.png"
-        mode=""
-        @click="display"
-      />
-      <view class="success">兑换成功</view>
-      <view class="nav">自动跳转“我的积分”</view>
-      <view>....</view>
-    </view>
   </view>
 </template>
 
@@ -181,17 +164,14 @@ export default {
       ],
       token: null,
       data: null,
-      list: [],
+      list:[]
     };
   },
   methods: {
-    pointsrecord() {
+    pointsrecord(){
       uni.navigateTo({
-        url: "../pointsrecord/index",
+         url: '../pointsrecord/index'
       });
-    },
-    score() {
-      console.log(111);
     },
     toggle() {
       this.flag = !this.flag;
@@ -223,11 +203,11 @@ export default {
         },
       });
     },
-    async getList() {
+    async getList(){
       return await request.get({
-        url: "score_product/list",
-      });
-    },
+        url:"score_product/list"
+      })
+    }
   },
   onShow() {
     uni.getStorage({
@@ -239,10 +219,10 @@ export default {
         });
       },
     });
-    this.getList().then((res) => {
-      this.list = res.data.data;
+    this.getList().then(res=>{
+      this.list = res.data.data
       console.log(this.list);
-    });
+    })
     checkLogin();
   },
   // onLoad() {
@@ -619,38 +599,6 @@ export default {
       font-weight: 500;
       color: #999999;
       line-height: 42px;
-    }
-  }
-  > .follow1 {
-    position: absolute;
-    top: rpx(171);
-    z-index: 999;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    margin: rpx(70) rpx(80);
-    width: rpx(589);
-    height: rpx(554);
-    background: #ffffff;
-    > image {
-      width: rpx(210);
-      height: rpx(216);
-    }
-    > .success {
-      margin-top: rpx(35);
-      margin-bottom: rpx(68);
-      font-size: rpx(32);
-      font-weight: 500;
-      color: #333333;
-      line-height: rpx(42);
-    }
-    > .nav {
-      font-size: rpx(26);
-      font-weight: 500;
-      color: #e9c589;
-      line-height: rpx(42);
     }
   }
 }
