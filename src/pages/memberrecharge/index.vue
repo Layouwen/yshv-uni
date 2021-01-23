@@ -713,7 +713,7 @@ export default {
         align-items: center;
         font-size: rpx(26);
         font-weight: 500;
-        color: #B98A52;
+        color: #b98a52;
         image {
           margin-left: rpx(14);
           width: rpx(13);
@@ -822,9 +822,8 @@ export default {
         margin-bottom: rpx(20);
         width: rpx(712);
         height: rpx(172);
-        border: rpx(2) solid #ba894f;
         border-radius: rpx(10);
-        background: linear-gradient(135deg, #fef5e7 0%, #ffcf85 100%);
+        background: linear-gradient(135deg, #f6f6f6 0%, #e6e6e6 100%);
         .left {
           display: flex;
           justify-content: center;
@@ -832,12 +831,12 @@ export default {
           .number {
             font-size: rpx(61);
             font-weight: 400;
-            color: #4d321b;
+            color: #696969;
           }
           .yuan {
             font-size: rpx(32);
             font-weight: bold;
-            color: #4d321b;
+            color:#696969;
             margin-top: rpx(30);
             margin-left: rpx(4);
           }
@@ -845,7 +844,7 @@ export default {
         .line {
           width: rpx(2);
           height: rpx(98);
-          background: #c7b3a2;
+          background: #C0C0C0;
         }
         .center {
           margin-left: rpx(54);
@@ -853,13 +852,13 @@ export default {
           .top {
             font-size: rpx(28);
             font-weight: bold;
-            color: #333333;
+            color: #696969;
             line-height: rpx(42);
           }
           .bottom {
             font-size: rpx(24);
             font-weight: 500;
-            color: #95867a;
+            color: #C0C0C0;
             line-height: rpx(42);
           }
         }
