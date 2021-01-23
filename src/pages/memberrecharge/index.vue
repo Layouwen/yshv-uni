@@ -823,7 +823,7 @@ export default {
         width: rpx(712);
         height: rpx(172);
         border-radius: rpx(10);
-        background: linear-gradient(135deg, #f6f6f6 0%, #e6e6e6 100%);
+        background: linear-gradient(135deg, #f6f6f6 0%, #e6e6e6 100%); 
         .left {
           display: flex;
           justify-content: center;
