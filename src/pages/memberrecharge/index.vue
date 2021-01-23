@@ -113,9 +113,16 @@
           <image src="../../static/coupon.png" mode="" />
           <text>优惠券</text>
         </view>
-        <view :class="discount1===false?'coupon_r1':'coupon_r2'">
-          <text>{{discount2}}</text>
-          <image src="../../static/right1.png" mode="" />
+        <view :class="discount1 === false ? 'coupon_r1' : 'coupon_r2'">
+          <text>{{ discount2 }}</text>
+          <image
+            :src="
+              discount1 === false
+                ? '../../static/right1.png'
+                : '../../static/selectright.png'
+            "
+            mode=""
+          />
         </view>
       </view>
       <u-popup
@@ -142,6 +149,7 @@
           </view>
         </view>
         <view
+          v-if="titletoggle === 0"
           class="couponitem1"
           v-for="(item, index) in couponlist"
           :key="index"
@@ -166,7 +174,26 @@
             ></u-icon
           ></view>
         </view>
-        <view class="button" @click="confirm(couponlist[active].money)">确认</view>
+        <view
+          v-if="titletoggle === 1"
+          class="couponitem2"
+          v-for="(item, index) in notcouponlist"
+          :key="index"
+          @click="couponitem(index)"
+        >
+          <view class="left">
+            <text class="number">{{ item.money }}</text>
+            <text class="yuan">元</text>
+          </view>
+          <view class="line"></view>
+          <view class="center">
+            <view class="top">{{ item.title }}</view>
+            <view class="bottom">截止至{{ item.date }}</view>
+          </view>
+        </view>
+        <view v-if="titletoggle===0" class="button" @click="confirm(couponlist[active].money)"
+          >确认</view
+        >
       </u-popup>
       <view class="button2" v-if="buttonflag === true"
         >由于相关规定，IOS功能暂不可用
@@ -232,15 +259,22 @@ export default {
           date: "2020 - 12 - 30",
         },
       ],
+      notcouponlist: [
+        {
+          money: 10,
+          title: "通用优惠券",
+          date: "2020 - 12 - 30",
+        },
+      ],
       titletoggle: 0,
       active: 0,
       discount1: false,
-      discount2: '选择优惠券',
+      discount2: "选择优惠券",
     };
   },
   watch: {
-    aaa(val) {
-      if (this.aaa !== "") {
+    phone(val) {
+      if (this.phone !== "") {
         this.flag = "请输入充值号码";
       } else {
         this.flag = "";
@@ -321,13 +355,12 @@ export default {
       this.titletoggle = e;
     },
     confirm(m) {
-      this.discount1 = true
+      this.discount1 = true;
       this.show = false;
-      this.discount2 = `已优惠${m}元`
+      this.discount2 = `已优惠${m}元`;
     },
-    couponitem(e,m) {
+    couponitem(e, m) {
       this.active = e;
-
     },
   },
   async onLoad(e) {
