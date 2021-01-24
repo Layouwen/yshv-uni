@@ -134,33 +134,32 @@
         closeable="true"
         close-icon-color="#000000"
         class="popup"
+        @close="close"
       >
         <view class="title">优惠券选择</view>
         <view class="maintitle">
           <view class="coupon" @click="toggle(0)">
             <view :class="titletoggle === 0 ? 'top2' : 'top1'"
-              >可用优惠券(2)</view
+              >可用优惠券</view
             >
-            <view
-              class="line"
-              v-if="
-                titletoggle === 0 &&
-                (item.pay_product_id === 0 ||
-                  item.pay_product_id === goldset.product_detail.product_id)
-              "
-            ></view>
+            <view class="line" v-if="titletoggle === 0"></view>
           </view>
           <view class="coupon" @click="toggle(1)">
             <view :class="titletoggle === 1 ? 'top2' : 'top1'"
-              >已使用优惠券(1)</view
+              >已使用优惠券</view
             >
             <view class="line" v-if="titletoggle === 1"></view>
           </view>
         </view>
+        <view></view>
         <view
-          v-if="titletoggle === 0"
           class="couponitem1"
           v-for="(item, index) in couponlist"
+          v-if="
+            titletoggle === 0 &&
+            (item.pay_product_id === 0 ||
+              item.pay_product_id === goldset[itemflag1].product_detail.product_id)
+          "
           :key="index"
           @click="couponitem(index)"
         >
@@ -184,9 +183,13 @@
           ></view>
         </view>
         <view
-          v-if="titletoggle === 1"
           class="couponitem2"
           v-for="(item, index) in notcouponlist"
+          v-if="
+            titletoggle === 1 &&
+            (item.pay_product_id === 0 ||
+              item.pay_product_id === goldset.product_detail.product_id)
+          "
           :key="index"
           @click="couponitem(index)"
         >
@@ -264,7 +267,7 @@ export default {
       couponlist: [],
       notcouponlist: [],
       titletoggle: 0,
-      active: 0,
+      active: null,
       discount1: false,
       discount2: "选择优惠券",
       id: null,
@@ -282,6 +285,9 @@ export default {
     },
   },
   methods: {
+    close(){
+      this.active = null
+    },
     gold() {
       this.topflag = false;
     },
@@ -431,6 +437,7 @@ export default {
       id: e.id,
     });
     this.goldset = index.data.data;
+    console.log('goldset',this.goldset);
     if (this.goldset != undefined) {
       this.goldset = this.goldset.reverse();
     }
