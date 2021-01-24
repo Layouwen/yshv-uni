@@ -194,7 +194,9 @@
         <view
           v-if="titletoggle === 0"
           class="button"
-          @click="confirm(couponlist[active].offsetamount,couponlist[active].id)"
+          @click="
+            confirm(couponlist[active].offsetamount, couponlist[active].id)
+          "
           >确认</view
         >
       </u-popup>
@@ -256,8 +258,8 @@ export default {
       active: 0,
       discount1: false,
       discount2: "选择优惠券",
-      id:null,
-      offsetamount:0
+      id: null,
+      offsetamount: 0,
     };
   },
   watch: {
@@ -316,36 +318,68 @@ export default {
         return;
       }
       const item = this.goldset[this.itemflag1];
-      this.postPay({
-        id: item.id,
-        payaccount: this.phone,
-        category_id: item.category_id,
-        thirdpartyid: item.thirdpartyid,
-        type: parseInt(item.type),
-        channel_price: item.product_detail.channel_price,
-        payamount: item.product_detail.channel_price-this.offsetamount,
-        productname: item.product_detail.item_name,
-        accounttype: item.accounttype,
-        user_coupon_id: this.id,
-      }).then((res) => {
-        console.log(res);
-        this.loading = true;
-        if (res.data.msg == "手机号格式错误") {
-          uni.showToast({
-            icon: "none",
-            title: "手机号格式错误",
-          });
-          return;
-        } else if (res.data.code === 1) {
-          this.loading = false;
-          const result = uni.requestPayment(res.data.data);
-          if (result[1]) {
+      if (this.offsetamount === 0) {
+        this.postPay({
+          id: item.id,
+          payaccount: this.phone,
+          category_id: item.category_id,
+          thirdpartyid: item.thirdpartyid,
+          type: parseInt(item.type),
+          channel_price: item.product_detail.channel_price,
+          payamount: item.product_detail.channel_price,
+          productname: item.product_detail.item_name,
+          accounttype: item.accounttype,
+        }).then((res) => {
+          console.log(res);
+          this.loading = true;
+          if (res.data.msg == "手机号格式错误") {
             uni.showToast({
-              title: "支付成功",
+              icon: "none",
+              title: "手机号格式错误",
             });
+            return;
+          } else if (res.data.code === 1) {
+            this.loading = false;
+            const result = uni.requestPayment(res.data.data);
+            if (result[1]) {
+              uni.showToast({
+                title: "支付成功",
+              });
+            }
           }
-        }
-      });
+        });
+      } else {
+        this.postPay({
+          id: item.id,
+          payaccount: this.phone,
+          category_id: item.category_id,
+          thirdpartyid: item.thirdpartyid,
+          type: parseInt(item.type),
+          channel_price: item.product_detail.channel_price,
+          payamount: item.product_detail.channel_price,
+          productname: item.product_detail.item_name,
+          accounttype: item.accounttype,
+          user_coupon_id: this.id,
+        }).then((res) => {
+          console.log(res);
+          this.loading = true;
+          if (res.data.msg == "手机号格式错误") {
+            uni.showToast({
+              icon: "none",
+              title: "手机号格式错误",
+            });
+            return;
+          } else if (res.data.code === 1) {
+            this.loading = false;
+            const result = uni.requestPayment(res.data.data);
+            if (result[1]) {
+              uni.showToast({
+                title: "支付成功",
+              });
+            }
+          }
+        });
+      }
     },
     open() {
       this.show = true;
@@ -368,12 +402,12 @@ export default {
         });
       }
     },
-    confirm(m,id) {
+    confirm(m, id) {
       this.discount1 = true;
       this.show = false;
       this.discount2 = `已优惠${m}元`;
-      this.id = id
-      this.offsetamount = m
+      this.id = id;
+      this.offsetamount = m;
     },
     couponitem(e, m) {
       this.active = e;
