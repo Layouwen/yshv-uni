@@ -1,6 +1,7 @@
 <template>
   <view class="index-page">
     <view class="user-wrapper" />
+    <u-notice-bar class="bar" mode="horizontal" :list="['由于平台规定，ios暂不支持使用，安卓可以正常使用。']" />
     <view class="top">
       <u-swiper
         class="swiper"
@@ -31,15 +32,15 @@
       >
         <image class="item-icon" :src="content.image" />
         <text class="item-title">{{ content.name }}</text>
-        <button class="item-btn">{{ content.description }}</button>
+        <button class="item-btn" v-if="showBtn">{{ content.description }}</button>
       </view>
     </view>
   </view>
 </template>
 
 <script>
-import { checkLogin } from '@/utils/login'
-import request from '../../utils/request'
+import request from '@/utils/request'
+import isIOS from '@/utils/isIOS'
 export default {
   data () {
     return {
@@ -48,13 +49,19 @@ export default {
       tabActive: 0
     }
   },
+  computed: {
+    showBtn () {
+      return !isIOS()
+    }
+  },
   methods: {
     async getIndex () {
-      return await request.get({
+      return request.get({
         url: 'index/index'
       })
     },
     onLinkPage (id, name) {
+      if (isIOS()) return
       uni.navigateTo({
         url: `/pages/memberrecharge/index?id=${id}&name=${name}`
       })
@@ -92,10 +99,15 @@ export default {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: -0;
+    z-index: 0;
     width: rpx(750);
     height: rpx(176);
     background: linear-gradient(148deg, #2d2e30, #2d2e30);
+  }
+  > .bar {
+    position: relative;
+    z-index: 0;
+    width: 100%;
   }
   > .top {
     position: relative;
