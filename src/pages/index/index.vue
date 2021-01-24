@@ -85,7 +85,6 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
   padding-bottom: rpx(200);
   overflow: auto;
   background: #f6f6f8;

@@ -1,40 +1,41 @@
 <template>
-  <view class='pointsrecord'>
-    <view class='item-wrapper' v-for="item in itemList" :key="item.id">
-      <view class="title">{{ item.title }}</view>
-      <view class="number" :class="color(item.number) ? 'color' : ''">{{ item.number }}</view>
+  <view class="pointsrecord">
+    <view class="item-wrapper" v-for="item in itemList" :key="item.id">
+      <view class="title">{{ item.memo }}</view>
+      <view class="number" :class="color(item) ? 'color' : ''">{{ money(item) }}</view>
     </view>
   </view>
 </template>
 
 <script>
+import request from '@/utils/request'
 export default {
   data () {
     return {
-      // mock
-      itemList: [
-        {
-          id: 0,
-          title: '1个月会员',
-          number: '-300'
-        },
-        {
-          id: 1,
-          title: '关注公众号',
-          number: '+32'
-        },
-        {
-          id: 2,
-          title: 'G5MI',
-          number: '+231'
-        }
-      ]
+      itemList: []
     }
   },
   methods: {
-    color (number) {
-      return parseInt(number) > 0
+    async getItemList () {
+      const { data } = await request.get({
+        url: 'user/scorelog',
+        header: {
+          'token': uni.getStorageSync('logininfo').token
+        }
+      })
+      if (data.code !== 1) uni.showToast({ title: '请求失败', icon: 'none' })
+      this.itemList = data.msg
+    },
+    color (item) {
+      return item.after - item.before > 0
+    },
+    money (item) {
+      const result = item.after - item.before
+      return result > 0 ? `+${result}` : result
     }
+  },
+  onShow () {
+    this.getItemList()
   }
 }
 </script>

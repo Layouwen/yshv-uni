@@ -8,7 +8,7 @@
       <view class="integral">
         <text class="intefral_t">1元=10积分</text>
         <view class="intefral_m"></view>
-        <text class="intefral_b">查看积分记录</text>
+        <text class="intefral_b" @click="onLinkPointsRecord">查看积分记录</text>
       </view>
     </view>
     <view class="main">
@@ -185,9 +185,13 @@ export default {
       }
     },
     onLinkPage (e) {
-      console.log(e)
       uni.navigateTo({
         url: `/pages/exchangedetails/index?id=${e}`
+      })
+    },
+    onLinkPointsRecord(){
+      uni.navigateTo({
+        url: `/pages/pointsrecord/index`
       })
     },
     async getIndex (data) {
