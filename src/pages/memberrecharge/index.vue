@@ -156,13 +156,13 @@
           @click="couponitem(index)"
         >
           <view class="left">
-            <text class="number">{{ item.money }}</text>
+            <text class="number">{{ item.offsetamount }}</text>
             <text class="yuan">元</text>
           </view>
           <view class="line"></view>
           <view class="center">
             <view class="top">{{ item.title }}</view>
-            <view class="bottom">截止至{{ item.date }}</view>
+            <view class="bottom">截止至{{ item.etime }}</view>
           </view>
 
           <view class="icon"
@@ -191,7 +191,10 @@
             <view class="bottom">截止至{{ item.date }}</view>
           </view>
         </view>
-        <view v-if="titletoggle===0" class="button" @click="confirm(couponlist[active].money)"
+        <view
+          v-if="titletoggle === 0"
+          class="button"
+          @click="confirm(couponlist[active].offsetamount,couponlist[active].id)"
           >确认</view
         >
       </u-popup>
@@ -247,29 +250,14 @@ export default {
       token: "",
       // loading: false,
       show: false,
-      couponlist: [
-        {
-          money: 10,
-          title: "通用优惠券",
-          date: "2020 - 12 - 30",
-        },
-        {
-          money: 100,
-          title: "仅限充值腾讯会员使用",
-          date: "2020 - 12 - 30",
-        },
-      ],
-      notcouponlist: [
-        {
-          money: 10,
-          title: "通用优惠券",
-          date: "2020 - 12 - 30",
-        },
-      ],
+      couponlist: [],
+      notcouponlist: [],
       titletoggle: 0,
       active: 0,
       discount1: false,
       discount2: "选择优惠券",
+      id:null,
+      offsetamount:0
     };
   },
   watch: {
@@ -310,7 +298,7 @@ export default {
         data,
       });
     },
-        async coupon(data) {
+    async coupon(data) {
       return await request.get({
         header: {
           token: this.token,
@@ -334,11 +322,11 @@ export default {
         category_id: item.category_id,
         thirdpartyid: item.thirdpartyid,
         type: parseInt(item.type),
-        channel_price:item.product_detail.channel_price,
-        payamount: item.product_detail.channel_price,
+        channel_price: item.product_detail.channel_price,
+        payamount: item.product_detail.channel_price-this.offsetamount,
         productname: item.product_detail.item_name,
-        accounttype:item.accounttype,
-        user_coupon_id:1
+        accounttype: item.accounttype,
+        user_coupon_id: this.id,
       }).then((res) => {
         console.log(res);
         this.loading = true;
@@ -363,13 +351,29 @@ export default {
       this.show = true;
     },
     toggle(e) {
-      console.log(111);
       this.titletoggle = e;
+      if (e === 0) {
+        this.coupon({
+          status: 1,
+        }).then((res) => {
+          console.log("coupon", res);
+          this.couponlist = res.data.msg;
+        });
+      } else {
+        this.coupon({
+          status: 2,
+        }).then((res) => {
+          console.log("coupon", res);
+          this.notcouponlist = res.data.msg;
+        });
+      }
     },
-    confirm(m) {
+    confirm(m,id) {
       this.discount1 = true;
       this.show = false;
       this.discount2 = `已优惠${m}元`;
+      this.id = id
+      this.offsetamount = m
     },
     couponitem(e, m) {
       this.active = e;
@@ -393,9 +397,10 @@ export default {
         const data = await this.getIndex(res.data.token);
         this.data = data.data.data;
         this.coupon({
-          status:0
-        }).then(res=>{
-          console.log('coupon',res);
+          status: 1,
+        }).then((res) => {
+          console.log("coupon", res);
+          this.couponlist = res.data.msg;
         });
       },
     });
@@ -840,7 +845,7 @@ export default {
         width: rpx(712);
         height: rpx(172);
         border-radius: rpx(10);
-        background: linear-gradient(135deg, #f6f6f6 0%, #e6e6e6 100%); 
+        background: linear-gradient(135deg, #f6f6f6 0%, #e6e6e6 100%);
         .left {
           display: flex;
           justify-content: center;
@@ -853,7 +858,7 @@ export default {
           .yuan {
             font-size: rpx(32);
             font-weight: bold;
-            color:#696969;
+            color: #696969;
             margin-top: rpx(30);
             margin-left: rpx(4);
           }
@@ -861,7 +866,7 @@ export default {
         .line {
           width: rpx(2);
           height: rpx(98);
-          background: #C0C0C0;
+          background: #c0c0c0;
         }
         .center {
           margin-left: rpx(54);
@@ -875,7 +880,7 @@ export default {
           .bottom {
             font-size: rpx(24);
             font-weight: 500;
-            color: #C0C0C0;
+            color: #c0c0c0;
             line-height: rpx(42);
           }
         }
