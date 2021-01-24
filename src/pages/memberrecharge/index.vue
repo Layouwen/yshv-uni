@@ -5,7 +5,7 @@
       <view class="text">{{ flag }}</view>
       <input
         type="number"
-        placeholder="请输入充值号码"
+        :placeholder="text"
         placeholder-class="aaa"
         v-model="phone"
       />
@@ -260,12 +260,13 @@ export default {
       discount2: "选择优惠券",
       id: null,
       offsetamount: 0,
+      text:''
     };
   },
   watch: {
     phone(val) {
       if (this.phone !== "") {
-        this.flag = "请输入充值号码";
+        this.flag = this.text;
       } else {
         this.flag = "";
       }
@@ -424,12 +425,18 @@ export default {
     if (this.goldset != undefined) {
       this.goldset = this.goldset.reverse();
     }
+    if(this.goldset[0].accounttype){
+      this.text = '请输入手机号码'
+    }else{
+      this.text = '请输入QQ号码'
+    }
     uni.getStorage({
       key: "logininfo",
       success: async (res) => {
         this.token = res.data.token;
         const data = await this.getIndex(res.data.token);
         this.data = data.data.data;
+        console.log(data);
         this.coupon({
           status: 1,
         }).then((res) => {
