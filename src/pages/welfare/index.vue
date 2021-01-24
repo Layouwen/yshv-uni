@@ -189,7 +189,7 @@ export default {
         url: `/pages/exchangedetails/index?id=${e}`
       })
     },
-    onLinkPointsRecord(){
+    onLinkPointsRecord () {
       uni.navigateTo({
         url: `/pages/pointsrecord/index`
       })
@@ -321,7 +321,6 @@ export default {
     }
     > .main_a {
       display: flex;
-      justify-content: space-between;
       flex-wrap: wrap;
       margin: 0 rpx(24);
       margin-top: rpx(33);
@@ -331,6 +330,7 @@ export default {
         justify-content: space-between;
         align-items: center;
         margin-bottom: rpx(52);
+        margin-right: rpx(18);
         > text {
           margin: rpx(25) 0;
           font-size: rpx(26);
