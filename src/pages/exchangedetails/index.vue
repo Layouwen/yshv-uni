@@ -117,8 +117,13 @@ export default {
         parseInt(this.detail.type),
         this.detail.DefaultAddress.id
       ).then((res) => {
-        if(res.data.msg === '兑换成功'){
-          this.flag =true
+        if (res.data.msg === "兑换成功") {
+          this.flag = true;
+          setTimeout(() => {
+            uni.switchTab({
+              url: "../welfare/index",
+            });
+          }, 500);
         }
       });
     },
