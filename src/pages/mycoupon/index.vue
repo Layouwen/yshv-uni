@@ -1,25 +1,25 @@
 <template>
-  <view class='mycoupon-page'>
+  <view class="mycoupon-page">
     <view class="tabs-wrapper">
       <view class="tabs">
-        <view class='left' :class="tabActive === 0 ? 'active' : ''" @click='onChangeTab(0)'>待领取</view>
-        <view class="right" :class="tabActive === 1 ? 'active' : ''" @click='onChangeTab(1)'>可使用</view>
+        <view class="left" :class="tabActive === 0 ? 'active' : ''" @click="onChangeTab(0)">待领取</view>
+        <view class="right" :class="tabActive === 1 ? 'active' : ''" @click="onChangeTab(1)">可使用</view>
       </view>
     </view>
     <view class="coupons">
-      <view class="coupon" v-for="coupon in couponList" :key="coupon.id" @click='onReceive(coupon.id)'>
+      <view class="coupon" v-for="coupon in couponList" :key="coupon.id" @click="onReceive(coupon.id)">
         <view class="money-wrapper">
-          <view class='money'>
-            <text>{{ coupon.money }}</text>
+          <view class="money">
+            <text>{{ coupon.offsetamount }}</text>
             <text>元</text>
           </view>
         </view>
         <view class="content">
           <text class="title">{{ coupon.title }}</text>
-          <text class='time'>截止至{{ coupon.time }}</text>
+          <text class="time">截止至{{ coupon.etime | date }}</text>
         </view>
         <view class="btn">
-          <text class='text'>立即领取</text>
+          <text class="text">{{ tabActive === 0 ? '立即领取' : '立即使用' }}</text>
         </view>
       </view>
     </view>
@@ -27,125 +27,62 @@
 </template>
 
 <script>
+import request from '@/utils/request'
 export default {
   data () {
     return {
       tabActive: 0,
-      test1: [
-        {
-          id: 0,
-          money: 10,
-          title: '通用优惠券',
-          time: '2020-12-24'
-        },
-        {
-          id: 1,
-          money: 100,
-          title: '仅限充值腾讯会员使用',
-          time: '2020-12-30'
-        },
-        {
-          id: 2,
-          money: 100,
-          title: '仅限充值腾讯会员使用',
-          time: '2020-12-30'
-        },
-        {
-          id: 3,
-          money: 100,
-          title: '仅限充值腾讯会员使用',
-          time: '2020-12-30'
-        },
-        {
-          id: 4,
-          money: 100,
-          title: '仅限充值腾讯会员使用',
-          time: '2020-12-30'
-        },
-        {
-          id: 5,
-          money: 100,
-          title: '仅限充值腾讯会员使用',
-          time: '2020-12-30'
-        },
-        {
-          id: 6,
-          money: 100,
-          title: '仅限充值腾讯会员使用',
-          time: '2020-12-30'
-        },
-        {
-          id: 7,
-          money: 100,
-          title: '仅限充值腾讯会员使用',
-          time: '2020-12-30'
-        },
-        {
-          id: 8,
-          money: 100,
-          title: '仅限充值腾讯会员使用',
-          time: '2020-12-30'
-        },
-        {
-          id: 9,
-          money: 100,
-          title: '仅限充值腾讯会员使用',
-          time: '2020-12-30'
-        },
-        {
-          id: 10,
-          money: 100,
-          title: '仅限充值腾讯会员使用',
-          time: '2020-12-30'
-        }
-      ],
-      test2: [
-        {
-          id: 0,
-          money: 1000,
-          title: '优惠券',
-          time: '2020-12-24'
-        },
-        {
-          id: 1,
-          money: 500,
-          title: '仅限充值爱奇艺使用',
-          time: '2020-12-30'
-        },
-        {
-          id: 2,
-          money: 300,
-          title: '仅限充值腾讯会员使用',
-          time: '2020-12-30'
-        }
-      ],
-      couponList: [
-        {
-          id: 0,
-          money: 10,
-          title: '通用优惠券',
-          time: '2020-12-24'
-        },
-        {
-          id: 1,
-          money: 100,
-          title: '仅限充值腾讯会员使用',
-          time: '2020-12-30'
-        }
-      ]
+      couponList: []
     }
   },
   methods: {
-    onChangeTab (number) {
-      this.couponList = number === 0 ? this.test1 : this.test2
-      this.tabActive = number
-    },
-    onReceive (id) {
-      uni.showToast({
-        title: '优惠券',
-        icon: 'none'
+    async getCouponList (status = 0) {
+      const { data: res } = await request.get({
+        url: 'user/coupons',
+        header: {
+          'token': uni.getStorageSync('logininfo').token
+        },
+        data: { status }
       })
+      if (res.code !== 1) {
+        uni.showToast({ title: '请求失败', icon: 'none' })
+        return
+      }
+      this.couponList = res.msg
+    },
+    onChangeTab (number) {
+      this.tabActive = number
+      this.getCouponList(number)
+    },
+    async onReceive (id) {
+      if (this.tabActive === 0) {
+        const { data: res } = await request.post({
+          url: 'user/receivecoupon',
+          header: {
+            token: uni.getStorageSync('logininfo').token
+          },
+          data: { id }
+        })
+        if (res.code !== 1) {
+          uni.showToast({ title: '领取失败', icon: 'none' })
+          return
+        }
+        const wait = 800
+        uni.showToast({
+          title: '领取成功',
+          duration: wait,
+          mask: true,
+          success: setTimeout(() => {
+            this.getCouponList(this.tabActive)
+          }, wait)
+        })
+        return
+      }
+      uni.showToast({ title: '去使用', icon: 'none' })
     }
+  },
+  onShow () {
+    this.getCouponList()
   }
 }
 </script>
