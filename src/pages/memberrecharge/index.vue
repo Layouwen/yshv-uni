@@ -143,7 +143,7 @@
           </view>
           <view class="coupon" @click="toggle(1)">
             <view :class="titletoggle === 1 ? 'top2' : 'top1'"
-              >不可用优惠券(1)</view
+              >已使用优惠券(1)</view
             >
             <view class="line" v-if="titletoggle === 1"></view>
           </view>
@@ -310,6 +310,15 @@ export default {
         data,
       });
     },
+        async coupon(data) {
+      return await request.get({
+        header: {
+          token: this.token,
+        },
+        url: "user/coupons",
+        data,
+      });
+    },
     pay() {
       if (this.phone === "") {
         uni.showToast({
@@ -321,12 +330,15 @@ export default {
       const item = this.goldset[this.itemflag1];
       this.postPay({
         id: item.id,
-        mobile: this.phone,
+        payaccount: this.phone,
         category_id: item.category_id,
         thirdpartyid: item.thirdpartyid,
         type: parseInt(item.type),
+        channel_price:item.product_detail.channel_price,
         payamount: item.product_detail.channel_price,
         productname: item.product_detail.item_name,
+        accounttype:item.accounttype,
+        user_coupon_id:1
       }).then((res) => {
         console.log(res);
         this.loading = true;
@@ -380,6 +392,11 @@ export default {
         this.token = res.data.token;
         const data = await this.getIndex(res.data.token);
         this.data = data.data.data;
+        this.coupon({
+          status:0
+        }).then(res=>{
+          console.log('coupon',res);
+        });
       },
     });
   },
