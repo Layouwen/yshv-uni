@@ -139,9 +139,7 @@
         <view class="title">优惠券选择</view>
         <view class="maintitle">
           <view class="coupon" @click="toggle(0)">
-            <view :class="titletoggle === 0 ? 'top2' : 'top1'"
-              >可用优惠券</view
-            >
+            <view :class="titletoggle === 0 ? 'top2' : 'top1'">可用优惠券</view>
             <view class="line" v-if="titletoggle === 0"></view>
           </view>
           <view class="coupon" @click="toggle(1)">
@@ -158,7 +156,8 @@
           v-if="
             titletoggle === 0 &&
             (item.pay_product_id === 0 ||
-              item.pay_product_id === goldset[itemflag1].product_detail.product_id)
+              item.pay_product_id ===
+                goldset[itemflag1].product_detail.product_id)
           "
           :key="index"
           @click="couponitem(index)"
@@ -185,11 +184,7 @@
         <view
           class="couponitem2"
           v-for="(item, index) in notcouponlist"
-          v-if="
-            titletoggle === 1 &&
-            (item.pay_product_id === 0 ||
-              item.pay_product_id === goldset.product_detail.product_id)
-          "
+          v-if="titletoggle === 1"
           :key="index"
           @click="couponitem(index)"
         >
@@ -285,8 +280,8 @@ export default {
     },
   },
   methods: {
-    close(){
-      this.active = null
+    close() {
+      this.active = null;
     },
     gold() {
       this.topflag = false;
@@ -425,7 +420,11 @@ export default {
       this.id = id;
       this.offsetamount = m;
     },
-    couponitem(e, m) {
+    couponitem(e) {
+      if (this.active === e) {
+        this.active = null;
+        return
+      }
       this.active = e;
     },
   },
@@ -437,7 +436,7 @@ export default {
       id: e.id,
     });
     this.goldset = index.data.data;
-    console.log('goldset',this.goldset);
+    console.log("goldset", this.goldset);
     if (this.goldset != undefined) {
       this.goldset = this.goldset.reverse();
     }
