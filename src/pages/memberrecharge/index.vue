@@ -134,7 +134,6 @@
         closeable="true"
         close-icon-color="#000000"
         class="popup"
-        @close="close"
       >
         <view class="title">优惠券选择</view>
         <view class="maintitle">
@@ -198,12 +197,7 @@
             <view class="bottom">截止至{{ item.date }}</view>
           </view>
         </view>
-        <view
-          v-if="titletoggle === 0"
-          class="button"
-          @click="
-            confirm(couponlist[active].offsetamount, couponlist[active].id)
-          "
+        <view v-if="titletoggle === 0" class="button" @click="confirm(active)"
           >确认</view
         >
       </u-popup>
@@ -280,9 +274,6 @@ export default {
     },
   },
   methods: {
-    close() {
-      this.active = null;
-    },
     gold() {
       this.topflag = false;
     },
@@ -413,17 +404,29 @@ export default {
         });
       }
     },
-    confirm(m, id) {
+    confirm(a) {
+      if (this.active === null) {
+        this.discount2 = '选择优惠券'
+        this.discount1 = false;
+        this.show = false;
+        this.offsetamount = 0
+        this.id = null
+        return;
+      }
+      const m = this.couponlist[this.active].offsetamount;
+      const id = this.couponlist[this.active].id;
+      console.log("确认", a);
       this.discount1 = true;
       this.show = false;
       this.discount2 = `已优惠${m}元`;
       this.id = id;
       this.offsetamount = m;
+      this.active = a;
     },
     couponitem(e) {
       if (this.active === e) {
         this.active = null;
-        return
+        return;
       }
       this.active = e;
     },
