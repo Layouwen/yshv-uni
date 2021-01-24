@@ -139,7 +139,7 @@
             <view :class="titletoggle === 0 ? 'top2' : 'top1'"
               >可用优惠券(2)</view
             >
-            <view class="line" v-if="titletoggle === 0"></view>
+            <view class="line" v-if="titletoggle === 0&&(item.pay_product_id===0||item.pay_product_id===goldset.product_detail.product_id)"></view>
           </view>
           <view class="coupon" @click="toggle(1)">
             <view :class="titletoggle === 1 ? 'top2' : 'top1'"
