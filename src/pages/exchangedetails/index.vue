@@ -32,7 +32,7 @@
       </view>
       <text class="address">></text>
     </view>
-    <view class="button">立即兑换</view>
+    <view class="button" @click="exchange">立即兑换</view>
     <view class="tips_title">兑换须知</view>
     <view class="tips_detail">
       1.实物商品图片仅供参考，请以实际到货实物为准；<br />
@@ -68,7 +68,8 @@ export default {
       index: 0,
       value: 1,
       detail: {},
-      id:null
+      id: null,
+      token: "",
     };
   },
   methods: {
@@ -94,18 +95,44 @@ export default {
         },
       });
     },
+    async posttrade(token, e, n, t, a) {
+      return await request.post({
+        header: {
+          token: token,
+        },
+        url: "score_product/trade",
+        data: {
+          id: e,
+          number: n,
+          type: t,
+          address_id: a,
+        },
+      });
+    },
+    exchange() {
+      this.posttrade(
+        this.token,
+        this.detail.id,
+        this.value,
+        parseInt(this.detail.type),
+        this.detail.DefaultAddress.id
+      ).then((res) => {
+        if(res.data.msg === '兑换成功'){
+          this.flag =true
+        }
+      });
+    },
   },
   onLoad(e) {
     console.log(e);
-    this.id = e.id
+    this.id = e.id;
     uni.getStorage({
       key: "logininfo",
       success: (res) => {
-        console.log(res);
-        console.log(res.data);
+        this.token = res.data.token;
         this.getdetail(res.data.token, this.id).then((res) => {
           this.detail = res.data.data;
-          console.log(this.detail);
+          console.log("11", this.detail);
         });
       },
     });
@@ -114,8 +141,7 @@ export default {
     uni.getStorage({
       key: "logininfo",
       success: (res) => {
-        console.log(res);
-        console.log(res.data);
+        this.token = res.data.token;
         this.getdetail(res.data.token, this.id).then((res) => {
           this.detail = res.data.data;
           console.log(this.detail);
