@@ -78,7 +78,7 @@ export default {
         })
         return
       }
-      uni.showToast({ title: '去使用', icon: 'none' })
+      uni.switchTab({ url: '/pages/index/index' })
     }
   },
   onShow () {
