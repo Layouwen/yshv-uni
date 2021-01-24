@@ -5,7 +5,7 @@
       <view class="text">{{ flag }}</view>
       <input
         type="number"
-        placeholder="请输入充值号码"
+        :placeholder="text"
         placeholder-class="aaa"
         v-model="phone"
       />
@@ -61,14 +61,16 @@
                 <text class="month" v-if="item.type === '6'">12个月</text>
               </view>
               <view>
-                <text class="yuan">￥</text>
-                <text class="money"
-                  >{{ parseFloat(item.product_detail.channel_price) }}
-                </text>
+                <view>
+                  <text class="yuan">￥</text>
+                  <text class="money"
+                    >{{ parseFloat(item.product_detail.channel_price) }}
+                  </text>
+                </view>
+                <view class="original"
+                  >原价：{{ parseFloat(item.product_detail.original_price) }}
+                </view>
               </view>
-              <text
-                >原价：{{ parseFloat(item.product_detail.original_price) }}
-              </text>
             </view>
           </view>
           <!-- <view v-else>
@@ -132,37 +134,43 @@
         closeable="true"
         close-icon-color="#000000"
         class="popup"
+        @close="close"
       >
         <view class="title">优惠券选择</view>
         <view class="maintitle">
           <view class="coupon" @click="toggle(0)">
             <view :class="titletoggle === 0 ? 'top2' : 'top1'"
-              >可用优惠券(2)</view
+              >可用优惠券</view
             >
             <view class="line" v-if="titletoggle === 0"></view>
           </view>
           <view class="coupon" @click="toggle(1)">
             <view :class="titletoggle === 1 ? 'top2' : 'top1'"
-              >不可用优惠券(1)</view
+              >已使用优惠券</view
             >
             <view class="line" v-if="titletoggle === 1"></view>
           </view>
         </view>
+        <view></view>
         <view
-          v-if="titletoggle === 0"
           class="couponitem1"
           v-for="(item, index) in couponlist"
+          v-if="
+            titletoggle === 0 &&
+            (item.pay_product_id === 0 ||
+              item.pay_product_id === goldset[itemflag1].product_detail.product_id)
+          "
           :key="index"
           @click="couponitem(index)"
         >
           <view class="left">
-            <text class="number">{{ item.money }}</text>
+            <text class="number">{{ item.offsetamount }}</text>
             <text class="yuan">元</text>
           </view>
           <view class="line"></view>
           <view class="center">
             <view class="top">{{ item.title }}</view>
-            <view class="bottom">截止至{{ item.date }}</view>
+            <view class="bottom">截止至{{ item.etime }}</view>
           </view>
 
           <view class="icon"
@@ -175,9 +183,13 @@
           ></view>
         </view>
         <view
-          v-if="titletoggle === 1"
           class="couponitem2"
           v-for="(item, index) in notcouponlist"
+          v-if="
+            titletoggle === 1 &&
+            (item.pay_product_id === 0 ||
+              item.pay_product_id === goldset.product_detail.product_id)
+          "
           :key="index"
           @click="couponitem(index)"
         >
@@ -191,7 +203,12 @@
             <view class="bottom">截止至{{ item.date }}</view>
           </view>
         </view>
-        <view v-if="titletoggle===0" class="button" @click="confirm(couponlist[active].money)"
+        <view
+          v-if="titletoggle === 0"
+          class="button"
+          @click="
+            confirm(couponlist[active].offsetamount, couponlist[active].id)
+          "
           >确认</view
         >
       </u-popup>
@@ -247,41 +264,30 @@ export default {
       token: "",
       // loading: false,
       show: false,
-      couponlist: [
-        {
-          money: 10,
-          title: "通用优惠券",
-          date: "2020 - 12 - 30",
-        },
-        {
-          money: 100,
-          title: "仅限充值腾讯会员使用",
-          date: "2020 - 12 - 30",
-        },
-      ],
-      notcouponlist: [
-        {
-          money: 10,
-          title: "通用优惠券",
-          date: "2020 - 12 - 30",
-        },
-      ],
+      couponlist: [],
+      notcouponlist: [],
       titletoggle: 0,
-      active: 0,
+      active: null,
       discount1: false,
       discount2: "选择优惠券",
+      id: null,
+      offsetamount: 0,
+      text: "",
     };
   },
   watch: {
     phone(val) {
       if (this.phone !== "") {
-        this.flag = "请输入充值号码";
+        this.flag = this.text;
       } else {
         this.flag = "";
       }
     },
   },
   methods: {
+    close(){
+      this.active = null
+    },
     gold() {
       this.topflag = false;
     },
@@ -310,6 +316,15 @@ export default {
         data,
       });
     },
+    async coupon(data) {
+      return await request.get({
+        header: {
+          token: this.token,
+        },
+        url: "user/coupons",
+        data,
+      });
+    },
     pay() {
       if (this.phone === "") {
         uni.showToast({
@@ -319,45 +334,96 @@ export default {
         return;
       }
       const item = this.goldset[this.itemflag1];
-      this.postPay({
-        id: item.id,
-        mobile: this.phone,
-        category_id: item.category_id,
-        thirdpartyid: item.thirdpartyid,
-        type: parseInt(item.type),
-        payamount: item.product_detail.channel_price,
-        productname: item.product_detail.item_name,
-      }).then((res) => {
-        console.log(res);
-        this.loading = true;
-        if (res.data.msg == "手机号格式错误") {
-          uni.showToast({
-            icon: "none",
-            title: "手机号格式错误",
-          });
-          return;
-        } else if (res.data.code === 1) {
-          this.loading = false;
-          const result = uni.requestPayment(res.data.data);
-          if (result[1]) {
+      if (this.offsetamount === 0) {
+        this.postPay({
+          id: item.id,
+          payaccount: this.phone,
+          category_id: item.category_id,
+          thirdpartyid: item.thirdpartyid,
+          type: parseInt(item.type),
+          channel_price: item.product_detail.channel_price,
+          payamount: item.product_detail.channel_price,
+          productname: item.product_detail.item_name,
+          accounttype: item.accounttype,
+        }).then((res) => {
+          console.log(res);
+          this.loading = true;
+          if (res.data.msg == "手机号格式错误") {
             uni.showToast({
-              title: "支付成功",
+              icon: "none",
+              title: "手机号格式错误",
             });
+            return;
+          } else if (res.data.code === 1) {
+            this.loading = false;
+            const result = uni.requestPayment(res.data.data);
+            if (result[1]) {
+              uni.showToast({
+                title: "支付成功",
+              });
+            }
           }
-        }
-      });
+        });
+      } else {
+        this.postPay({
+          id: item.id,
+          payaccount: this.phone,
+          category_id: item.category_id,
+          thirdpartyid: item.thirdpartyid,
+          type: parseInt(item.type),
+          channel_price: item.product_detail.channel_price,
+          payamount: item.product_detail.channel_price,
+          productname: item.product_detail.item_name,
+          accounttype: item.accounttype,
+          user_coupon_id: this.id,
+        }).then((res) => {
+          console.log(res);
+          this.loading = true;
+          if (res.data.msg == "手机号格式错误") {
+            uni.showToast({
+              icon: "none",
+              title: "手机号格式错误",
+            });
+            return;
+          } else if (res.data.code === 1) {
+            this.loading = false;
+            const result = uni.requestPayment(res.data.data);
+            if (result[1]) {
+              uni.showToast({
+                title: "支付成功",
+              });
+            }
+          }
+        });
+      }
     },
     open() {
       this.show = true;
     },
     toggle(e) {
-      console.log(111);
       this.titletoggle = e;
+      if (e === 0) {
+        this.coupon({
+          status: 1,
+        }).then((res) => {
+          console.log("coupon", res);
+          this.couponlist = res.data.msg;
+        });
+      } else {
+        this.coupon({
+          status: 2,
+        }).then((res) => {
+          console.log("coupon", res);
+          this.notcouponlist = res.data.msg;
+        });
+      }
     },
-    confirm(m) {
+    confirm(m, id) {
       this.discount1 = true;
       this.show = false;
       this.discount2 = `已优惠${m}元`;
+      this.id = id;
+      this.offsetamount = m;
     },
     couponitem(e, m) {
       this.active = e;
@@ -371,8 +437,14 @@ export default {
       id: e.id,
     });
     this.goldset = index.data.data;
+    console.log('goldset',this.goldset);
     if (this.goldset != undefined) {
       this.goldset = this.goldset.reverse();
+    }
+    if (this.goldset[0].accounttype) {
+      this.text = "请输入手机号码";
+    } else {
+      this.text = "请输入QQ号码";
     }
     uni.getStorage({
       key: "logininfo",
@@ -380,6 +452,13 @@ export default {
         this.token = res.data.token;
         const data = await this.getIndex(res.data.token);
         this.data = data.data.data;
+        console.log(data);
+        this.coupon({
+          status: 1,
+        }).then((res) => {
+          console.log("coupon", res);
+          this.couponlist = res.data.msg;
+        });
       },
     });
   },
@@ -527,6 +606,7 @@ export default {
             position: relative;
             display: flex;
             align-items: center;
+            justify-content: space-between;
             width: rpx(663);
             height: rpx(150);
             border: rpx(2) solid #ba894f;
@@ -535,6 +615,7 @@ export default {
             border-radius: rpx(10);
             margin: 0 auto;
             margin-bottom: rpx(18);
+            padding: 0 rpx(26);
             > .xianshi {
               position: absolute;
               top: 0;
@@ -549,18 +630,20 @@ export default {
               font-weight: 500;
               color: #fbdfbe;
             }
-            > text {
-              margin-left: rpx(26);
-              font-size: rpx(28);
-              font-weight: 400;
-              text-decoration: line-through;
-              color: #ba8c55;
-            }
             > view {
               display: flex;
-              align-items: center;
-              margin-left: rpx(30);
-              min-width: rpx(160);
+              flex-direction: column;
+              min-width: rpx(182);
+              view {
+                display: flex;
+                align-items: center;
+              }
+              .original {
+                font-size: rpx(28);
+                font-weight: 400;
+                text-decoration: line-through;
+                color: #ba8c55;
+              }
               .yuan {
                 font-size: rpx(30);
                 font-weight: bold;
@@ -574,11 +657,10 @@ export default {
             }
 
             > .main_item_l {
-              min-width: rpx(224);
+              max-width: rpx(200);
               display: flex;
               flex-direction: column;
               align-items: flex-start;
-              margin-left: rpx(26);
               > .monthcard {
                 font-size: rpx(32);
                 font-weight: bold;
@@ -595,6 +677,7 @@ export default {
             position: relative;
             display: flex;
             align-items: center;
+            justify-content: space-between;
             width: rpx(663);
             height: rpx(150);
             border: rpx(2) solid #e3e3e3;
@@ -603,6 +686,7 @@ export default {
             border-radius: rpx(10);
             margin: 0 auto;
             margin-bottom: rpx(18);
+            padding: 0 rpx(26);
             > .xianshi {
               position: absolute;
               top: 0;
@@ -623,18 +707,20 @@ export default {
               text-decoration: line-through;
               color: #d0c8c3;
             }
-            > text {
-              margin-left: rpx(26);
-              font-size: rpx(28);
-              font-weight: 400;
-              text-decoration: line-through;
-              color: #d0c8c3;
-            }
             > view {
               display: flex;
-              align-items: center;
-              margin-left: rpx(30);
-              min-width: rpx(160);
+              flex-direction: column;
+              min-width: rpx(182);
+              view {
+                display: flex;
+                align-items: center;
+              }
+              .original {
+                font-size: rpx(28);
+                font-weight: 400;
+                text-decoration: line-through;
+                color: #d0c8c3;
+              }
               .yuan {
                 font-size: rpx(30);
                 font-weight: bold;
@@ -661,8 +747,7 @@ export default {
               display: flex;
               flex-direction: column;
               align-items: flex-start;
-              margin-left: rpx(26);
-              min-width: rpx(224);
+              max-width: rpx(200);
               > .monthcard {
                 font-size: rpx(32);
                 font-weight: bold;
@@ -836,7 +921,7 @@ export default {
           .yuan {
             font-size: rpx(32);
             font-weight: bold;
-            color:#696969;
+            color: #696969;
             margin-top: rpx(30);
             margin-left: rpx(4);
           }
@@ -844,7 +929,7 @@ export default {
         .line {
           width: rpx(2);
           height: rpx(98);
-          background: #C0C0C0;
+          background: #c0c0c0;
         }
         .center {
           margin-left: rpx(54);
@@ -858,7 +943,7 @@ export default {
           .bottom {
             font-size: rpx(24);
             font-weight: 500;
-            color: #C0C0C0;
+            color: #c0c0c0;
             line-height: rpx(42);
           }
         }
