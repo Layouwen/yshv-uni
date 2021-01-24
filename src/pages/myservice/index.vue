@@ -1,22 +1,41 @@
 <template>
-  <view class='myservice-page'>
-    <view class='item' v-for="(card, index) in [1,1,1,1,1,1]" :key="index">
-      <image class='item-icon' src='/static/images/tengxun.png' />
+  <view class="myservice-page">
+    <view class="item" v-for="card in items" :key="card.id">
+      <image class="item-icon" :src="card.image" />
       <view class="item-content">
-        <text class='item-title'>腾讯视频</text>
-        <text class='time'>有效期截止：2021年04月23日</text>
+        <text class="item-title">{{ card.title }}</text>
+        <text class="time">有效期截止：{{ card.expiretime }}</text>
       </view>
-      <button class='item-btn'>{{ index }}天</button>
+      <button class="item-btn">{{ card.surplusday }}天</button>
     </view>
   </view>
 </template>
 
 <script>
+import request from '@/utils/request'
 export default {
   data () {
     return {
       items: []
     }
+  },
+  methods: {
+    async getPayProductLog () {
+      const { data: res } = await request.get({
+        header: {
+          token: uni.getStorageSync('logininfo').token
+        },
+        url: 'user/payproductlog'
+      })
+      if (res.code !== 1) {
+        uni.showToast({ title: '请求失败', icon: 'none' })
+        return
+      }
+      this.items = res.msg
+    }
+  },
+  onShow () {
+    this.getPayProductLog()
   }
 }
 </script>
