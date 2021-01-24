@@ -134,14 +134,11 @@
         closeable="true"
         close-icon-color="#000000"
         class="popup"
-        @close="close"
       >
         <view class="title">优惠券选择</view>
         <view class="maintitle">
           <view class="coupon" @click="toggle(0)">
-            <view :class="titletoggle === 0 ? 'top2' : 'top1'"
-              >可用优惠券</view
-            >
+            <view :class="titletoggle === 0 ? 'top2' : 'top1'">可用优惠券</view>
             <view class="line" v-if="titletoggle === 0"></view>
           </view>
           <view class="coupon" @click="toggle(1)">
@@ -158,7 +155,8 @@
           v-if="
             titletoggle === 0 &&
             (item.pay_product_id === 0 ||
-              item.pay_product_id === goldset[itemflag1].product_detail.product_id)
+              item.pay_product_id ===
+                goldset[itemflag1].product_detail.product_id)
           "
           :key="index"
           @click="couponitem(index)"
@@ -185,11 +183,7 @@
         <view
           class="couponitem2"
           v-for="(item, index) in notcouponlist"
-          v-if="
-            titletoggle === 1 &&
-            (item.pay_product_id === 0 ||
-              item.pay_product_id === goldset.product_detail.product_id)
-          "
+          v-if="titletoggle === 1"
           :key="index"
           @click="couponitem(index)"
         >
@@ -203,12 +197,7 @@
             <view class="bottom">截止至{{ item.date }}</view>
           </view>
         </view>
-        <view
-          v-if="titletoggle === 0"
-          class="button"
-          @click="
-            confirm(couponlist[active].offsetamount, couponlist[active].id)
-          "
+        <view v-if="titletoggle === 0" class="button" @click="confirm(active)"
           >确认</view
         >
       </u-popup>
@@ -285,9 +274,6 @@ export default {
     },
   },
   methods: {
-    close(){
-      this.active = null
-    },
     gold() {
       this.topflag = false;
     },
@@ -418,14 +404,30 @@ export default {
         });
       }
     },
-    confirm(m, id) {
+    confirm(a) {
+      if (this.active === null) {
+        this.discount2 = '选择优惠券'
+        this.discount1 = false;
+        this.show = false;
+        this.offsetamount = 0
+        this.id = null
+        return;
+      }
+      const m = this.couponlist[this.active].offsetamount;
+      const id = this.couponlist[this.active].id;
+      console.log("确认", a);
       this.discount1 = true;
       this.show = false;
       this.discount2 = `已优惠${m}元`;
       this.id = id;
       this.offsetamount = m;
+      this.active = a;
     },
-    couponitem(e, m) {
+    couponitem(e) {
+      if (this.active === e) {
+        this.active = null;
+        return;
+      }
       this.active = e;
     },
   },
@@ -437,7 +439,7 @@ export default {
       id: e.id,
     });
     this.goldset = index.data.data;
-    console.log('goldset',this.goldset);
+    console.log("goldset", this.goldset);
     if (this.goldset != undefined) {
       this.goldset = this.goldset.reverse();
     }
