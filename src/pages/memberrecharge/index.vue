@@ -169,7 +169,7 @@
             <view class="line"></view>
             <view class="center">
               <view class="top">{{ item.title }}</view>
-              <view class="bottom">截止至{{ item.etime }}</view>
+              <view class="bottom">截止至{{ item.etime }}</view> 
             </view>
 
             <view class="icon"
