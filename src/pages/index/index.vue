@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import { checkLogin, checkToken } from '@/utils/login'
 import request from '@/utils/request'
 import isIOS from '@/utils/isIOS'
 export default {
@@ -80,7 +81,10 @@ export default {
     this.adList = adList
     this.payList = payList
   },
-  onShow () { }
+  onShow () {
+    checkLogin({ status: false })
+    checkToken({ status: false })
+  }
 }
 </script>
 
