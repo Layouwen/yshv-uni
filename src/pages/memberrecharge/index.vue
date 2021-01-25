@@ -284,6 +284,11 @@ export default {
     },
     item1(e) {
       this.itemflag1 = e;
+      if(this.goldset[e].accounttype === 1){
+        this.text = '请输入手机号码'
+      }else{
+        this.text = '请输入QQ号码'
+      }
     },
     item2(e) {
       this.itemflag2 = e;
@@ -434,6 +439,7 @@ export default {
     },
   },
   async onLoad(e) {
+    
     uni.setNavigationBarTitle({
       title: e.name + "会员充值",
     });
@@ -441,14 +447,18 @@ export default {
       id: e.id,
     });
     this.goldset = index.data.data;
+    console.log(this.goldset[0].accounttype);
     console.log("goldset", this.goldset);
     if (this.goldset != undefined) {
       this.goldset = this.goldset.reverse();
     }
-    if (this.goldset[0].accounttype===1) {
-      this.text = "请输入手机号码";
-    } else {
+    console.log('qq');  
+    if (this.goldset[0].accounttype===2) {
+      console.log(this.goldset[0].accounttype,'qq');
       this.text = "请输入QQ号码";
+    } else if(this.goldset[0].accounttype===1){
+      console.log(this.goldset[0].accounttype,'qq');
+      this.text = "请输入手机号码";
     }
     uni.getStorage({
       key: "logininfo",
