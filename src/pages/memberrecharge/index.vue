@@ -49,6 +49,12 @@
               >限时7折
               </view
               > -->
+              <view
+                class="xianshi"
+                style="position: absolute; top: 0;right:0"
+              >10积分
+              </view
+              >
               <view class="main_item_l">
                 <text class="monthcard"
                 >{{ item.product_detail.item_name }}
@@ -153,8 +159,7 @@
             v-if="
               titletoggle === 0 &&
               (item.pay_product_id === 0 ||
-                item.pay_product_id ===
-                  goldset[itemflag1].id)
+                item.pay_product_id === goldset[itemflag1].id)
             "
             :key="index"
             @click="couponitem(index)"
@@ -464,6 +469,7 @@ export default {
       console.log(this.goldset[0].accounttype, 'qq')
       this.text = '请输入手机号码'
     }
+
     uni.getStorage({
       key: 'logininfo',
       success: async (res) => {
