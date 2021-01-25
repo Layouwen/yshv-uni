@@ -42,13 +42,13 @@
               v-for="(item, index) in goldset"
               :key="index"
             >
-              <!-- <view
-                v-if="index === 1"
+              <view
+                v-if="item.flag!=null"
                 class="xianshi"
                 style="position: absolute; top: 0"
-              >限时7折
+              >{{item.flag}}
               </view
-              > -->
+              >
               <view  style="position: absolute; top: 0; right: 20rpx"
                 >+{{item.score}}积分
               </view>
@@ -632,7 +632,7 @@ export default {
             display: flex;
             align-items: center;
             width: rpx(663);
-            height: rpx(150);
+            height: rpx(166);
             border: rpx(2) solid #ba894f;
             background: linear-gradient(135deg, #fef5e7 0%, #ffcf85 100%);
             box-shadow: 0px rpx(5) rpx(15) 0px rgba(45, 47, 64, 0.05);
@@ -643,7 +643,7 @@ export default {
               position: absolute;
               top: 0;
               width: rpx(148);
-              height: rpx(42);
+              height: rpx(30);
               font-size: rpx(26);
               display: flex;
               align-items: center;
@@ -701,7 +701,7 @@ export default {
             display: flex;
             align-items: center;
             width: rpx(663);
-            height: rpx(150);
+            height: rpx(166);
             border: rpx(2) solid #e3e3e3;
             background: #ffffff;
             box-shadow: 0px rpx(5) rpx(15) 0px rgba(45, 47, 64, 0.05);
@@ -712,7 +712,7 @@ export default {
               position: absolute;
               top: 0;
               width: rpx(148);
-              height: rpx(42);
+              height: rpx(30);
               font-size: rpx(26);
               display: flex;
               align-items: center;
