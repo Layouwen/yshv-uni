@@ -126,7 +126,7 @@
           />
         </view>
       </view>
-      <view class="total">共计:{{ parseFloat(total) }}元</view>
+      <view class="total">共计：{{ parseFloat(total) }}元</view>
       <u-popup
         v-model="show"
         mode="bottom"
@@ -263,7 +263,7 @@ export default {
       id: null,
       offsetamount: 0,
       text: "",
-      total: null,
+      total: 0,
       preferentialamount: 0,
     };
   },
@@ -457,9 +457,10 @@ export default {
     if (this.goldset != undefined) {
       this.goldset = this.goldset.reverse();
     }
-    this.total = this.goldset[0].price - this.preferentialamount;
+
     console.log("qq");
     if (this.goldset.length != 0) {
+      this.total = this.goldset[0].price - this.preferentialamount;
       if (this.goldset[0].accounttype === 2) {
         console.log(this.goldset[0].accounttype, "qq");
         this.text = "请输入QQ号码";
