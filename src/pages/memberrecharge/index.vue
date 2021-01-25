@@ -157,7 +157,6 @@
             :key="index"
             @click="couponitem(index)"
           >
-            <view>{{ item.pay_product_id }}{{ goldset[itemflag1].id }}</view>
             <view class="left">
               <text class="number">{{ item.offsetamount }}</text>
               <text class="yuan">元</text>
