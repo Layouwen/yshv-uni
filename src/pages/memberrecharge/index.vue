@@ -189,13 +189,13 @@
             @click="couponitem(index)"
           >
             <view class="left">
-              <text class="number">{{ item.money }}</text>
+              <text class="number">{{ item.offsetamount }}</text>
               <text class="yuan">元</text>
             </view>
             <view class="line"></view>
             <view class="center">
               <view class="top">{{ item.title }}</view>
-              <view class="bottom">截止至{{ item.date }}</view>
+              <view class="bottom">截止至{{ item.etime }}</view>
             </view>
           </view>
         </view>
