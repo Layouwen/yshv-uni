@@ -38,7 +38,7 @@
           <view v-if="topflag === false">
             <view
               :class="itemflag1 === index ? 'main_item1' : 'main_item2'"
-              @click="item1(index)"
+              @click="item1(index, item.accounttype)"
               v-for="(item, index) in goldset"
               :key="index"
             >
@@ -63,9 +63,7 @@
               <view>
                 <view>
                   <text class="yuan">￥</text>
-                  <text class="money"
-                    >{{ parseFloat(item.price) }}
-                  </text>
+                  <text class="money">{{ parseFloat(item.price) }} </text>
                 </view>
                 <view class="original"
                   >原价：{{ parseFloat(item.product_detail.original_price) }}
@@ -169,7 +167,7 @@
             <view class="line"></view>
             <view class="center">
               <view class="top">{{ item.title }}</view>
-              <view class="bottom">截止至{{ item.etime }}</view> 
+              <view class="bottom">截止至{{ item.etime }}</view>
             </view>
 
             <view class="icon"
@@ -240,7 +238,7 @@ import { checkLogin, checkToken } from "@/utils/login";
 import isIOS from "../../utils/isIOS";
 import request from "../../utils/request";
 export default {
-  data() {
+  data () {
     return {
       buttonflag: isIOS(),
       phone: "",
@@ -267,7 +265,7 @@ export default {
     };
   },
   watch: {
-    phone(val) {
+    phone (val) {
       if (this.phone !== "") {
         this.flag = this.text;
       } else {
@@ -276,30 +274,35 @@ export default {
     },
   },
   methods: {
-    gold() {
+    gold () {
       this.topflag = false;
     },
-    diamonds() {
+    diamonds () {
       this.topflag = true;
     },
-    item1(e) {
+    item1 (e, accounttype) {
       this.itemflag1 = e;
-      if(this.goldset[e].accounttype === 1){
-        this.text = '请输入手机号码'
-      }else{
-        this.text = '请输入QQ号码'
+      if (accounttype == 1) {
+        this.text = "请输入手机号码";
+      } else if (accounttype == 2) {
+        this.text = "请输入QQ号码";
       }
     },
-    item2(e) {
+    item2 (e, accounttype) {
       this.itemflag2 = e;
+      if (accounttype == 1) {
+        this.text = "请输入手机号码";
+      } else if (accounttype == 2) {
+        this.text = "请输入QQ号码";
+      }
     },
-    async getIndex(data) {
+    async getIndex (data) {
       return await request.get({
         url: "pay_product/details",
         data,
       });
     },
-    async postPay(data) {
+    async postPay (data) {
       return await request.post({
         header: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -309,7 +312,7 @@ export default {
         data,
       });
     },
-    async coupon(data) {
+    async coupon (data) {
       return await request.get({
         header: {
           token: this.token,
@@ -318,11 +321,11 @@ export default {
         data,
       });
     },
-    pay() {
+    pay () {
       if (this.phone === "") {
         uni.showToast({
           icon: "none",
-          title: "请输入手机号",
+          title: this.text,
         });
         return;
       }
@@ -390,10 +393,10 @@ export default {
         });
       }
     },
-    open() {
+    open () {
       this.show = true;
     },
-    toggle(e) {
+    toggle (e) {
       this.titletoggle = e;
       if (e === 0) {
         this.coupon({
@@ -411,7 +414,7 @@ export default {
         });
       }
     },
-    confirm(a) {
+    confirm (a) {
       if (this.active === null) {
         this.discount2 = "选择优惠券";
         this.discount1 = false;
@@ -430,7 +433,7 @@ export default {
       this.offsetamount = m;
       this.active = a;
     },
-    couponitem(e) {
+    couponitem (e) {
       if (this.active === e) {
         this.active = null;
         return;
@@ -438,8 +441,8 @@ export default {
       this.active = e;
     },
   },
-  async onLoad(e) {
-    
+  async onLoad (e) {
+
     uni.setNavigationBarTitle({
       title: e.name + "会员充值",
     });
@@ -452,12 +455,12 @@ export default {
     if (this.goldset != undefined) {
       this.goldset = this.goldset.reverse();
     }
-    console.log('qq');  
-    if (this.goldset[0].accounttype===2) {
-      console.log(this.goldset[0].accounttype,'qq');
+    console.log('qq');
+    if (this.goldset[0].accounttype === 2) {
+      console.log(this.goldset[0].accounttype, 'qq');
       this.text = "请输入QQ号码";
-    } else if(this.goldset[0].accounttype===1){
-      console.log(this.goldset[0].accounttype,'qq');
+    } else if (this.goldset[0].accounttype === 1) {
+      console.log(this.goldset[0].accounttype, 'qq');
       this.text = "请输入手机号码";
     }
     uni.getStorage({
@@ -476,7 +479,7 @@ export default {
       },
     });
   },
-  onShow() {
+  onShow () {
     checkLogin({ status: false })
     checkToken({ status: false })
   },
