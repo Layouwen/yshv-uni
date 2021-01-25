@@ -169,7 +169,7 @@
             <view class="line"></view>
             <view class="center">
               <view class="top">{{ item.title }}</view>
-              <view class="bottom">截止至{{ item.etime }}</view>
+              <view class="bottom">截止至{{ item.etime }}</view> 
             </view>
 
             <view class="icon"
@@ -189,13 +189,13 @@
             @click="couponitem(index)"
           >
             <view class="left">
-              <text class="number">{{ item.money }}</text>
+              <text class="number">{{ item.offsetamount }}</text>
               <text class="yuan">元</text>
             </view>
             <view class="line"></view>
             <view class="center">
               <view class="top">{{ item.title }}</view>
-              <view class="bottom">截止至{{ item.date }}</view>
+              <view class="bottom">截止至{{ item.etime }}</view>
             </view>
           </view>
         </view>
@@ -445,7 +445,7 @@ export default {
     if (this.goldset != undefined) {
       this.goldset = this.goldset.reverse();
     }
-    if (this.goldset[0].accounttype) {
+    if (this.goldset[0].accounttype===1) {
       this.text = "请输入手机号码";
     } else {
       this.text = "请输入QQ号码";
