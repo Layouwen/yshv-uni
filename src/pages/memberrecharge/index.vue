@@ -359,7 +359,7 @@ export default {
           category_id: item.category_id,
           thirdpartyid: item.thirdpartyid,
           type: parseInt(item.type),
-          channel_price: item.product_detail.channel_price,
+          channel_price: item.price,
           payamount: item.product_detail.channel_price,
           productname: item.product_detail.item_name,
           accounttype: item.accounttype,
