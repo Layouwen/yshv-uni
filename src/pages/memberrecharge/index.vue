@@ -49,12 +49,9 @@
               >限时7折
               </view
               > -->
-              <view
-                class="xianshi"
-                style="position: absolute; top: 0;right:0"
-              >10积分
-              </view
-              >
+              <view class="xianshi" style="position: absolute; top: 0; right: 0"
+                >10积分
+              </view>
               <view class="main_item_l">
                 <text class="monthcard"
                   >{{ item.product_detail.item_name }}
@@ -129,6 +126,7 @@
           />
         </view>
       </view>
+      <view class="total">共计:{{ parseFloat(total) }}元</view>
       <u-popup
         v-model="show"
         mode="bottom"
@@ -265,6 +263,8 @@ export default {
       id: null,
       offsetamount: 0,
       text: "",
+      total: null,
+      preferentialamount: 0,
     };
   },
   watch: {
@@ -285,6 +285,7 @@ export default {
     },
     item1(e) {
       console.log(this.goldset[e]);
+      this.total = this.goldset[e].price;
       this.itemflag1 = e;
       if (this.goldset[e].accounttype === 1) {
         this.text = "请输入手机号码";
@@ -415,6 +416,7 @@ export default {
     },
     confirm(a) {
       if (this.active === null) {
+        this.total = this.goldset[this.itemflag1].price;
         this.discount2 = "选择优惠券";
         this.discount1 = false;
         this.show = false;
@@ -422,7 +424,10 @@ export default {
         this.id = null;
         return;
       }
+
       const m = this.couponlist[this.active].offsetamount;
+      this.total = this.goldset[this.itemflag1].price - m;
+      console.log(this.preferentialamount, "preferentialamount");
       const id = this.couponlist[this.active].id;
       console.log("确认", a);
       this.discount1 = true;
@@ -452,8 +457,9 @@ export default {
     if (this.goldset != undefined) {
       this.goldset = this.goldset.reverse();
     }
-    console.log("qq"); 
-    if (this.goldset.length!=0) {
+    this.total = this.goldset[0].price - this.preferentialamount;
+    console.log("qq");
+    if (this.goldset.length != 0) {
       if (this.goldset[0].accounttype === 2) {
         console.log(this.goldset[0].accounttype, "qq");
         this.text = "请输入QQ号码";
@@ -820,6 +826,10 @@ export default {
         }
       }
     }
+    .total {
+      color: #b98a52;
+      margin: 0 rpx(21);
+    }
     > .popup {
       .title {
         display: flex;
@@ -988,7 +998,7 @@ export default {
       justify-content: center;
       align-items: center;
       margin: 0 auto;
-      margin-top: rpx(72);
+      margin-top: rpx(40);
       margin-bottom: rpx(80);
       width: rpx(711);
       height: rpx(100);
