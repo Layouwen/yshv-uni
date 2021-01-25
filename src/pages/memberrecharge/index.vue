@@ -445,7 +445,7 @@ export default {
     if (this.goldset != undefined) {
       this.goldset = this.goldset.reverse();
     }
-    if (this.goldset[0].accounttype) {
+    if (this.goldset[0].accounttype===1) {
       this.text = "请输入手机号码";
     } else {
       this.text = "请输入QQ号码";
