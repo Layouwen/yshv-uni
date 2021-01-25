@@ -38,7 +38,7 @@
           <view v-if="topflag === false">
             <view
               :class="itemflag1 === index ? 'main_item1' : 'main_item2'"
-              @click="item1(index)"
+              @click="item1(index,item.accounttype)"
               v-for="(item, index) in goldset"
               :key="index"
             >
@@ -282,11 +282,21 @@ export default {
     diamonds() {
       this.topflag = true;
     },
-    item1(e) {
+    item1(e,accounttype) {
       this.itemflag1 = e;
+	  if(accounttype==1){
+		this.text = "请输入手机号";
+	  }else if(accounttype==2){
+		this.text = "请输入QQ号码";
+	  }
     },
-    item2(e) {
+    item2(e,accounttype) {
       this.itemflag2 = e;
+	  if(accounttype==1){
+		this.text = "请输入手机号";
+	  }else if(accounttype==2){
+		this.text = "请输入QQ号码";
+	  }
     },
     async getIndex(data) {
       return await request.get({
@@ -317,7 +327,7 @@ export default {
       if (this.phone === "") {
         uni.showToast({
           icon: "none",
-          title: "请输入手机号",
+          title: this.text,
         });
         return;
       }
