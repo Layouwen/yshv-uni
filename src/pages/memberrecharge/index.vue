@@ -64,7 +64,7 @@
                 <view>
                   <text class="yuan">￥</text>
                   <text class="money"
-                    >{{ parseFloat(item.product_detail.channel_price) }}
+                    >{{ parseFloat(item.price) }}
                   </text>
                 </view>
                 <view class="original"
@@ -149,52 +149,54 @@
           </view>
         </view>
         <view></view>
-        <view
-          class="couponitem1"
-          v-for="(item, index) in couponlist"
-          v-if="
-            titletoggle === 0 &&
-            (item.pay_product_id === 0 ||
-              item.pay_product_id ===
-                goldset[itemflag1].product_detail.product_id)
-          "
-          :key="index"
-          @click="couponitem(index)"
-        >
-          <view class="left">
-            <text class="number">{{ item.offsetamount }}</text>
-            <text class="yuan">元</text>
-          </view>
-          <view class="line"></view>
-          <view class="center">
-            <view class="top">{{ item.title }}</view>
-            <view class="bottom">截止至{{ item.etime }}</view>
-          </view>
+        <view class="over">
+          <view
+            class="couponitem1"
+            v-for="(item, index) in couponlist"
+            v-if="
+              titletoggle === 0 &&
+              (item.pay_product_id === 0 ||
+                item.pay_product_id ===
+                  goldset[itemflag1].product_detail.product_id)
+            "
+            :key="index"
+            @click="couponitem(index)"
+          >
+            <view class="left">
+              <text class="number">{{ item.offsetamount }}</text>
+              <text class="yuan">元</text>
+            </view>
+            <view class="line"></view>
+            <view class="center">
+              <view class="top">{{ item.title }}</view>
+              <view class="bottom">截止至{{ item.etime }}</view>
+            </view>
 
-          <view class="icon"
-            ><u-icon
-              v-if="active === index"
-              size="48"
-              color="#BA894F"
-              name="checkmark-circle-fill"
-            ></u-icon
-          ></view>
-        </view>
-        <view
-          class="couponitem2"
-          v-for="(item, index) in notcouponlist"
-          v-if="titletoggle === 1"
-          :key="index"
-          @click="couponitem(index)"
-        >
-          <view class="left">
-            <text class="number">{{ item.money }}</text>
-            <text class="yuan">元</text>
+            <view class="icon"
+              ><u-icon
+                v-if="active === index"
+                size="48"
+                color="#BA894F"
+                name="checkmark-circle-fill"
+              ></u-icon
+            ></view>
           </view>
-          <view class="line"></view>
-          <view class="center">
-            <view class="top">{{ item.title }}</view>
-            <view class="bottom">截止至{{ item.date }}</view>
+          <view
+            class="couponitem2"
+            v-for="(item, index) in notcouponlist"
+            v-if="titletoggle === 1"
+            :key="index"
+            @click="couponitem(index)"
+          >
+            <view class="left">
+              <text class="number">{{ item.money }}</text>
+              <text class="yuan">元</text>
+            </view>
+            <view class="line"></view>
+            <view class="center">
+              <view class="top">{{ item.title }}</view>
+              <view class="bottom">截止至{{ item.date }}</view>
+            </view>
           </view>
         </view>
         <view v-if="titletoggle === 0" class="button" @click="confirm(active)"
@@ -357,7 +359,7 @@ export default {
           category_id: item.category_id,
           thirdpartyid: item.thirdpartyid,
           type: parseInt(item.type),
-          channel_price: item.product_detail.channel_price,
+          channel_price: item.price,
           payamount: item.product_detail.channel_price,
           productname: item.product_detail.item_name,
           accounttype: item.accounttype,
@@ -406,11 +408,11 @@ export default {
     },
     confirm(a) {
       if (this.active === null) {
-        this.discount2 = '选择优惠券'
+        this.discount2 = "选择优惠券";
         this.discount1 = false;
         this.show = false;
-        this.offsetamount = 0
-        this.id = null
+        this.offsetamount = 0;
+        this.id = null;
         return;
       }
       const m = this.couponlist[this.active].offsetamount;
@@ -844,112 +846,117 @@ export default {
           }
         }
       }
-      .couponitem1 {
-        display: flex;
-        align-items: center;
-        margin: 0 auto;
-        margin-bottom: rpx(20);
-        width: rpx(712);
-        height: rpx(172);
-        border: rpx(2) solid #ba894f;
-        border-radius: rpx(10);
-        background: linear-gradient(135deg, #fef5e7 0%, #ffcf85 100%);
-        .left {
+      .over {
+        max-height: rpx(363);
+        overflow: auto;
+        .couponitem1 {
           display: flex;
-          justify-content: center;
-          width: rpx(211);
-          .number {
-            font-size: rpx(61);
-            font-weight: 400;
-            color: #4d321b;
-          }
-          .yuan {
-            font-size: rpx(32);
-            font-weight: bold;
-            color: #4d321b;
-            margin-top: rpx(30);
-            margin-left: rpx(4);
-          }
-        }
-        .line {
-          width: rpx(2);
-          height: rpx(98);
-          background: #c7b3a2;
-        }
-        .center {
-          margin-left: rpx(54);
-          min-width: rpx(353);
-          .top {
-            font-size: rpx(28);
-            font-weight: bold;
-            color: #333333;
-            line-height: rpx(42);
-          }
-          .bottom {
-            font-size: rpx(24);
-            font-weight: 500;
-            color: #95867a;
-            line-height: rpx(42);
-          }
-        }
-        .icon {
-          display: flex;
-          justify-content: center;
           align-items: center;
-          width: rpx(38);
-          height: rpx(38);
-          border-radius: 50%;
-          border: rpx(4) solid #ba894f;
+          margin: 0 auto;
+          margin-bottom: rpx(20);
+          width: rpx(712);
+          height: rpx(172);
+          border: rpx(2) solid #ba894f;
+          border-radius: rpx(10);
+          background: linear-gradient(135deg, #fef5e7 0%, #ffcf85 100%);
+          .left {
+            display: flex;
+            justify-content: center;
+            width: rpx(211);
+            .number {
+              font-size: rpx(61);
+              font-weight: 400;
+              color: #4d321b;
+            }
+            .yuan {
+              font-size: rpx(32);
+              font-weight: bold;
+              color: #4d321b;
+              margin-top: rpx(30);
+              margin-left: rpx(4);
+            }
+          }
+          .line {
+            width: rpx(2);
+            height: rpx(98);
+            background: #c7b3a2;
+          }
+          .center {
+            margin-left: rpx(54);
+            min-width: rpx(353);
+            .top {
+              font-size: rpx(28);
+              font-weight: bold;
+              color: #333333;
+              line-height: rpx(42);
+            }
+            .bottom {
+              font-size: rpx(24);
+              font-weight: 500;
+              color: #95867a;
+              line-height: rpx(42);
+            }
+          }
+          .icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: rpx(38);
+            height: rpx(38);
+            border-radius: 50%;
+            border: rpx(4) solid #ba894f;
+          }
         }
-      }
-      .couponitem2 {
-        display: flex;
-        align-items: center;
-        margin: 0 auto;
-        margin-bottom: rpx(20);
-        width: rpx(712);
-        height: rpx(172);
-        border-radius: rpx(10);
-        background: linear-gradient(135deg, #f6f6f6 0%, #e6e6e6 100%);
-        .left {
+        .couponitem2 {
           display: flex;
-          justify-content: center;
-          width: rpx(211);
-          .number {
-            font-size: rpx(61);
-            font-weight: 400;
-            color: #696969;
+          align-items: center;
+          margin: 0 auto;
+          margin-bottom: rpx(20);
+          width: rpx(712);
+          height: rpx(172);
+          border-radius: rpx(10);
+          background: linear-gradient(135deg, #f6f6f6 0%, #e6e6e6 100%);
+          .left {
+            display: flex;
+            justify-content: center;
+            width: rpx(211);
+            .number {
+              font-size: rpx(61);
+              font-weight: 400;
+              color: #696969;
+            }
+            .yuan {
+              font-size: rpx(32);
+              font-weight: bold;
+              color: #696969;
+              margin-top: rpx(30);
+              margin-left: rpx(4);
+            }
           }
-          .yuan {
-            font-size: rpx(32);
-            font-weight: bold;
-            color: #696969;
-            margin-top: rpx(30);
-            margin-left: rpx(4);
+          .line {
+            width: rpx(2);
+            height: rpx(98);
+            background: #c0c0c0;
           }
-        }
-        .line {
-          width: rpx(2);
-          height: rpx(98);
-          background: #c0c0c0;
-        }
-        .center {
-          margin-left: rpx(54);
-          min-width: rpx(353);
-          .top {
-            font-size: rpx(28);
-            font-weight: bold;
-            color: #696969;
-            line-height: rpx(42);
-          }
-          .bottom {
-            font-size: rpx(24);
-            font-weight: 500;
-            color: #c0c0c0;
-            line-height: rpx(42);
+          .center {
+            margin-left: rpx(54);
+            min-width: rpx(353);
+            .top {
+              font-size: rpx(28);
+              font-weight: bold;
+              color: #696969;
+              line-height: rpx(42);
+            }
+            .bottom {
+              font-size: rpx(24);
+              font-weight: 500;
+              color: #c0c0c0;
+              line-height: rpx(42);
+            }
           }
         }
       }
+
       .button {
         display: flex;
         justify-content: center;
