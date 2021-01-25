@@ -49,8 +49,8 @@
               >限时7折
               </view
               > -->
-              <view class="xianshi" style="position: absolute; top: 0; right: 0"
-                >10积分
+              <view  style="position: absolute; top: 0; right: 20rpx"
+                >+{{item.score}}积分
               </view>
               <view class="main_item_l">
                 <text class="monthcard"
@@ -63,7 +63,7 @@
                 <text class="month" v-if="item.type === '5'">6个月</text>
                 <text class="month" v-if="item.type === '6'">12个月</text>
               </view>
-              <view>
+              <view class="price">
                 <text class="yuan">￥</text>
                 <text class="money">{{ parseFloat(item.price) }} </text>
               </view>
@@ -660,7 +660,7 @@ export default {
               text-decoration: line-through;
               color: #ba8c55;
             }
-            > view {
+            > .price {
               display: flex;
               align-items: center;
               margin-left: rpx(30);
@@ -735,7 +735,7 @@ export default {
               text-decoration: line-through;
               color: #d0c8c3;
             }
-            > view {
+            > .price {
               display: flex;
               align-items: center;
               margin-left: rpx(30);
