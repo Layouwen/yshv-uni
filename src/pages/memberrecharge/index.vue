@@ -452,7 +452,7 @@ export default {
     if (this.goldset != undefined) {
       this.goldset = this.goldset.reverse();
     }
-    console.log("qq");
+    console.log("qq"); 
     if (this.goldset.length!=0) {
       if (this.goldset[0].accounttype === 2) {
         console.log(this.goldset[0].accounttype, "qq");
