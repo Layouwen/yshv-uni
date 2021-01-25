@@ -51,7 +51,7 @@
               > -->
               <view class="main_item_l">
                 <text class="monthcard"
-                  >{{ item.product_detail.item_name }}
+                >{{ item.product_detail.item_name }}
                 </text>
                 <text class="month" v-if="item.type === '1'">1天</text>
                 <text class="month" v-if="item.type === '2'">1周</text>
@@ -61,21 +61,11 @@
                 <text class="month" v-if="item.type === '6'">12个月</text>
               </view>
               <view>
-                <<<<<<< HEAD
-                <view>
-                  <text class="yuan">￥</text>
-                  <text class="money">{{ parseFloat(item.price) }} </text>
-                </view>
-                <view class="original"
-                  >原价：{{ parseFloat(item.product_detail.original_price) }}
-                </view>
-                =======
                 <text class="yuan">￥</text>
-                <text class="money">{{ parseFloat(item.price) }} </text>
-                >>>>>>> memberrecharge
+                <text class="money">{{ parseFloat(item.price) }}</text>
               </view>
               <text
-                >原价：{{ parseFloat(item.product_detail.original_price) }}
+              >原价：{{ parseFloat(item.product_detail.original_price) }}
               </text>
             </view>
           </view>
@@ -149,7 +139,8 @@
           </view>
           <view class="coupon" @click="toggle(1)">
             <view :class="titletoggle === 1 ? 'top2' : 'top1'"
-              >已使用优惠券</view
+            >已使用优惠券
+            </view
             >
             <view class="line" v-if="titletoggle === 1"></view>
           </view>
@@ -179,13 +170,15 @@
             </view>
 
             <view class="icon"
-              ><u-icon
+            >
+              <u-icon
                 v-if="active === index"
                 size="48"
                 color="#BA894F"
                 name="checkmark-circle-fill"
               ></u-icon
-            ></view>
+              >
+            </view>
           </view>
           <view
             class="couponitem2"
@@ -206,11 +199,12 @@
           </view>
         </view>
         <view v-if="titletoggle === 0" class="button" @click="confirm(active)"
-          >确认</view
+        >确认
+        </view
         >
       </u-popup>
       <view class="button2" v-if="buttonflag === true"
-        >由于相关规定，IOS功能暂不可用
+      >由于相关规定，IOS功能暂不可用
       </view>
       <view class="button1" @click="pay" v-else>立即开通</view>
       <!-- <u-loading
@@ -242,15 +236,15 @@
 </template>
 
 <script>
-import { checkLogin, checkToken } from "@/utils/login";
-import isIOS from "../../utils/isIOS";
-import request from "../../utils/request";
+import { checkLogin, checkToken } from '@/utils/login'
+import isIOS from '../../utils/isIOS'
+import request from '../../utils/request'
 export default {
   data () {
     return {
       buttonflag: isIOS(),
-      phone: "",
-      flag: "",
+      phone: '',
+      flag: '',
       topflag: false,
       itemflag1: 0,
       itemflag2: 0,
@@ -258,7 +252,7 @@ export default {
       diaset: [],
       goldCardList: [],
       diaCardList: [],
-      token: "",
+      token: '',
       // loading: false,
       show: false,
       couponlist: [],
@@ -266,78 +260,78 @@ export default {
       titletoggle: 0,
       active: null,
       discount1: false,
-      discount2: "选择优惠券",
+      discount2: '选择优惠券',
       id: null,
       offsetamount: 0,
-      text: "",
-    };
+      text: ''
+    }
   },
   watch: {
     phone (val) {
-      if (this.phone !== "") {
-        this.flag = this.text;
+      if (this.phone !== '') {
+        this.flag = this.text
       } else {
-        this.flag = "";
+        this.flag = ''
       }
-    },
+    }
   },
   methods: {
     gold () {
-      this.topflag = false;
+      this.topflag = false
     },
     diamonds () {
-      this.topflag = true;
+      this.topflag = true
     },
     item1 (e, accounttype) {
-      this.itemflag1 = e;
+      this.itemflag1 = e
       if (accounttype == 1) {
-        this.text = "请输入手机号码";
+        this.text = '请输入手机号码'
       } else if (accounttype == 2) {
-        this.text = "请输入QQ号码";
+        this.text = '请输入QQ号码'
       }
     },
     item2 (e, accounttype) {
-      this.itemflag2 = e;
+      this.itemflag2 = e
       if (accounttype == 1) {
-        this.text = "请输入手机号码";
+        this.text = '请输入手机号码'
       } else if (accounttype == 2) {
-        this.text = "请输入QQ号码";
+        this.text = '请输入QQ号码'
       }
     },
     async getIndex (data) {
       return await request.get({
-        url: "pay_product/details",
-        data,
-      });
+        url: 'pay_product/details',
+        data
+      })
     },
     async postPay (data) {
       return await request.post({
         header: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          token: this.token,
+          'Content-Type': 'application/x-www-form-urlencoded',
+          token: this.token
         },
-        url: "pay_product/pay",
-        data,
-      });
+        url: 'pay_product/pay',
+        data
+      })
     },
     async coupon (data) {
       return await request.get({
         header: {
-          token: this.token,
+          token: this.token
         },
-        url: "user/coupons",
-        data,
-      });
+        url: 'user/coupons',
+        data
+      })
     },
     pay () {
-      if (this.phone === "") {
+      if (this.phone === '') {
         uni.showToast({
-          icon: "none",
-          title: this.text,
-        });
-        return;
+          icon: 'none',
+          title: this.text
+        })
+        return
       }
-      const item = this.goldset[this.itemflag1];
+      const item = this.goldset[this.itemflag1]
       if (this.offsetamount === 0) {
         this.postPay({
           id: item.id,
@@ -348,26 +342,26 @@ export default {
           channel_price: item.product_detail.channel_price,
           payamount: item.price,
           productname: item.product_detail.item_name,
-          accounttype: item.accounttype,
+          accounttype: item.accounttype
         }).then((res) => {
-          console.log(res);
-          this.loading = true;
-          if (res.data.msg == "手机号格式错误") {
+          console.log(res)
+          this.loading = true
+          if (res.data.msg == '手机号格式错误') {
             uni.showToast({
-              icon: "none",
-              title: "手机号格式错误",
-            });
-            return;
+              icon: 'none',
+              title: '手机号格式错误'
+            })
+            return
           } else if (res.data.code === 1) {
-            this.loading = false;
-            const result = uni.requestPayment(res.data.data);
+            this.loading = false
+            const result = uni.requestPayment(res.data.data)
             if (result[1]) {
               uni.showToast({
-                title: "支付成功",
-              });
+                title: '支付成功'
+              })
             }
           }
-        });
+        })
       } else {
         this.postPay({
           id: item.id,
@@ -379,132 +373,118 @@ export default {
           payamount: item.price,
           productname: item.product_detail.item_name,
           accounttype: item.accounttype,
-          user_coupon_id: this.id,
+          user_coupon_id: this.id
         }).then((res) => {
-          console.log(res);
-          this.loading = true;
-          if (res.data.msg == "手机号格式错误") {
+          console.log(res)
+          this.loading = true
+          if (res.data.msg == '手机号格式错误') {
             uni.showToast({
-              icon: "none",
-              title: "手机号格式错误",
-            });
-            return;
+              icon: 'none',
+              title: '手机号格式错误'
+            })
+            return
           } else if (res.data.code === 1) {
-            this.loading = false;
-            const result = uni.requestPayment(res.data.data);
+            this.loading = false
+            const result = uni.requestPayment(res.data.data)
             if (result[1]) {
               uni.showToast({
-                title: "支付成功",
-              });
+                title: '支付成功'
+              })
             }
           }
-        });
+        })
       }
     },
     open () {
-      this.show = true;
+      this.show = true
     },
     toggle (e) {
-      this.titletoggle = e;
+      this.titletoggle = e
       if (e === 0) {
         this.coupon({
-          status: 1,
+          status: 1
         }).then((res) => {
-          console.log("coupon", res);
-          this.couponlist = res.data.msg;
-        });
+          console.log('coupon', res)
+          this.couponlist = res.data.msg
+        })
       } else {
         this.coupon({
-          status: 2,
+          status: 2
         }).then((res) => {
-          console.log("coupon", res);
-          this.notcouponlist = res.data.msg;
-        });
+          console.log('coupon', res)
+          this.notcouponlist = res.data.msg
+        })
       }
     },
     confirm (a) {
       if (this.active === null) {
-        this.discount2 = "选择优惠券";
-        this.discount1 = false;
-        this.show = false;
-        this.offsetamount = 0;
-        this.id = null;
-        return;
+        this.discount2 = '选择优惠券'
+        this.discount1 = false
+        this.show = false
+        this.offsetamount = 0
+        this.id = null
+        return
       }
-      const m = this.couponlist[this.active].offsetamount;
-      const id = this.couponlist[this.active].id;
-      console.log("确认", a);
-      this.discount1 = true;
-      this.show = false;
-      this.discount2 = `已优惠${m}元`;
-      this.id = id;
-      this.offsetamount = m;
-      this.active = a;
+      const m = this.couponlist[this.active].offsetamount
+      const id = this.couponlist[this.active].id
+      console.log('确认', a)
+      this.discount1 = true
+      this.show = false
+      this.discount2 = `已优惠${m}元`
+      this.id = id
+      this.offsetamount = m
+      this.active = a
     },
     couponitem (e) {
       if (this.active === e) {
-        this.active = null;
-        return;
+        this.active = null
+        return
       }
-      this.active = e;
-    },
-  },
-<<<<<<< HEAD
-  async onLoad (e) {
-
-=======
-  async onLoad(e) {
->>>>>>> memberrecharge
-    uni.setNavigationBarTitle({
-      title: e.name + "会员充值",
-    });
-    const index = await this.getIndex({
-      id: e.id,
-    });
-    this.goldset = index.data.data;
-    console.log(this.goldset[0].accounttype);
-    console.log("goldset", this.goldset);
-    if (this.goldset != undefined) {
-      this.goldset = this.goldset.reverse();
+      this.active = e
     }
-<<<<<<< HEAD
-    console.log('qq');
+  },
+  async onLoad (e) {
+    uni.setNavigationBarTitle({
+      title: e.name + '会员充值'
+    })
+    const index = await this.getIndex({
+      id: e.id
+    })
+    this.goldset = index.data.data
+    console.log(this.goldset[0].accounttype)
+    console.log('goldset', this.goldset)
+    if (this.goldset != undefined) {
+      this.goldset = this.goldset.reverse()
+    }
+    console.log('qq')
     if (this.goldset[0].accounttype === 2) {
-      console.log(this.goldset[0].accounttype, 'qq');
-      this.text = "请输入QQ号码";
+      console.log(this.goldset[0].accounttype, 'qq')
+      this.text = '请输入QQ号码'
     } else if (this.goldset[0].accounttype === 1) {
-      console.log(this.goldset[0].accounttype, 'qq');
-=======
-    console.log("qq");
-    if (this.goldset[0].accounttype === 2) {
-      console.log(this.goldset[0].accounttype, "qq");
-      this.text = "请输入QQ号码";
-    } else if (this.goldset[0].accounttype === 1) {
-      console.log(this.goldset[0].accounttype, "qq");
->>>>>>> memberrecharge
-      this.text = "请输入手机号码";
+      console.log(this.goldset[0].accounttype, 'qq')
+      this.text = '请输入手机号码'
     }
     uni.getStorage({
-      key: "logininfo",
+      key: 'logininfo',
       success: async (res) => {
-        this.token = res.data.token;
-        const data = await this.getIndex(res.data.token);
-        this.data = data.data.data;
-        console.log(data);
+        this.token = res.data.token
+        const data = await this.getIndex(res.data.token)
+        this.data = data.data.data
+        console.log(data)
         this.coupon({
-          status: 1,
+          status: 1
         }).then((res) => {
-          console.log("coupon", res);
-          this.couponlist = res.data.msg;
-        });
-      },
-    });
+          console.log('coupon', res)
+          this.couponlist = res.data.msg
+        })
+      }
+    })
   },
   onShow () {
     checkLogin({ status: false })
     checkToken({ status: false })
-  },
-};
+  }
+}
 </script>
 
 <style lang="scss">

@@ -1,7 +1,7 @@
 <template>
   <view class="index-page">
     <view class="user-wrapper" />
-    <u-notice-bar class="bar" mode="horizontal" :list="['由于平台规定，ios暂不支持使用，安卓可以正常使用。']" />
+    <u-notice-bar v-if="!showBtn" class="bar" mode="horizontal" :list="['由于平台规定，ios暂不支持使用，安卓可以正常使用。']" />
     <view class="top">
       <u-swiper
         class="swiper"
