@@ -285,7 +285,7 @@ export default {
     item1(e,accounttype) {
       this.itemflag1 = e;
 	  if(accounttype==1){
-		this.text = "请输入手机号";
+		this.text = "请输入手机号码";
 	  }else if(accounttype==2){
 		this.text = "请输入QQ号码";
 	  }
@@ -293,7 +293,7 @@ export default {
     item2(e,accounttype) {
       this.itemflag2 = e;
 	  if(accounttype==1){
-		this.text = "请输入手机号";
+		this.text = "请输入手机号码";
 	  }else if(accounttype==2){
 		this.text = "请输入QQ号码";
 	  }
