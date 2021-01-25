@@ -61,16 +61,12 @@
                 <text class="month" v-if="item.type === '6'">12个月</text>
               </view>
               <view>
-                <view>
-                  <text class="yuan">￥</text>
-                  <text class="money"
-                    >{{ parseFloat(item.price) }}
-                  </text>
-                </view>
-                <view class="original"
-                  >原价：{{ parseFloat(item.product_detail.original_price) }}
-                </view>
+                <text class="yuan">￥</text>
+                <text class="money">{{ parseFloat(item.price) }} </text>
               </view>
+              <text
+                >原价：{{ parseFloat(item.product_detail.original_price) }}
+              </text>
             </view>
           </view>
           <!-- <view v-else>
@@ -169,7 +165,7 @@
             <view class="line"></view>
             <view class="center">
               <view class="top">{{ item.title }}</view>
-              <view class="bottom">截止至{{ item.etime }}</view> 
+              <view class="bottom">截止至{{ item.etime }}</view>
             </view>
 
             <view class="icon"
@@ -284,10 +280,10 @@ export default {
     },
     item1(e) {
       this.itemflag1 = e;
-      if(this.goldset[e].accounttype === 1){
-        this.text = '请输入手机号码'
-      }else{
-        this.text = '请输入QQ号码'
+      if (this.goldset[e].accounttype === 1) {
+        this.text = "请输入手机号码";
+      } else {
+        this.text = "请输入QQ号码";
       }
     },
     item2(e) {
@@ -439,7 +435,6 @@ export default {
     },
   },
   async onLoad(e) {
-    
     uni.setNavigationBarTitle({
       title: e.name + "会员充值",
     });
@@ -452,12 +447,12 @@ export default {
     if (this.goldset != undefined) {
       this.goldset = this.goldset.reverse();
     }
-    console.log('qq');  
-    if (this.goldset[0].accounttype===2) {
-      console.log(this.goldset[0].accounttype,'qq');
+    console.log("qq");
+    if (this.goldset[0].accounttype === 2) {
+      console.log(this.goldset[0].accounttype, "qq");
       this.text = "请输入QQ号码";
-    } else if(this.goldset[0].accounttype===1){
-      console.log(this.goldset[0].accounttype,'qq');
+    } else if (this.goldset[0].accounttype === 1) {
+      console.log(this.goldset[0].accounttype, "qq");
       this.text = "请输入手机号码";
     }
     uni.getStorage({
@@ -620,7 +615,6 @@ export default {
             position: relative;
             display: flex;
             align-items: center;
-            justify-content: space-between;
             width: rpx(663);
             height: rpx(150);
             border: rpx(2) solid #ba894f;
@@ -629,7 +623,6 @@ export default {
             border-radius: rpx(10);
             margin: 0 auto;
             margin-bottom: rpx(18);
-            padding: 0 rpx(26);
             > .xianshi {
               position: absolute;
               top: 0;
@@ -644,20 +637,18 @@ export default {
               font-weight: 500;
               color: #fbdfbe;
             }
+            > text {
+              margin-left: rpx(26);
+              font-size: rpx(28);
+              font-weight: 400;
+              text-decoration: line-through;
+              color: #ba8c55;
+            }
             > view {
               display: flex;
-              flex-direction: column;
-              min-width: rpx(182);
-              view {
-                display: flex;
-                align-items: center;
-              }
-              .original {
-                font-size: rpx(28);
-                font-weight: 400;
-                text-decoration: line-through;
-                color: #ba8c55;
-              }
+              align-items: center;
+              margin-left: rpx(30);
+              min-width: rpx(204);
               .yuan {
                 font-size: rpx(30);
                 font-weight: bold;
@@ -671,11 +662,13 @@ export default {
             }
 
             > .main_item_l {
-              max-width: rpx(200);
+              min-width: rpx(224);
               display: flex;
               flex-direction: column;
               align-items: flex-start;
+              margin-left: rpx(26);
               > .monthcard {
+                max-width: rpx(190);
                 font-size: rpx(32);
                 font-weight: bold;
                 color: #333333;
@@ -691,7 +684,6 @@ export default {
             position: relative;
             display: flex;
             align-items: center;
-            justify-content: space-between;
             width: rpx(663);
             height: rpx(150);
             border: rpx(2) solid #e3e3e3;
@@ -700,7 +692,6 @@ export default {
             border-radius: rpx(10);
             margin: 0 auto;
             margin-bottom: rpx(18);
-            padding: 0 rpx(26);
             > .xianshi {
               position: absolute;
               top: 0;
@@ -721,20 +712,18 @@ export default {
               text-decoration: line-through;
               color: #d0c8c3;
             }
+            > text {
+              margin-left: rpx(26);
+              font-size: rpx(28);
+              font-weight: 400;
+              text-decoration: line-through;
+              color: #d0c8c3;
+            }
             > view {
               display: flex;
-              flex-direction: column;
-              min-width: rpx(182);
-              view {
-                display: flex;
-                align-items: center;
-              }
-              .original {
-                font-size: rpx(28);
-                font-weight: 400;
-                text-decoration: line-through;
-                color: #d0c8c3;
-              }
+              align-items: center;
+              margin-left: rpx(30);
+              min-width: rpx(204);
               .yuan {
                 font-size: rpx(30);
                 font-weight: bold;
@@ -761,8 +750,10 @@ export default {
               display: flex;
               flex-direction: column;
               align-items: flex-start;
-              max-width: rpx(200);
+              margin-left: rpx(26);
+              min-width: rpx(224);
               > .monthcard {
+                max-width: rpx(190);
                 font-size: rpx(32);
                 font-weight: bold;
                 color: #333333;
