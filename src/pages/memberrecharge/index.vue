@@ -152,12 +152,12 @@
             v-if="
               titletoggle === 0 &&
               (item.pay_product_id === 0 ||
-                item.pay_product_id ===
-                  goldset[itemflag1].id)
+                item.pay_product_id === goldset[itemflag1].id)
             "
             :key="index"
             @click="couponitem(index)"
           >
+            <view>{{ item.pay_product_id }}{{ goldset[itemflag1].id }}</view>
             <view class="left">
               <text class="number">{{ item.offsetamount }}</text>
               <text class="yuan">元</text>
@@ -279,6 +279,7 @@ export default {
       this.topflag = true;
     },
     item1(e) {
+      console.log(this.goldset[e]);
       this.itemflag1 = e;
       if (this.goldset[e].accounttype === 1) {
         this.text = "请输入手机号码";
@@ -442,23 +443,26 @@ export default {
       id: e.id,
     });
     this.goldset = index.data.data;
-    console.log(this.goldset[0].accounttype);
     console.log("goldset", this.goldset);
     if (this.goldset != undefined) {
       this.goldset = this.goldset.reverse();
     }
     console.log("qq");
-    if (this.goldset[0].accounttype === 2) {
-      console.log(this.goldset[0].accounttype, "qq");
-      this.text = "请输入QQ号码";
-    } else if (this.goldset[0].accounttype === 1) {
-      console.log(this.goldset[0].accounttype, "qq");
-      this.text = "请输入手机号码";
+    if (this.goldset.length!=0) {
+      if (this.goldset[0].accounttype === 2) {
+        console.log(this.goldset[0].accounttype, "qq");
+        this.text = "请输入QQ号码";
+      } else if (this.goldset[0].accounttype === 1) {
+        console.log(this.goldset[0].accounttype, "qq");
+        this.text = "请输入手机号码";
+      }
     }
+
     uni.getStorage({
       key: "logininfo",
       success: async (res) => {
         this.token = res.data.token;
+        console.log(this.token, "token");
         const data = await this.getIndex(res.data.token);
         this.data = data.data.data;
         console.log(data);
