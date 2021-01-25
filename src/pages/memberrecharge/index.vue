@@ -49,6 +49,12 @@
               >限时7折
               </view
               > -->
+              <view
+                class="xianshi"
+                style="position: absolute; top: 0;right:0"
+              >10积分
+              </view
+              >
               <view class="main_item_l">
                 <text class="monthcard"
                   >{{ item.product_detail.item_name }}
