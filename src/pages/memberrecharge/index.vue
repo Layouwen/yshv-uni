@@ -163,7 +163,7 @@
               titletoggle === 0 &&
               (item.pay_product_id === 0 ||
                 item.pay_product_id ===
-                  goldset[itemflag1].product_detail.product_id)
+                  goldset[itemflag1].id)
             "
             :key="index"
             @click="couponitem(index)"
