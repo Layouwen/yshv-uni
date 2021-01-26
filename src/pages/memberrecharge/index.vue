@@ -45,13 +45,10 @@
               <view
                 v-if="item.flag"
                 class="xianshi"
-                style="position: absolute; top: 0"
-              >{{item.flag}}
-              </view
-              >
-              <view  style="position: absolute; top: 0; right: 20rpx"
-                >+{{item.score}}积分
+                style="position: absolute; top: -2rpx; right: -2rpx"
+                >{{ item.flag }}
               </view>
+              <view class="jifen">+{{ item.score }}积分 </view>
               <view class="main_item_l">
                 <text class="monthcard"
                   >{{ item.product_detail.item_name }}
@@ -643,15 +640,21 @@ export default {
               position: absolute;
               top: 0;
               width: rpx(148);
-              height: rpx(30);
+              height: rpx(40);
               font-size: rpx(26);
               display: flex;
               align-items: center;
               justify-content: center;
               background: linear-gradient(135deg, #626667 0%, #3a3e3d 100%);
-              border-radius: rpx(10) 0 rpx(10) 0;
+              border-radius: 0 rpx(10) 0 rpx(10);
               font-weight: 500;
               color: #fbdfbe;
+            }
+            > .jifen {
+              position: absolute;
+              bottom: 0;
+              right: 20rpx;
+              color: white;
             }
             > text {
               margin-left: rpx(26);
@@ -712,14 +715,20 @@ export default {
               position: absolute;
               top: 0;
               width: rpx(148);
-              height: rpx(30);
+              height: rpx(40);
               font-size: rpx(26);
               display: flex;
               align-items: center;
               justify-content: center;
               background: linear-gradient(135deg, #626667 0%, #3a3e3d 100%);
-              border-radius: rpx(10) 0 rpx(10) 0;
+              border-radius: 0 rpx(10) 0 rpx(10);
               font-weight: 500;
+              color: #fbdfbe;
+            }
+            > .jifen {
+              position: absolute;
+              bottom: 0;
+              right: 20rpx;
               color: #fbdfbe;
             }
             > .yj {
