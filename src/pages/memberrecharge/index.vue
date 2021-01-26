@@ -43,7 +43,7 @@
               :key="index"
             >
               <view
-                v-if="item.flag!=null"
+                v-if="item.flag"
                 class="xianshi"
                 style="position: absolute; top: 0"
               >{{item.flag}}

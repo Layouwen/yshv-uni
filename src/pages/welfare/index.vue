@@ -114,7 +114,7 @@ export default {
     return {
       flag: false,
       flag1: false,
-      topoption: ['积分兑换', '物品状态', '积分记录'],
+      topoption: ['积分兑换', '物品状态', '积分任务'],
       exchangeindex: 1,
       toggle1: '查看物流',
       mainb: [
