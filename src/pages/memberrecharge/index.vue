@@ -148,15 +148,14 @@
         <view></view>
         <view class="over">
           <view
-            class="couponitem1"
             v-for="(item, index) in couponlist"
-            v-if="
-              titletoggle === 0 &&
+            :class="
               (item.pay_product_id === 0 ||
-                item.pay_product_id === goldset[itemflag1].id)
+              item.pay_product_id === goldset[itemflag1].id)?'couponitem1':'couponitem2'
             "
+            v-if="titletoggle === 0"
             :key="index"
-            @click="couponitem(index)"
+            @click="couponitem(index, item)"
           >
             <view class="left">
               <text class="number">{{ item.offsetamount }}</text>
@@ -282,6 +281,7 @@ export default {
     },
     item1(e) {
       console.log(this.goldset[e]);
+      this.active = null;
       this.total = this.goldset[e].price;
       this.itemflag1 = e;
       if (this.goldset[e].accounttype === 1) {
@@ -434,12 +434,16 @@ export default {
       this.offsetamount = m;
       this.active = a;
     },
-    couponitem(e) {
+    couponitem(e, item) {
       if (this.active === e) {
         this.active = null;
         return;
+      } else if (
+        item.pay_product_id === 0 ||
+        item.pay_product_id === this.goldset[this.itemflag1].id
+      ) {
+        this.active = e;
       }
-      this.active = e;
     },
   },
   async onLoad(e) {
