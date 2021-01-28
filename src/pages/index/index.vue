@@ -8,6 +8,7 @@
         interval="3000"
         img-mode="scaleToFill"
         :list="adList"
+        @click="onLinkAd"
       ></u-swiper>
     </view>
     <view class="padding" style="padding: 28rpx 0 22rpx 0">
@@ -56,6 +57,12 @@ export default {
     }
   },
   methods: {
+    onLinkAd (index) {
+      const { link, type, xcxappid } = this.adList[index]
+      if (type === '1') uni.navigateTo({ url: link })
+      if (type === '2') uni.navigateToMiniProgram({ appId: xcxappid, path: link })
+      if (type === '3') uni.navigateTo({ url: `/pages/index/website?url=${link}` })
+    },
     async getIndex () {
       return request.get({
         url: 'index/index'
@@ -73,15 +80,11 @@ export default {
   },
   async onShow () {
     const indexData = await this.getIndex()
-    const {
-      data: {
-        data: { AdList: adList, PayProductCategoryList: payList }
-      }
-    } = indexData
+    const { data: { data: { AdList: adList, PayProductCategoryList: payList } } } = indexData
     this.adList = adList
     this.payList = payList
-    checkLogin({ status: false })
-    checkToken({ status: false })
+    await checkLogin({ status: false })
+    await checkToken({ status: false })
   }
 }
 </script>
