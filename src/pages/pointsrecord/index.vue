@@ -2,7 +2,9 @@
   <view class="pointsrecord">
     <view class="item-wrapper" v-for="item in itemList" :key="item.id">
       <view class="title">{{ item.memo }}</view>
-      <view class="number" :class="color(item) ? 'color' : ''">{{ money(item) }}</view>
+      <view class="number" :class="color(item) ? 'color' : ''">{{
+        money(item)
+      }}</view>
     </view>
   </view>
 </template>
@@ -20,7 +22,7 @@ export default {
       const { data } = await request.get({
         url: 'user/scorelog',
         header: {
-          'token': uni.getStorageSync('logininfo').token
+          token: uni.getStorageSync('logininfo').token
         }
       })
       if (data.code !== 1) uni.showToast({ title: '请求失败', icon: 'none' })
@@ -63,7 +65,7 @@ export default {
       font-weight: 500;
       color: #666;
       &.color {
-        color: #B98A52;
+        color: #b98a52;
       }
     }
   }

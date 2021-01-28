@@ -2,24 +2,25 @@
   <view class="mine-page">
     <view class="user-wrapper">
       <button
-          class="avatar"
-          v-if="!userinfo"
-          open-type="getUserInfo"
-          @getuserinfo="getUserInfo"
+        class="avatar"
+        v-if="!userinfo"
+        open-type="getUserInfo"
+        @getuserinfo="getUserInfo"
       />
       <image
-          class="avatar"
-          v-if="userinfo"
-          mode="aspectFill"
-          :src="logininfo ? logininfo.avatar : userinfo.avatarUrl"
+        class="avatar"
+        v-if="userinfo"
+        mode="aspectFill"
+        :src="logininfo ? logininfo.avatar : userinfo.avatarUrl"
       />
       <view class="content">
-        <view class="name">{{
+        <view class="name"
+          >{{
             logininfo
-                ? logininfo.username
-                : userinfo
-                ? userinfo.nickName
-                : '点击头像立即登录'
+              ? logininfo.username
+              : userinfo
+              ? userinfo.nickName
+              : "点击头像立即登录"
           }}
         </view>
         <view v-if="logininfo" class="user-id">ID:{{ logininfo.id }}</view>
@@ -28,18 +29,18 @@
     <view class="main">
       <block v-for="item in items" :key="item.id">
         <button
-            class="item-list item-btn"
-            :open-type="item.type ? item.type : ''"
-            hover-class="btn-hover"
-            @click="onLinkPage(item.link, item.type)"
+          class="item-list item-btn"
+          :open-type="item.type ? item.type : ''"
+          hover-class="btn-hover"
+          @click="onLinkPage(item.link, item.type)"
         >
           <image class="item-icon" :src="titlePng(item.icon)" />
           <view class="title">{{ item.title }}</view>
           <u-icon
-              class="item-right"
-              name="arrow-right"
-              size="26rpx"
-              color="#999"
+            class="item-right"
+            name="arrow-right"
+            size="26rpx"
+            color="#999"
           />
         </button>
       </block>
@@ -140,7 +141,7 @@ export default {
     uni.getSetting({
       success: () => {
         uni.getUserInfo({
-          success: async userRes => {
+          success: async (userRes) => {
             const userinfo = JSON.parse(userRes.rawData)
             const { nickName, avatarUrl, gender } = userinfo
             const code = await login()
@@ -203,7 +204,8 @@ export default {
       height: rpx(101);
       margin: 0 rpx(34) 0 rpx(24);
       border-radius: 50%;
-      background: #fff url("../../static/images/default-avatar.png") no-repeat center center;
+      background: #fff url("../../static/images/default-avatar.png") no-repeat
+        center center;
       background-size: 50%;
     }
     > .content {

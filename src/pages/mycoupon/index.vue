@@ -40,7 +40,7 @@ export default {
       const { data: res } = await request.get({
         url: 'user/coupons',
         header: {
-          'token': uni.getStorageSync('logininfo').token
+          token: uni.getStorageSync('logininfo').token
         },
         data: { status }
       })

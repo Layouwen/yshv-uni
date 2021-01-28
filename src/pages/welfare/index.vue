@@ -19,11 +19,16 @@
           @click="exchange(index)"
           v-for="(item, index) in topoption"
           :key="index"
-        >{{ item }}
+          >{{ item }}
         </view>
       </view>
       <view class="main_a" v-if="exchangeindex === 0">
-        <view class="main_a_item" v-for="(item, index) in list" :key="index" @click="onLinkPage(item.id)">
+        <view
+          class="main_a_item"
+          v-for="(item, index) in list"
+          :key="index"
+          @click="onLinkPage(item.id)"
+        >
           <image :src="item.image" mode="" />
           <text>{{ item.title }}</text>
           <view class="exchange">{{ item.score }}兑换</view>
@@ -191,7 +196,7 @@ export default {
     },
     onLinkPointsRecord () {
       uni.navigateTo({
-        url: `/pages/pointsrecord/index`
+        url: '/pages/pointsrecord/index'
       })
     },
     async getIndex (data) {
@@ -218,7 +223,7 @@ export default {
         })
       }
     })
-    this.getList().then(res => {
+    this.getList().then((res) => {
       this.list = res.data.data
       console.log(this.list)
     })
