@@ -8,7 +8,11 @@
       <view class="integral">
         <text class="intefral_t">1元=10积分</text>
         <view class="intefral_m"></view>
+<<<<<<< HEAD
         <text class="intefral_b" @click="onLinkPointsRecord">查看积分记录</text>
+=======
+        <text class="intefral_b" @click="pointsrecord">查看积分记录</text>
+>>>>>>> 2258e0b488d304a7d86a17356270d547f82b50a0
       </view>
     </view>
     <view class="main">
@@ -175,6 +179,11 @@ export default {
     };
   },
   methods: {
+    pointsrecord(){
+      uni.navigateTo({
+         url: '../pointsrecord/index'
+      });
+    },
     toggle() {
       this.flag = !this.flag;
       if (this.flag === false) {
