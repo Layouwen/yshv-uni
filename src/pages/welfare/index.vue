@@ -41,7 +41,7 @@
         :key="index"
       >
         <view class="top">
-          <view class="name">{{ index + 1 }}、{{ item.name }}</view>
+          <view class="name">{{ index + 1 }}、{{ item.title }}</view>
           <view class="number">数量：x{{ item.number }}</view>
           <view class="logistics" @click="toggle">{{ toggle1 }}</view>
         </view>
@@ -68,15 +68,15 @@
           <view class="detail">
             <view
               class="detail_item"
-              v-for="(item, index) in item.address"
+              v-for="(itemm, index) in item.traces"
               :key="index"
             >
               <view class="top">
                 <view class="left">
-                  <text>{{ item.time }}</text>
-                  <text>{{ item.date }}</text>
+                  <text>{{ itemm.AcceptTime.split(" ")[0] }}</text>
+                  <text>{{ itemm.AcceptTime.split(" ")[1] }}</text>
                 </view>
-                <view class="right">{{ item.address }}</view>
+                <view class="right">{{ itemm.AcceptStation }}</view>
               </view>
               <view class="line"></view>
             </view>
@@ -85,10 +85,17 @@
       </view>
       <view class="main_c" v-else>
         <view class="main_c_item" v-for="(item, index) in mainc" :key="index">
-          <view class="itemleft">{{ index + 1 }}、{{ item.name }}</view>
+          <view class="itemleft">{{ index + 1 }}、{{ item.title }}</view>
           <view class="itemright">
-            <text>+{{ item.integral }}积分</text>
-            <text @click="display(index)">{{ item.button }}</text>
+            <text>+{{ item.score }}积分</text>
+            <text
+              v-if="item.type === '1'"
+              @click="display1(index, item.mpqrcode)"
+              >关注</text
+            >
+            <text @click="display2(index)" v-else-if="item.type === '2'"
+              >查看</text
+            >
           </view>
         </view>
       </view>
@@ -101,147 +108,177 @@
         mode=""
         @click="display"
       />
-      <image
-        class="ewm"
-        src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201710%2F15%2F20171015094202_BHwPK.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612618719&t=9cc627ffbf77bb164f7ce54bb839c689"
-        mode=""
-      />
+      <image class="ewm" :src="mpqrcode" mode="" />
       <view class="text">长按关注公众号</view>
     </view>
   </view>
 </template>
 
 <script>
-import { checkLogin } from '@/utils/login'
-import request from '../../utils/request'
+import { checkLogin } from "@/utils/login";
+import request from "../../utils/request";
 export default {
-  data () {
+  data() {
     return {
       flag: false,
       flag1: false,
-      topoption: ['积分兑换', '物品状态', '积分任务'],
+      topoption: ["积分兑换", "物品状态", "积分任务"],
       exchangeindex: 1,
-      toggle1: '查看物流',
+      toggle1: "查看物流",
       mainb: [
         {
-          name: '香奈儿香水',
+          title: "香奈儿香水",
           number: 1,
-          address: [
+          traces: [
             {
-              date: '2020-12-22',
-              time: '23:27',
-              address: '快件已从义乌市场部出发'
+              AcceptTime: "2020-11-21 16:43:41",
+              AcceptStation: "快件已从义乌市场部出发",
             },
             {
-              date: '2020-12-22',
-              time: '23:27',
-              address: '义乌市场部d的黄晓凡 已揽件'
+              AcceptTime: "2020-11-21 16:43:41",
+              AcceptStation: "义乌市场部d的黄晓凡 已揽件",
             },
             {
-              date: '2020-12-22',
-              time: '23:27',
-              address: '卖家发货'
-            }
-          ]
-        }
+              AcceptTime: "2020-11-21 16:43:41",
+              AcceptStation: "卖家发货",
+            },
+          ],
+        },
       ],
       mainc: [
         {
-          name: '关注公众号',
+          name: "关注公众号",
           integral: 200,
-          button: '关注'
+          button: "关注",
         },
         {
-          name: '充值一年腾讯视频会员',
+          name: "充值一年腾讯视频会员",
           integral: 200,
-          button: '查看'
+          button: "查看",
         },
         {
-          name: '阅读文章',
+          name: "阅读文章",
           integral: 100,
-          button: '查看'
+          button: "查看",
         },
         {
-          name: '购买儿童文具',
+          name: "购买儿童文具",
           integral: 300,
-          button: '查看'
-        }
+          button: "查看",
+        },
       ],
       token: null,
       data: null,
-      list: []
-    }
+      list: [],
+      logistics: [],
+      mpqrcode: "",
+    };
   },
   methods: {
-    toggle () {
-      this.flag = !this.flag
+    toggle() {
+      this.flag = !this.flag;
       if (this.flag === false) {
-        this.toggle1 = '查看物流'
+        this.toggle1 = "查看物流";
       } else {
-        this.toggle1 = '收起物流'
+        this.toggle1 = "收起物流";
       }
     },
-    exchange (e) {
-      this.exchangeindex = e
+    exchange(e) {
+      this.exchangeindex = e;
     },
-    display (index) {
-      if (index === 0 || this.flag1 === true) {
-        this.flag1 = !this.flag1
-      }
+    display1(index, m) {
+      console.log(111);
+        uni.previewImage({
+            urls: [m],
+            longPressActions: {
+                itemList: ['发送给朋友', '保存图片', '收藏'],
+                success: function(data) {
+                   console.log(data);
+                },
+            }
+        });
+
     },
-    onLinkPage (e) {
+    display2(index, m) {
+      uni.switchTab({
+        url: "/pages/index/index",
+      });
+    },
+    onLinkPage(e) {
       uni.navigateTo({
-        url: `/pages/exchangedetails/index?id=${e}`
-      })
+        url: `/pages/exchangedetails/index?id=${e}`,
+      });
     },
-    onLinkPointsRecord () {
+    onLinkPointsRecord() {
       uni.navigateTo({
-        url: '/pages/pointsrecord/index'
-      })
+        url: `/pages/pointsrecord/index`,
+      });
     },
-    async getIndex (data) {
+    async getIndex(data) {
       return await request.get({
-        url: 'user/userinfo',
+        url: "user/userinfo",
         data: {
-          token: data
-        }
-      })
+          token: data,
+        },
+      });
     },
-    async getList () {
+    async getList() {
       return await request.get({
-        url: 'score_product/list'
-      })
-    }
+        url: "score_product/list",
+      });
+    },
+    async getlogistics() {
+      return await request.get({
+        header: {
+          token: this.token,
+        },
+        url: "score_product/logistics",
+      });
+    },
+    async getscorelist() {
+      return await request.get({
+        url: "score_task/list",
+      });
+    },
   },
-  onShow () {
+  onShow() {
     uni.getStorage({
-      key: 'logininfo',
+      key: "logininfo",
       success: (res) => {
-        this.token = res.data.token
+        this.token = res.data.token;
         this.getIndex(res.data.token).then((res) => {
-          this.data = res.data.data
-        })
-      }
-    })
+          this.data = res.data.data;
+        });
+        this.getlogistics().then((res) => {
+          if (res.data.data != "") {
+            this.mainb = res.data.data;
+          }
+        });
+      },
+    });
     this.getList().then((res) => {
-      this.list = res.data.data
-      console.log(this.list)
-    })
-    checkLogin({ status: false })
+      this.list = res.data.data;
+      console.log(this.list);
+    });
+    this.getscorelist().then((res) => {
+      console.log("score", res);
+      this.mainc = res.data.msg;
+    });
+    checkLogin({ status: false });
   },
-  onLoad () {
+  onLoad() {
     uni.getStorageSync({
-      key: 'logininfo',
+      key: "logininfo",
       success: (res) => {
-        this.token = res.data.token
+        this.token = res.data.token;
         this.getIndex(res.data.token).then((res) => {
-          this.data = res.data.data
-        })
-      }
-    })
-    checkLogin({ status: false })
-  }
-}
+          this.data = res.data.data;
+        });
+      },
+    });
+    checkLogin({ status: false });
+  },
+};
 </script>
 
 <style lang="scss">
@@ -519,7 +556,7 @@ export default {
               margin: rpx(33) 0;
               width: rpx(2);
               height: rpx(55);
-              margin-left: rpx(119);
+              margin-left: rpx(144);
               background: #999999;
             }
           }
@@ -537,6 +574,7 @@ export default {
         padding: rpx(42) rpx(25);
         margin-bottom: rpx(26);
         > .itemleft {
+          max-width: rpx(340);
           font-size: rpx(28);
           font-weight: 500;
           color: #333333;
@@ -546,6 +584,7 @@ export default {
           align-items: center;
           > text {
             &:nth-child(1) {
+              min-width: rpx(125);
               margin-right: rpx(56);
               font-size: rpx(26);
               font-weight: 500;
