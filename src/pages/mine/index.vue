@@ -19,7 +19,7 @@
                 ? logininfo.username
                 : userinfo
                 ? userinfo.nickName
-                : '未登录'
+                : '点击头像立即登录'
           }}
         </view>
         <view v-if="logininfo" class="user-id">ID:{{ logininfo.id }}</view>

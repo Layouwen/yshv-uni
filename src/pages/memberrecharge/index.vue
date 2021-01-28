@@ -150,8 +150,10 @@
           <view
             v-for="(item, index) in couponlist"
             :class="
-              (item.pay_product_id === 0 ||
-              item.pay_product_id === goldset[itemflag1].id)?'couponitem1':'couponitem2'
+              item.pay_product_id === 0 ||
+              item.pay_product_id === goldset[itemflag1].id
+                ? 'couponitem1'
+                : 'couponitem2'
             "
             v-if="titletoggle === 0"
             :key="index"
@@ -489,8 +491,8 @@ export default {
     });
   },
   onShow() {
-    // checkLogin({ status: false });
-    // checkToken({ status: false })
+    checkLogin({ status: false });
+    checkToken({ status: false })
   },
 };
 </script>

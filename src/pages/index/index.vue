@@ -71,7 +71,7 @@ export default {
       this.tabActive = index
     }
   },
-  async onLoad () {
+  async onShow () {
     const indexData = await this.getIndex()
     const {
       data: {
@@ -80,8 +80,6 @@ export default {
     } = indexData
     this.adList = adList
     this.payList = payList
-  },
-  onShow () {
     checkLogin({ status: false })
     checkToken({ status: false })
   }
