@@ -8,11 +8,10 @@
       <view class="integral">
         <text class="intefral_t">1元=10积分</text>
         <view class="intefral_m"></view>
-<<<<<<< HEAD
+
         <text class="intefral_b" @click="onLinkPointsRecord">查看积分记录</text>
-=======
+
         <text class="intefral_b" @click="pointsrecord">查看积分记录</text>
->>>>>>> 2258e0b488d304a7d86a17356270d547f82b50a0
       </view>
     </view>
     <view class="main">
@@ -59,7 +58,7 @@
           <view class="stateimg">
             <view class="circular"></view>
             <view class="line"></view>
-            <view class="circular"></view>
+            <view class="circular_active"></view>
             <view class="line"></view>
             <view class="circular"></view>
             <view class="line"></view>
@@ -179,9 +178,9 @@ export default {
     };
   },
   methods: {
-    pointsrecord(){
+    pointsrecord() {
       uni.navigateTo({
-         url: '../pointsrecord/index'
+        url: "../pointsrecord/index",
       });
     },
     toggle() {
@@ -197,16 +196,15 @@ export default {
     },
     display1(index, m) {
       console.log(111);
-        uni.previewImage({
-            urls: [m],
-            longPressActions: {
-                itemList: ['发送给朋友', '保存图片', '收藏'],
-                success: function(data) {
-                   console.log(data);
-                },
-            }
-        });
-
+      uni.previewImage({
+        urls: [m],
+        longPressActions: {
+          itemList: ["发送给朋友", "保存图片", "收藏"],
+          success: function (data) {
+            console.log(data);
+          },
+        },
+      });
     },
     display2(index, m) {
       uni.switchTab({
@@ -472,6 +470,12 @@ export default {
             width: rpx(20);
             height: rpx(20);
             background: #cdcbce;
+            border-radius: 50%;
+          }
+          .circular_active {
+            width: rpx(20);
+            height: rpx(20);
+            background: #e5bf7d;
             border-radius: 50%;
           }
           .line {
