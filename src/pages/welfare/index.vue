@@ -47,19 +47,37 @@
         </view>
         <view class="main" v-if="flag === true">
           <view class="state">
-            <text :class="item.tracesStatus==='1'?'select':''">已发货</text>
-            <text :class="item.tracesStatus==='2'?'select':''">运输中</text>
-            <text>派件中</text>
-            <text :class="item.tracesStatus==='3'?'select':''">已签收</text>
+            <text :class="item.tracesStatus === '1' ? 'select1' : 'select2'"
+              >已发货</text
+            >
+            <text :class="item.tracesStatus === '2' ? 'select1' : 'select2'"
+              >运输中</text
+            >
+            <text :class="item.tracesStatus === '4' ? 'select1' : 'select2'">派件中</text>
+            <text :class="item.tracesStatus === '3' ? 'select1' : 'select2'"
+              >已签收</text
+            >
           </view>
           <view class="stateimg">
-            <view :class="item.tracesStatus==='1'?'circular_active':'circular'"></view>
+            <view
+              :class="
+                item.tracesStatus === '1' ? 'circular_active' : 'circular'
+              "
+            ></view>
             <view class="line"></view>
-            <view :class="item.tracesStatus==='2'?'circular_active':'circular'"></view>
+            <view
+              :class="
+                item.tracesStatus === '2' ? 'circular_active' : 'circular'
+              "
+            ></view>
             <view class="line"></view>
             <view class="circular"></view>
             <view class="line"></view>
-            <view :class="item.tracesStatus==='3'?'circular_active':'circular'"></view>
+            <view
+              :class="
+                item.tracesStatus === '3' ? 'circular_active' : 'circular'
+              "
+            ></view>
           </view>
           <!-- <view class="address">
             <text>金华市</text>
@@ -427,15 +445,15 @@ export default {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin: 0 rpx(68);
+          margin: 0 rpx(39);
           font-size: rpx(26);
           font-weight: 500;
           color: #999999;
-          > .select {
+          > .select1 {
             position: relative;
             width: rpx(126);
             height: rpx(54);
-            margin-left: rpx(-15);
+
             line-height: rpx(54);
             text-align: center;
             font-size: rpx(26);
@@ -452,6 +470,13 @@ export default {
               border-left: rpx(10) solid transparent;
               border-top: rpx(10) solid #e5be7b;
             }
+          }
+          > .select2 {
+            width: rpx(126);
+            height: rpx(54);
+
+            line-height: rpx(54);
+            text-align: center;
           }
         }
         > .stateimg {
