@@ -91,8 +91,8 @@
             >
               <view class="top">
                 <view class="left">
-                  <text>{{ itemm.AcceptTime.split(" ")[0] }}</text>
                   <text>{{ itemm.AcceptTime.split(" ")[1] }}</text>
+                  <text>{{ itemm.AcceptTime.split(" ")[0] }}</text>
                 </view>
                 <view class="right">{{ itemm.AcceptStation }}</view>
               </view>
