@@ -61,10 +61,10 @@
             <view class="line"></view>
             <view class="circular"></view>
           </view>
-          <view class="address">
+          <!-- <view class="address">
             <text>金华市</text>
             <text>杭州市</text>
-          </view>
+          </view> -->
           <view class="detail">
             <view
               class="detail_item"
