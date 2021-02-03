@@ -47,19 +47,19 @@
         </view>
         <view class="main" v-if="flag === true">
           <view class="state">
-            <text>已发货</text>
-            <text class="select">运输中</text>
+            <text :class="item.tracesStatus==='1'?'select':''">已发货</text>
+            <text :class="item.tracesStatus==='2'?'select':''">运输中</text>
             <text>派件中</text>
-            <text>已签收</text>
+            <text :class="item.tracesStatus==='3'?'select':''">已签收</text>
           </view>
           <view class="stateimg">
-            <view class="circular"></view>
+            <view :class="item.tracesStatus==='1'?'circular_active':'circular'"></view>
             <view class="line"></view>
-            <view class="circular_active"></view>
-            <view class="line"></view>
-            <view class="circular"></view>
+            <view :class="item.tracesStatus==='2'?'circular_active':'circular'"></view>
             <view class="line"></view>
             <view class="circular"></view>
+            <view class="line"></view>
+            <view :class="item.tracesStatus==='3'?'circular_active':'circular'"></view>
           </view>
           <!-- <view class="address">
             <text>金华市</text>
