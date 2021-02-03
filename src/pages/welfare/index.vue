@@ -43,9 +43,9 @@
         <view class="top">
           <view class="name">{{ index + 1 }}、{{ item.title }}</view>
           <view class="number">数量：x{{ item.number }}</view>
-          <view class="logistics" @click="toggle">{{ toggle1 }}</view>
+          <view class="logistics" @click="toggle(index,item.toggle)">{{ item.toggle }}</view>
         </view>
-        <view class="main" v-if="flag === true">
+        <view class="main" v-if="item.toggle === '收起物流'">
           <view class="state">
             <text :class="item.tracesStatus === '1' ? 'select1' : 'select2'"
               >已发货</text
@@ -142,7 +142,6 @@ export default {
       flag1: false,
       topoption: ["积分兑换", "物品状态", "积分任务"],
       exchangeindex: 1,
-      toggle1: "查看物流",
       mainb: [
         {
           title: "香奈儿香水",
@@ -198,12 +197,15 @@ export default {
         url: "../pointsrecord/index",
       });
     },
-    toggle() {
-      this.flag = !this.flag;
-      if (this.flag === false) {
-        this.toggle1 = "查看物流";
-      } else {
-        this.toggle1 = "收起物流";
+    toggle(index,toggle) {
+      if(toggle==="查看物流"){
+        console.log(111);
+        this.mainb[index].toggle = "收起物流"
+        console.log(this.mainb[index]);
+      }else{
+        console.log(222);
+        this.mainb[index].toggle = "查看物流"
+        console.log(this.mainb[index]);
       }
     },
     exchange(e) {
@@ -268,7 +270,12 @@ export default {
         });
         this.getlogistics().then((res) => {
           if (res.data.data != "") {
-            this.mainb = res.data.data;
+            console.log(res.data.data,'fuck');
+            const temp = res.data.data;
+            temp.map(item=>{
+              item.toggle = "查看物流"
+            })
+            this.mainb = temp
           }
         });
       },
