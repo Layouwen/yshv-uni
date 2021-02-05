@@ -108,7 +108,7 @@
             <text>+{{ item.score }}积分</text>
             <text
               v-if="item.type === '1'"
-              @click="display1(index, item.link)"
+              @click="display1(index, item.link,item.id)"
               >关注</text
             >
             <text @click="display2(index)" v-else-if="item.type === '2'"
@@ -163,26 +163,6 @@ export default {
         },
       ],
       mainc: [
-        {
-          name: "关注公众号",
-          integral: 200,
-          button: "关注",
-        },
-        {
-          name: "充值一年腾讯视频会员",
-          integral: 200,
-          button: "查看",
-        },
-        {
-          name: "阅读文章",
-          integral: 100,
-          button: "查看",
-        },
-        {
-          name: "购买儿童文具",
-          integral: 300,
-          button: "查看",
-        },
       ],
       token: null,
       data: null,
@@ -211,11 +191,14 @@ export default {
     exchange(e) {
       this.exchangeindex = e;
     },
-    display1(index, link) {
-
+    display1(index, link,id) {
       uni.navigateTo({
          url: `../index/website?url=${link}`
       });
+      const getperformtask = this.getperformtask(this.token,{
+        id:id,
+        type:1
+      })
     },
     display2(index, m) {
       uni.switchTab({
@@ -253,6 +236,15 @@ export default {
         url: "score_task/list",
       });
     },
+    async getperformtask(token,data){
+      return await request.post({
+        url:"score_task/performtask",
+        header:{
+          token:token
+        },
+        data
+      })
+    }
   },
   onShow() {
     uni.getStorage({
