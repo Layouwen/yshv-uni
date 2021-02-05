@@ -108,7 +108,7 @@
             <text>+{{ item.score }}积分</text>
             <text
               v-if="item.type === '1'"
-              @click="display1(index, item.mpqrcode)"
+              @click="display1(index, item.link)"
               >关注</text
             >
             <text @click="display2(index)" v-else-if="item.type === '2'"
@@ -211,16 +211,10 @@ export default {
     exchange(e) {
       this.exchangeindex = e;
     },
-    display1(index, m) {
-      console.log(111);
-      uni.previewImage({
-        urls: [m],
-        longPressActions: {
-          itemList: ["发送给朋友", "保存图片", "收藏"],
-          success: function (data) {
-            console.log(data);
-          },
-        },
+    display1(index, link) {
+
+      uni.navigateTo({
+         url: `../index/website?url=${link}`
       });
     },
     display2(index, m) {
