@@ -43,7 +43,9 @@
         <view class="top">
           <view class="name">{{ index + 1 }}、{{ item.title }}</view>
           <view class="number">数量：x{{ item.number }}</view>
-          <view class="logistics" @click="toggle(index,item.toggle)">{{ item.toggle }}</view>
+          <view class="logistics" @click="toggle(index, item.toggle)">{{
+            item.toggle
+          }}</view>
         </view>
         <view class="main" v-if="item.toggle === '收起物流'">
           <view class="state">
@@ -53,7 +55,9 @@
             <text :class="item.tracesStatus === '2' ? 'select1' : 'select2'"
               >运输中</text
             >
-            <text :class="item.tracesStatus === '4' ? 'select1' : 'select2'">派件中</text>
+            <text :class="item.tracesStatus === '4' ? 'select1' : 'select2'"
+              >派件中</text
+            >
             <text :class="item.tracesStatus === '3' ? 'select1' : 'select2'"
               >已签收</text
             >
@@ -108,7 +112,7 @@
             <text>+{{ item.score }}积分</text>
             <text
               v-if="item.type === '1'"
-              @click="display1(index, item.link,item.id)"
+              @click="display1(index, item.link, item.id)"
               >关注</text
             >
             <text @click="display2(index)" v-else-if="item.type === '2'"
@@ -142,28 +146,8 @@ export default {
       flag1: false,
       topoption: ["积分兑换", "物品状态", "积分任务"],
       exchangeindex: 1,
-      mainb: [
-        {
-          title: "香奈儿香水",
-          number: 1,
-          traces: [
-            {
-              AcceptTime: "2020-11-21 16:43:41",
-              AcceptStation: "快件已从义乌市场部出发",
-            },
-            {
-              AcceptTime: "2020-11-21 16:43:41",
-              AcceptStation: "义乌市场部d的黄晓凡 已揽件",
-            },
-            {
-              AcceptTime: "2020-11-21 16:43:41",
-              AcceptStation: "卖家发货",
-            },
-          ],
-        },
-      ],
-      mainc: [
-      ],
+      mainb: [],
+      mainc: [],
       token: null,
       data: null,
       list: [],
@@ -177,28 +161,28 @@ export default {
         url: "../pointsrecord/index",
       });
     },
-    toggle(index,toggle) {
-      if(toggle==="查看物流"){
+    toggle(index, toggle) {
+      if (toggle === "查看物流") {
         console.log(111);
-        this.mainb[index].toggle = "收起物流"
+        this.mainb[index].toggle = "收起物流";
         console.log(this.mainb[index]);
-      }else{
+      } else {
         console.log(222);
-        this.mainb[index].toggle = "查看物流"
+        this.mainb[index].toggle = "查看物流";
         console.log(this.mainb[index]);
       }
     },
     exchange(e) {
       this.exchangeindex = e;
     },
-    display1(index, link,id) {
+    display1(index, link, id) {
       uni.navigateTo({
-         url: `../index/website?url=${link}`
+        url: `../index/website?url=${link}`,
       });
-      const getperformtask = this.getperformtask(this.token,{
-        id:id,
-        type:1
-      })
+      const getperformtask = this.getperformtask(this.token, {
+        id: id,
+        type: 1,
+      });
     },
     display2(index, m) {
       uni.switchTab({
@@ -236,15 +220,15 @@ export default {
         url: "score_task/list",
       });
     },
-    async getperformtask(token,data){
+    async getperformtask(token, data) {
       return await request.post({
-        url:"score_task/performtask",
-        header:{
-          token:token
+        url: "score_task/performtask",
+        header: {
+          token: token,
         },
-        data
-      })
-    }
+        data,
+      });
+    },
   },
   onShow() {
     uni.getStorage({
@@ -256,12 +240,12 @@ export default {
         });
         this.getlogistics().then((res) => {
           if (res.data.data != "") {
-            console.log(res.data.data,'fuck');
+            console.log(res.data.data, "fuck");
             const temp = res.data.data;
-            temp.map(item=>{
-              item.toggle = "查看物流"
-            })
-            this.mainb = temp
+            temp.map((item) => {
+              item.toggle = "查看物流";
+            });
+            this.mainb = temp;
           }
         });
       },
