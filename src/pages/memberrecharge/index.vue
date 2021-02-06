@@ -284,6 +284,8 @@ export default {
       this.active = null;
       this.total = this.goldset[e].price;
       this.itemflag1 = e;
+      this.discount2 = '选择优惠券'
+      this.discount1 = false
       if (this.goldset[e].accounttype === 1) {
         this.text = "请输入手机号码";
       } else {
